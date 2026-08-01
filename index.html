@@ -310,7 +310,6 @@
             width: 92px;
             height: 92px;
             border-radius: 24px;
-            box-shadow: 0 0 28px rgba(255, 45, 149, 0.16);
         }
         .login-box h1 {
             color: #fff;
@@ -1847,8 +1846,8 @@
     }
 
     function getPlanLimit(plan) {
-        const map = { 'basic': 50, 'pro': 500, 'business': Infinity };
-        return map[plan] || 50;
+        const map = { 'basic': 0, 'pro': 500, 'business': Infinity };
+        return map[plan] || 0;
     }
 
     function getPlanLabel(plan) {
@@ -1864,7 +1863,17 @@
 
     function canMakeQuery(user) {
         if (!user) return false;
-        if (isPlanExpired(user)) return false;
+        
+        // ✅ Админ всегда может делать запросы
+        if (user.isAdmin) return true;
+        
+        // ❌ Если нет премиума — поиск запрещён
+        if (!user.isPremium) {
+            showNotification('❌ Для поиска нужен Premium план. Обратитесь к администратору.');
+            return false;
+        }
+        
+        // Проверяем лимиты (если есть)
         if (user.hwid && user.hwid !== HWID) return false;
         const limit = getPlanLimit(user.plan);
         if (limit === Infinity) return true;
@@ -1886,6 +1895,7 @@
                 totalQueries: 0,
                 hwid: HWID,
                 isAdmin: true,
+                isPremium: true,        // ← Админ всегда премиум
                 createdAt: new Date().toISOString()
             };
             users.push(admin);
@@ -1937,26 +1947,76 @@
     }
 
     function updateUIForUser(user) {
-        setAvatarElement(userAvatar, user);
+        // ===== АВАТАР В ШАПКЕ =====
+        const avatar = (user.name || user.telegramUsername || 'U')[0].toUpperCase();
+        userAvatar.textContent = avatar;
         userName.textContent = user.name || user.telegramUsername || 'Пользователь';
-        const planLabel = getPlanLabel(user.plan);
-        const expired = isPlanExpired(user);
-        userPlan.textContent = planLabel + (expired ? ' (истекла)' : '');
-        userPlan.className = 'plan' + (expired ? ' expired' : '');
 
-        setAvatarElement(profileAvatar, user);
+        // ===== СТАТУС ПЛАНА В ШАПКЕ =====
+        let planLabel = '🆓 Бесплатно';
+        let planClass = 'plan';
+
+        if (user.isAdmin) {
+            planLabel = '👑 Админ';
+            planClass += ' admin';
+        } else if (user.isPremium) {
+            planLabel = '⭐ Premium';
+            planClass += ' premium';
+        } else {
+            planClass += ' expired';
+        }
+
+        // Если есть срок действия и он истёк
+        if (user.planExpiry && new Date(user.planExpiry) < new Date() && !user.isAdmin) {
+            planLabel = '🆓 Бесплатно (истек)';
+            planClass += ' expired';
+        }
+
+        userPlan.textContent = planLabel;
+        userPlan.className = planClass;
+
+        // ===== ПРОФИЛЬ =====
+        profileAvatar.textContent = avatar;
         profileName.textContent = user.name || user.telegramUsername || 'Пользователь';
         profileTelegram.textContent = user.telegramUsername
             ? '@' + user.telegramUsername
             : 'ID: ' + user.telegramId;
-        profilePlan.textContent = planLabel + (expired ? ' (истекла)' : '');
-        profilePlan.className = 'plan-badge' + (expired ? ' expired' : '');
-        if (user.planExpiry) {
+
+        // ===== СТАТУС ПЛАНА В ПРОФИЛЕ =====
+        let profilePlanLabel = 'Бесплатный';
+        let profilePlanClass = 'plan-badge';
+
+        if (user.isAdmin) {
+            profilePlanLabel = '👑 Администратор';
+            profilePlanClass += ' admin';
+        } else if (user.isPremium) {
+            profilePlanLabel = '⭐ Premium';
+            profilePlanClass += ' premium';
+        } else {
+            profilePlanClass += ' expired';
+        }
+
+        if (user.planExpiry && new Date(user.planExpiry) < new Date() && !user.isAdmin) {
+            profilePlanLabel = 'Бесплатный (истек)';
+            profilePlanClass += ' expired';
+        }
+
+        profilePlan.textContent = profilePlanLabel;
+        profilePlan.className = profilePlanClass;
+
+        // ===== ДАТА ОКОНЧАНИЯ =====
+        if (user.isAdmin) {
+            profileExpiry.textContent = '👑 Полный доступ';
+        } else if (user.isPremium && user.planExpiry) {
             const d = new Date(user.planExpiry);
             profileExpiry.textContent = `Действует до: ${d.toLocaleDateString('ru-RU')}`;
+        } else if (user.isPremium && !user.planExpiry) {
+            profileExpiry.textContent = '⭐ Бессрочный Premium';
         } else {
-            profileExpiry.textContent = 'Без ограничений';
+            profileExpiry.textContent = 'Бесплатный план (поиск недоступен)';
         }
+
+        // ===== HWID =====
         profileHwid.textContent = 'HWID: ' + (user.hwid || 'Не привязан');
         if (user.hwid && user.hwid !== HWID) {
             profileHwid.style.color = '#ff5f57';
@@ -1964,17 +2024,29 @@
             profileHwid.style.color = 'rgba(255,255,255,0.04)';
         }
 
+        // ===== СТАТИСТИКА =====
         const users = getUsers();
         const current = users.find(u => u.id === user.id);
         if (current) {
             statQueriesUsed.textContent = current.queriesUsed || 0;
             statTotalQueries.textContent = current.totalQueries || 0;
-            const limit = getPlanLimit(current.plan);
+
+            // Лимит зависит от плана
+            let limit = 0;
+            if (user.isAdmin) {
+                limit = Infinity;
+            } else if (user.isPremium) {
+                limit = 500; // или число, которое вы задали в getPlanLimit('pro')
+            } else {
+                limit = 0; // бесплатный план — поиск отключён
+            }
+
             const left = Math.max(0, limit - (current.queriesUsed || 0));
-            statQueriesLeft.textContent = (isPlanExpired(current) || (current.hwid && current.hwid !== HWID)) ? 0 : left;
+            statQueriesLeft.textContent = (user.isAdmin || user.isPremium) ? left : '❌';
             statPlanLimit.textContent = limit === Infinity ? '∞' : limit;
         }
 
+        // ===== ПОКАЗЫВАЕМ/СКРЫВАЕМ АДМИНКУ =====
         if (user.isAdmin) {
             adminLink.style.display = 'block';
         } else {
@@ -1985,40 +2057,50 @@
     // ===== АВТОРИЗАЦИЯ =====
     function loginWithTelegram(tgUser) {
         const telegramId = String(tgUser.id);
-        const displayName = getTelegramDisplayName(tgUser);
+        const displayName = tgUser.first_name + (tgUser.last_name ? ' ' + tgUser.last_name : '');
         const username = tgUser.username || '';
         const photoUrl = tgUser.photo_url || '';
-        const users = getUsers();
+        let users = getUsers();
 
-        let user = users.find((u) => u.telegramId === telegramId);
-
+        // Ищем пользователя
+        let user = users.find(u => u.telegramId === telegramId);
         if (!user && username) {
-            user = users.find((u) => u.telegramUsername === username);
+            user = users.find(u => u.telegramUsername === username);
         }
 
+        // ===== АВТО-РЕГИСТРАЦИЯ =====
         if (!user) {
-            loginStatus.textContent = '❌ Пользователь не найден. Обратитесь к администратору или @MenaceAuthRobot';
-            loginStatus.className = 'login-status error';
-            return false;
+            const newUser = {
+                id: Date.now(),
+                telegramId: telegramId,
+                telegramUsername: username,
+                name: displayName || username || 'Пользователь',
+                plan: 'basic',                    // ← БЕСПЛАТНЫЙ ПЛАН
+                planExpiry: null,                 // ← БЕЗ СРОКА (бессрочный basic)
+                queriesUsed: 0,
+                totalQueries: 0,
+                hwid: HWID,
+                isAdmin: false,
+                isPremium: false,                 // ← НОВОЕ ПОЛЕ
+                createdAt: new Date().toISOString(),
+                photoUrl: photoUrl
+            };
+            users.push(newUser);
+            saveUsers(users);
+            user = newUser;
+            console.log('[auth] Создан новый пользователь:', user);
+            showNotification('✅ Вы зарегистрированы! Для доступа к поиску нужен Premium план.');
         }
 
-        if (user.hwid && user.hwid !== HWID) {
-            loginStatus.textContent = '❌ Ошибка: HWID не совпадает!';
-            loginStatus.className = 'login-status error';
-            return false;
-        }
-
-        user.telegramId = telegramId;
+        // Обновляем данные пользователя (аватарка, имя)
         user.name = displayName || user.name;
         user.telegramUsername = username || user.telegramUsername;
         user.photoUrl = photoUrl || user.photoUrl;
-
-        if (!user.hwid) {
-            user.hwid = HWID;
-        }
-
+        if (!user.hwid) user.hwid = HWID;
+        
         saveUsers(users);
         saveSession(user);
+        
         state.isLoggedIn = true;
         state.currentUser = user;
         updateUIForUser(user);
@@ -2042,14 +2124,14 @@
     function loadAdminUsers() {
         const users = getUsers();
         if (users.length === 0) {
-            adminUsersBody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:rgba(255,255,255,0.04); padding:30px 0;">Нет пользователей</td></tr>`;
+            adminUsersBody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:rgba(255,255,255,0.04); padding:30px 0;">Нет пользователей</td></tr>`;
             return;
         }
         let html = '';
         users.forEach(u => {
             const isExpired = isPlanExpired(u);
-            const planLabel = getPlanLabel(u.plan);
-            const planClass = isExpired ? 'expired' : u.plan;
+            const planLabel = u.isPremium ? '⭐ Premium' : '🆓 Бесплатно';
+            const planClass = u.isPremium ? 'pro' : 'basic';
             const expiry = u.planExpiry ? new Date(u.planExpiry).toLocaleDateString('ru-RU') : '∞';
             const hwidDisplay = u.hwid ? u.hwid.substring(0, 12) + '...' : '—';
             const hwidFull = u.hwid || '—';
@@ -2057,12 +2139,16 @@
                 <td>${u.id}</td>
                 <td>@${u.telegramUsername || u.telegramId}</td>
                 <td>${u.name || '-'}</td>
-                <td><span class="plan-badge ${planClass}">${planLabel}${isExpired ? ' ✕' : ''}</span></td>
+                <td><span class="plan-badge ${planClass}">${planLabel}</span></td>
                 <td>${expiry}</td>
                 <td class="hwid-cell" title="${hwidFull}">${hwidDisplay}</td>
                 <td>${u.queriesUsed || 0}</td>
                 <td>
                     <div class="actions-cell">
+                        ${u.isAdmin ? '' : (u.isPremium ? 
+                            `<button class="revoke" onclick="window.togglePremium(${u.id}, false)"><i class="fas fa-minus-circle"></i> Отключить</button>` :
+                            `<button class="grant" onclick="window.togglePremium(${u.id}, true)"><i class="fas fa-star"></i> Выдать Premium</button>`
+                        )}
                         <button class="grant" onclick="window.openSubscriptionModal(${u.id})"><i class="fas fa-pen"></i></button>
                         ${u.isAdmin ? '' : `<button class="revoke" onclick="window.deleteUser(${u.id})"><i class="fas fa-trash"></i></button>`}
                     </div>
@@ -2071,6 +2157,27 @@
         });
         adminUsersBody.innerHTML = html;
     }
+
+    window.togglePremium = function(userId, enable) {
+        const users = getUsers();
+        const user = users.find(u => u.id === userId);
+        if (!user) {
+            showNotification('Пользователь не найден');
+            return;
+        }
+        if (user.isAdmin) {
+            showNotification('Администратор всегда имеет доступ');
+            return;
+        }
+        user.isPremium = enable;
+        user.plan = enable ? 'pro' : 'basic';
+        if (!enable) {
+            user.planExpiry = null;
+        }
+        saveUsers(users);
+        loadAdminUsers();
+        showNotification(enable ? '✅ Premium выдан!' : '❌ Premium отключён');
+    };
 
     window.openSubscriptionModal = function(userId) {
         const users = getUsers();
