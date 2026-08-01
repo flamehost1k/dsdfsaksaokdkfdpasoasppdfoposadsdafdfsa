@@ -11,8 +11,9 @@ const API_URL = 'https://leakosintapi.com/';
 let telegramConfig = {};
 try {
     telegramConfig = require('./telegram.config.js');
+    console.log('[config] telegram.config.js загружен');
 } catch {
-    // Локальный конфиг необязателен — можно задать через переменные окружения.
+    console.warn('[config] telegram.config.js не найден, используем переменные окружения');
 }
 
 const TELEGRAM_BOT_USERNAME = process.env.TELEGRAM_BOT_USERNAME
@@ -24,7 +25,7 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN
 const AUTH_PAGE_URL = (process.env.TELEGRAM_AUTH_PAGE_URL || telegramConfig.authPageUrl || '').replace(/\/+$/, '');
 const AUTH_CALLBACK_PORT = 3847;
 const AUTH_CALLBACK_HOST = '127.0.0.1';
-const AUTH_MAX_AGE_SEC = 86_400;
+const AUTH_MAX_AGE_SEC = 86400;
 const ALLOWED_EXTERNAL_URLS = new Set([
     'https://t.me/MenaceAuthRobot',
     'https://t.me/leakosint_bot',
@@ -43,15 +44,23 @@ let tray;
 let authServer;
 let authPort;
 
+// ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
+
 function getAssetPath(fileName) {
     return path.join(__dirname, 'assets', fileName);
 }
 
+// ===== ВЕРИФИКАЦИЯ ПОДПИСИ TELEGRAM =====
+
 function verifyTelegramAuth(data) {
-    if (!data || typeof data !== 'object' || !data.hash) return false;
+    if (!data || typeof data !== 'object' || !data.hash) {
+        console.warn('[auth] Неверные данные для проверки подписи');
+        return false;
+    }
 
     const authAge = Math.floor(Date.now() / 1000) - Number(data.auth_date);
     if (!Number.isFinite(authAge) || authAge < 0 || authAge > AUTH_MAX_AGE_SEC) {
+        console.warn('[auth] Истекло время авторизации');
         return false;
     }
 
@@ -70,15 +79,16 @@ function verifyTelegramAuth(data) {
     const expectedHash = crypto.createHmac('sha256', secretKey).update(checkString).digest('hex');
 
     try {
-        return crypto.timingSafeEqual(Buffer.from(expectedHash, 'hex'), Buffer.from(hash, 'hex'));
-    } catch {
+        const result = crypto.timingSafeEqual(Buffer.from(expectedHash, 'hex'), Buffer.from(hash, 'hex'));
+        console.log('[auth] Проверка подписи:', result ? '✅ УСПЕШНО' : '❌ НЕ УДАЛАСЬ');
+        return result;
+    } catch (error) {
+        console.error('[auth] Ошибка проверки подписи:', error.message);
         return false;
     }
 }
 
-function getAuthCallbackUrl() {
-    return `http://${AUTH_CALLBACK_HOST}:${AUTH_CALLBACK_PORT}/callback`;
-}
+// ===== НОРМАЛИЗАЦИЯ ДАННЫХ =====
 
 function normalizeTelegramAuthData(rawData) {
     const data = { ...rawData };
@@ -107,6 +117,12 @@ function mapTelegramUser(data) {
     };
 }
 
+// ===== ЛОКАЛЬНЫЙ СЕРВЕР ДЛЯ КОЛБЭКА =====
+
+function getAuthCallbackUrl() {
+    return `http://${AUTH_CALLBACK_HOST}:${AUTH_CALLBACK_PORT}/callback`;
+}
+
 function startAuthServer(onAuth) {
     return new Promise((resolve, reject) => {
         if (authServer) {
@@ -131,8 +147,9 @@ function startAuthServer(onAuth) {
                     '<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><title>Готово</title>',
                     '<style>body{background:#0d0d14;color:#fff;font-family:sans-serif;text-align:center;padding:48px 16px}',
                     'h2{margin-bottom:8px}p{color:rgba(255,255,255,.5)}</style></head><body>',
-                    '<h2>Вход выполнен</h2><p>Можно закрыть это окно.</p></body></html>',
+                    '<h2>✅ Вход выполнен</h2><p>Можно закрыть это окно.</p></body></html>',
                 ].join(''));
+                console.log('[auth] Получены данные от Telegram:', data);
                 onAuth(data);
                 return;
             }
@@ -167,6 +184,7 @@ function startAuthServer(onAuth) {
 
         authServer.listen(AUTH_CALLBACK_PORT, AUTH_CALLBACK_HOST, () => {
             authPort = AUTH_CALLBACK_PORT;
+            console.log(`[auth] Сервер запущен на порту ${AUTH_CALLBACK_PORT}`);
             resolve(authPort);
         });
     });
@@ -179,6 +197,8 @@ function buildAuthPageUrl() {
     }
     return `http://${AUTH_CALLBACK_HOST}:${AUTH_CALLBACK_PORT}/?callback=${encodeURIComponent(getAuthCallbackUrl())}`;
 }
+
+// ===== ОКНО АВТОРИЗАЦИИ =====
 
 function openTelegramAuthWindow() {
     return new Promise(async (resolve, reject) => {
@@ -196,6 +216,7 @@ function openTelegramAuthWindow() {
 
         const handleAuthPayload = (rawData) => {
             const data = normalizeTelegramAuthData(rawData);
+            console.log('[auth] Получены данные для верификации:', data);
             if (!verifyTelegramAuth(data)) {
                 finish(reject, new Error('Неверная подпись Telegram. Проверьте TELEGRAM_BOT_TOKEN.'));
                 return;
@@ -205,13 +226,14 @@ function openTelegramAuthWindow() {
 
         const onAuthData = (_event, data) => {
             if (!authWindow || _event.sender !== authWindow.webContents) return;
+            console.log('[auth] Данные из auth-preload:', data);
             handleAuthPayload(data);
         };
 
         try {
             if (!AUTH_PAGE_URL) {
                 console.warn('[auth] authPageUrl не задан. Для Telegram Login Widget нужен HTTPS-домен.');
-                console.warn('[auth] Смотрите telegram.config.example.js — GitHub Pages или ngrok.');
+                console.warn('[auth] Используется локальная страница auth.html');
             }
 
             await startAuthServer(handleAuthPayload);
@@ -236,17 +258,29 @@ function openTelegramAuthWindow() {
                 icon: getAssetPath('icon.ico'),
             });
 
-            if (useLocalPreload) ipcMain.on('telegram-auth-data', onAuthData);
+            if (useLocalPreload) {
+                ipcMain.on('telegram-auth-data', onAuthData);
+                console.log('[auth] Зарегистрирован обработчик telegram-auth-data');
+            }
 
             authWindow.once('ready-to-show', () => authWindow?.show());
-            authWindow.on('closed', () => finish(reject, new Error('Авторизация отменена')));
+            authWindow.on('closed', () => {
+                if (!settled) {
+                    finish(reject, new Error('Авторизация отменена'));
+                }
+            });
 
-            await authWindow.loadURL(buildAuthPageUrl());
+            const authUrl = buildAuthPageUrl();
+            console.log('[auth] Загрузка страницы:', authUrl);
+            await authWindow.loadURL(authUrl);
         } catch (error) {
+            console.error('[auth] Ошибка:', error.message);
             finish(reject, error);
         }
     });
 }
+
+// ===== СОЗДАНИЕ ГЛАВНОГО ОКНА =====
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -286,6 +320,8 @@ function setMaximizedClass(isMaximized) {
     ).catch(() => {});
 }
 
+// ===== ТРЕЙ =====
+
 function createTray() {
     const icon = nativeImage.createFromPath(getAssetPath('icon.png'));
     if (icon.isEmpty()) return;
@@ -304,6 +340,8 @@ function createTray() {
     });
 }
 
+// ===== ОБРАБОТЧИКИ IPC =====
+
 function registerIpcHandlers() {
     ipcMain.on('close-window', () => mainWindow?.close());
     ipcMain.on('minimize-window', () => mainWindow?.minimize());
@@ -312,7 +350,13 @@ function registerIpcHandlers() {
         mainWindow.isMaximized() ? mainWindow.unmaximize() : mainWindow.maximize();
     });
 
-    ipcMain.handle('get-hwid', () => machineIdSync(true));
+    ipcMain.handle('get-hwid', () => {
+        try {
+            return machineIdSync(true);
+        } catch {
+            return 'unknown-hwid';
+        }
+    });
 
     ipcMain.handle('open-external', (_event, url) => {
         if (typeof url !== 'string') throw new Error('Недопустимая ссылка.');
@@ -325,9 +369,12 @@ function registerIpcHandlers() {
 
     ipcMain.handle('open-telegram-auth', async () => {
         try {
+            console.log('[auth] Запрос на открытие окна авторизации');
             const user = await openTelegramAuthWindow();
+            console.log('[auth] Авторизация успешна:', user);
             return { ok: true, user };
         } catch (error) {
+            console.error('[auth] Ошибка авторизации:', error.message);
             return { ok: false, error: error.message || 'Ошибка авторизации Telegram.' };
         }
     });
@@ -338,7 +385,7 @@ function registerIpcHandlers() {
         }
 
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 20_000);
+        const timeout = setTimeout(() => controller.abort(), 20000);
         try {
             const response = await fetch(API_URL, {
                 method: 'POST',
@@ -360,7 +407,10 @@ function registerIpcHandlers() {
     });
 }
 
+// ===== ЗАПУСК =====
+
 app.whenReady().then(() => {
+    console.log('[app] Electron готов');
     registerIpcHandlers();
     createWindow();
     createTray();
@@ -378,3 +428,9 @@ app.on('before-quit', () => {
     tray?.destroy();
     authServer?.close();
 });
+
+console.log(`[app] ${APP_NAME} запущен`);
+console.log('[app] API_URL:', API_URL);
+console.log('[app] TELEGRAM_BOT_USERNAME:', TELEGRAM_BOT_USERNAME);
+console.log('[app] TELEGRAM_BOT_TOKEN:', TELEGRAM_BOT_TOKEN ? '✅ УСТАНОВЛЕН' : '❌ ОТСУТСТВУЕТ');
+console.log('[app] AUTH_PAGE_URL:', AUTH_PAGE_URL || '❌ НЕ ЗАДАН (используется локальная страница)');
