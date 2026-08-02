@@ -1,6 +1,6 @@
 module.exports = {
     botUsername: 'MenaceAuthRobot',
-    botToken: 'YOUR_BOT_TOKEN_FROM_BOTFATHER',
+    botToken: '8712904392:AAGMl7OBly82D2zD7Wt2vyfjqSg4B4nfio8',
 
     // URL страницы входа с HTTPS (обязательно для Telegram Login Widget).
     //
