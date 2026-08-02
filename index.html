@@ -1,0 +1,2496 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MenaceSEARCH Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* ===== ГЛОБАЛЬНЫЕ СТИЛИ - РОЗОВАЯ ТЕМА ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: transparent;
+            font-family: "Segoe UI", sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        .app-window {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-radius: 24px;
+            background: #0e1015;
+            border: 1px solid rgba(255, 255, 255, .05);
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, .03);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            transition: border-radius .18s ease, inset .18s ease, box-shadow .18s ease;
+        }
+
+        .app-window.maximized {
+            inset: 0;
+            border-radius: 0;
+        }
+
+        .window-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px 10px 20px;
+            background: #0a080c !important;
+            border-bottom: 1px solid rgba(255, 20, 120, 0.04);
+            flex-shrink: 0;
+            min-height: 52px;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 8px;
+            -webkit-app-region: no-drag;
+        }
+
+        .window-controls .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .window-controls .dot:hover { transform: scale(1.15); }
+        .window-controls .dot.close { background: #ff5f57; }
+        .window-controls .dot.close:hover { background: #ff3b30; }
+        .window-controls .dot.minimize { background: #ffbd2e; }
+        .window-controls .dot.minimize:hover { background: #ff9f0a; }
+        .window-controls .dot.maximize { background: #28c840; }
+        .window-controls .dot.maximize:hover { background: #30d158; }
+
+        .window-title {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+        .window-title span { color: #ff2d95; font-weight: 700; }
+
+        .window-actions .icon-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: none;
+            color: rgba(255, 255, 255, 0.3);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        .window-actions .icon-btn:hover {
+            background: rgba(255, 20, 120, 0.06);
+            color: #ff2d95;
+        }
+
+        /* ===== ЭКРАН ВХОДА ===== */
+        .login-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0a080c !important;
+            z-index: 100;
+            flex-direction: column;
+            border-radius: 32px;
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        .login-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.97);
+        }
+
+        .login-box {
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            padding: 40px;
+        }
+        .login-box .logo-icon {
+            font-size: 56px;
+            color: #ff2d95;
+            margin-bottom: 8px;
+            text-shadow: 0 0 60px rgba(255, 45, 149, 0.2);
+        }
+        .app-logo {
+            width: 42px;
+            height: 42px;
+            object-fit: cover;
+            border-radius: 12px;
+            vertical-align: middle;
+        }
+        .login-box .app-logo {
+            width: 92px;
+            height: 92px;
+            border-radius: 24px;
+        }
+        .login-box h1 {
+            color: #fff;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .login-box h1 span { color: #ff2d95; }
+        .login-box p {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 14px;
+            margin: 6px 0 28px 0;
+        }
+
+        .login-box .hwid-display {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 20, 120, 0.04);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 12px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        .login-box .hwid-display i { color: #ff2d95; margin-right: 8px; }
+
+        .login-box .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff2d95, #d41a7a);
+            border: none;
+            border-radius: 16px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 4px;
+            box-shadow: 0 4px 30px rgba(255, 45, 149, 0.1);
+        }
+        .login-box .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(255, 45, 149, 0.2);
+        }
+        .login-box .login-btn.telegram-btn {
+            background: linear-gradient(135deg, #0088cc, #006699);
+            box-shadow: 0 4px 30px rgba(0, 136, 204, 0.15);
+        }
+        .login-box .login-btn.telegram-btn:hover {
+            box-shadow: 0 8px 40px rgba(0, 136, 204, 0.25);
+        }
+        .login-box .login-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .login-box .login-status {
+            margin-top: 16px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.2);
+            min-height: 24px;
+        }
+        .login-box .login-status.error { color: #ff5f57; }
+        .login-box .login-status.success { color: #ff2d95; }
+
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+        .main-content {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            padding: 0 24px 20px 24px;
+            overflow: hidden;
+            background: #0a080c;
+        }
+        .main-content.active { display: flex; }
+
+        /* ===== НАВИГАЦИЯ ===== */
+        .nav-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 0 14px 0;
+            flex-shrink: 0;
+            border-bottom: 1px solid rgba(255, 20, 120, 0.04);
+            background: #0a080c !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        .nav-bar .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-right: 20px;
+        }
+        .nav-bar .brand i {
+            font-size: 24px;
+            color: #ff2d95;
+            background: rgba(255, 45, 149, 0.06);
+            padding: 8px;
+            border-radius: 12px;
+        }
+        .nav-bar .brand span {
+            color: #fff;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+        }
+        .nav-bar .brand span small {
+            color: #ff2d95;
+            font-weight: 400;
+            font-size: 11px;
+            margin-left: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 4px;
+            border-radius: 16px;
+            flex: 1;
+        }
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.25s;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .nav-links a:hover {
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .nav-links a.active {
+            color: #fff;
+            background: rgba(255, 45, 149, 0.12);
+            box-shadow: 0 0 20px rgba(255, 45, 149, 0.02);
+        }
+        .nav-links a i { margin-right: 6px; font-size: 13px; }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+        .nav-right .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 4px 14px 4px 4px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .nav-right .user-badge:hover { background: rgba(255, 255, 255, 0.03); }
+        .nav-right .user-badge .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff2d95, #d41a7a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .nav-right .user-badge .avatar img,
+        .profile-card .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .nav-right .user-badge .name {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .nav-right .user-badge .plan {
+            color: #ff2d95;
+            font-size: 11px;
+            background: rgba(255, 45, 149, 0.06);
+            padding: 2px 10px;
+            border-radius: 50px;
+        }
+        .nav-right .user-badge .plan.expired {
+            color: #ff5f57;
+            background: rgba(255, 95, 87, 0.06);
+        }
+        .nav-right .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff2d95;
+            display: inline-block;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.7); }
+        }
+
+        /* ===== СТРАНИЦЫ ===== */
+        .page {
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 0 8px 0;
+            animation: fadeSlideIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .page.active { display: block; }
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .page::-webkit-scrollbar { width: 4px; }
+        .page::-webkit-scrollbar-track { background: transparent; }
+        .page::-webkit-scrollbar-thumb { background: rgba(255, 45, 149, 0.15); border-radius: 20px; }
+
+        /* ===== ПОИСК ===== */
+        .search-hero {
+            text-align: center;
+            padding: 10px 0 20px 0;
+        }
+        
+        /* ПЕРЕЛИВАЮЩАЯСЯ НАДПИСЬ ГЛОБАЛЬНЫЙ ПОИСК */
+        .search-hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(
+                90deg, 
+                #ff2d95 0%, 
+                #ff7ebb 25%, 
+                #ffffff 50%, 
+                #ff7ebb 75%, 
+                #ff2d95 100%
+            );
+            background-size: 200% auto;
+            color: #ff2d95;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer-glow 4s linear infinite;
+            text-shadow: 0 0 35px rgba(255, 45, 149, 0.25);
+        }
+
+        @keyframes shimmer-glow {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .search-hero p {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 15px;
+            margin-top: 6px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 20, 120, 0.08);
+            padding: 4px;
+            max-width: 780px;
+            margin: 16px auto 0 auto;
+            transition: all 0.3s;
+        }
+        .search-box:focus-within {
+            border-color: rgba(255, 45, 149, 0.3);
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 0 40px rgba(255, 45, 149, 0.08);
+        }
+        .search-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            padding: 16px 20px;
+            font-weight: 400;
+            min-width: 120px;
+            outline: none;
+        }
+        .search-box input::placeholder { color: rgba(255, 255, 255, 0.15); font-weight: 300; }
+        .search-box button {
+            background: linear-gradient(135deg, #ff2d95, #d41a7a);
+            border: none;
+            border-radius: 16px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 14px 32px;
+            cursor: pointer;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+            box-shadow: 0 4px 20px rgba(255, 45, 149, 0.12);
+        }
+        .search-box button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 45, 149, 0.25);
+        }
+        .search-box button:active { transform: scale(0.97); }
+
+        .filter-chips {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+        .filter-chips .chip {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 20, 120, 0.03);
+            color: rgba(255, 255, 255, 0.3);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 400;
+        }
+        .filter-chips .chip:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .filter-chips .chip.active {
+            background: rgba(255, 45, 149, 0.08);
+            border-color: rgba(255, 45, 149, 0.2);
+            color: #ff2d95;
+        }
+
+        /* ===== РЕЗУЛЬТАТЫ ===== */
+        .results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0 8px 0;
+            border-bottom: 1px solid rgba(255, 20, 120, 0.04);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .results-header h3 {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .results-header h3 i { color: #ff2d95; margin-right: 10px; }
+        .results-header .badge {
+            background: rgba(255, 45, 149, 0.06);
+            color: #ff2d95;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .results-header .actions {
+            display: flex;
+            gap: 6px;
+        }
+        .results-header .actions button {
+            background: rgba(255, 255, 255, 0.02);
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .results-header .actions button:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .result-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 12px 0;
+            max-height: 380px;
+            overflow-y: auto;
+        }
+        .result-grid::-webkit-scrollbar { width: 4px; }
+        .result-grid::-webkit-scrollbar-thumb { background: rgba(255, 45, 149, 0.15); border-radius: 20px; }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            padding: 16px 20px;
+            border: 1px solid rgba(255, 20, 120, 0.03);
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            animation: fadeSlideIn 0.3s ease forwards;
+            opacity: 0;
+            margin-bottom: 10px;
+            backdrop-filter: none !important;
+        }
+        .result-card:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 20, 120, 0.08);
+            transform: translateX(4px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+        }
+
+        .result-card .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .result-card .card-header .source {
+            color: #ff2d95;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .result-card .card-header .source i { margin-right: 6px; }
+        .result-card .card-header .tag {
+            background: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.3);
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 11px;
+        }
+
+        .result-card .data-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 8px;
+            padding: 4px 0;
+        }
+        .result-card .data-row .field {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 4px 12px 4px 8px;
+            border-radius: 50px;
+            margin: 2px 4px 2px 0;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .result-card .card-footer {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 20, 120, 0.02);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .result-card .card-footer .meta {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+        }
+        .result-card .card-footer .copy-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: none;
+            color: rgba(255, 255, 255, 0.3);
+            padding: 4px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .result-card .card-footer .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+        .result-card .card-footer .copy-btn.copied { color: #ff2d95; }
+
+        .no-results {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.2);
+            padding: 60px 0;
+        }
+        .no-results i {
+            font-size: 48px;
+            color: rgba(255, 20, 120, 0.1);
+            margin-bottom: 16px;
+            display: block;
+        }
+        .no-results .big-icon {
+            font-size: 64px;
+            color: rgba(255, 45, 149, 0.15);
+        }
+
+        /* ===== ИСТОРИЯ (ОБНОВЛЕННЫЙ ВНЕШНИЙ ВИД) ===== */
+        .history-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 20, 120, 0.04);
+            transition: all 0.25s ease;
+        }
+        .history-item:hover { 
+            background: rgba(255, 255, 255, 0.03); 
+            border-color: rgba(255, 45, 149, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .history-item .left-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .history-item .icon-box {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: rgba(255, 45, 149, 0.08);
+            color: #ff2d95;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+        }
+        .history-item .query-text { 
+            color: #ffffff; 
+            font-weight: 600; 
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+        .history-item .time-text { 
+            color: rgba(255, 255, 255, 0.25); 
+            font-size: 12px; 
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .history-item .right-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .history-item .count-badge { 
+            color: #ff2d95; 
+            font-size: 12px; 
+            font-weight: 600;
+            background: rgba(255, 45, 149, 0.08);
+            padding: 4px 12px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 45, 149, 0.1);
+        }
+        .history-item .open-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .history-item .open-btn:hover {
+            background: rgba(255, 45, 149, 0.15);
+            color: #fff;
+            border-color: rgba(255, 45, 149, 0.3);
+        }
+
+        /* ===== НАСТРОЙКИ ===== */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .settings-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 20, 120, 0.02);
+            backdrop-filter: none !important;
+        }
+        .settings-card h4 {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .settings-card .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 20, 120, 0.02);
+        }
+        .settings-card .setting-row:last-child { border-bottom: none; }
+        .settings-card .setting-row label { color: rgba(255, 255, 255, 0.4); font-size: 14px; }
+        .settings-card .setting-row input,
+        .settings-card .setting-row select {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 20, 120, 0.03);
+            border-radius: 8px;
+            color: #fff;
+            padding: 6px 12px;
+            font-size: 13px;
+            width: 160px;
+            outline: none;
+        }
+        .settings-card .setting-row input:focus {
+            border-color: rgba(255, 45, 149, 0.2);
+        }
+        .settings-card .toggle {
+            width: 44px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+        .settings-card .toggle.active {
+            background: rgba(255, 45, 149, 0.15);
+        }
+        .settings-card .toggle .thumb {
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s;
+        }
+        .settings-card .toggle.active .thumb {
+            left: 22px;
+            background: #ff2d95;
+        }
+
+        /* ===== АККАУНТ (ОБНОВЛЕННЫЙ ВНЕШНИЙ ВИД) ===== */
+        .profile-card {
+            display: flex;
+            gap: 24px;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(255, 45, 149, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 45, 149, 0.1);
+            align-items: center;
+            backdrop-filter: none !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .profile-card .avatar {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff2d95, #8a0e4e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #fff;
+            font-weight: 700;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 0 25px rgba(255, 45, 149, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        .profile-card .info { flex: 1; }
+        .profile-card .info h3 { color: #fff; font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+        .profile-card .info p { color: rgba(255, 255, 255, 0.4); font-size: 14px; margin-top: 2px; }
+        .profile-card .info .plan-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 45, 149, 0.1);
+            color: #ff2d95;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+            border: 1px solid rgba(255, 45, 149, 0.2);
+        }
+        .profile-card .info .plan-badge.expired {
+            background: rgba(255, 95, 87, 0.1);
+            color: #ff5f57;
+            border-color: rgba(255, 95, 87, 0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            padding: 20px 16px;
+            border: 1px solid rgba(255, 20, 120, 0.04);
+            text-align: center;
+            backdrop-filter: none !important;
+            transition: all 0.25s ease;
+        }
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 45, 149, 0.15);
+            transform: translateY(-2px);
+        }
+        .stat-card .icon {
+            font-size: 18px;
+            color: rgba(255, 45, 149, 0.5);
+            margin-bottom: 8px;
+        }
+        .stat-card .number {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+        .stat-card .label {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 12px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* ===== АДМИН-ПАНЕЛЬ ===== */
+        .admin-users-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+        .admin-users-table th {
+            text-align: left;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 20, 120, 0.04);
+        }
+        .admin-users-table td {
+            padding: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 20, 120, 0.02);
+        }
+        .admin-users-table tr:hover td {
+            background: rgba(255, 255, 255, 0.015);
+        }
+        .admin-users-table .actions-cell {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .admin-users-table .actions-cell button {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .admin-users-table .actions-cell button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+        .admin-users-table .actions-cell button.grant { color: #ff2d95; }
+        .admin-users-table .actions-cell button.grant:hover { background: rgba(255, 45, 149, 0.1); }
+        .admin-users-table .actions-cell button.revoke { color: #ff5f57; }
+        .admin-users-table .actions-cell button.revoke:hover { background: rgba(255, 95, 87, 0.1); }
+        
+        .admin-users-table .plan-badge {
+            padding: 3px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .admin-users-table .plan-badge.basic {
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .admin-users-table .plan-badge.pro {
+            background: rgba(255, 45, 149, 0.08);
+            color: #ff2d95;
+        }
+        .admin-users-table .plan-badge.business {
+            background: rgba(108, 92, 231, 0.1);
+            color: #a29bfe;
+        }
+        .admin-users-table .hwid-cell {
+            font-family: monospace;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.2);
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* ===== МОДАЛЬНЫЕ ОКНА ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-box {
+            background: #141014;
+            border-radius: 24px;
+            padding: 32px;
+            max-width: 440px;
+            width: 90%;
+            border: 1px solid rgba(255, 20, 120, 0.08);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
+        }
+        .modal-box h3 {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .modal-box p {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .modal-box .form-group { margin-bottom: 16px; }
+        .modal-box .form-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+        .modal-box .form-group input,
+        .modal-box .form-group select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 20, 120, 0.08);
+            border-radius: 12px;
+            color: #fff;
+            padding: 10px 14px;
+            font-size: 14px;
+            outline: none;
+        }
+        .modal-box .form-group input:focus {
+            border-color: rgba(255, 45, 149, 0.3);
+        }
+        .modal-box .modal-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+        .modal-box .modal-actions button {
+            padding: 10px 24px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .modal-box .modal-actions .cancel {
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.4);
+        }
+        .modal-box .modal-actions .cancel:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+        .modal-box .modal-actions .confirm {
+            background: linear-gradient(135deg, #ff2d95, #d41a7a);
+            color: #fff;
+        }
+        .modal-box .modal-actions .confirm:hover {
+            box-shadow: 0 4px 20px rgba(255, 45, 149, 0.2);
+        }
+
+        /* АДАПТИВНОСТЬ */
+        @media screen and (max-width: 1024px) {
+            .app-window { width: 96vw; height: 90vh; max-height: 90vh; }
+            .settings-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media screen and (max-width: 768px) {
+            .app-window { border-radius: 20px; width: 98vw; height: 95vh; }
+            .window-title { display: none; }
+            .nav-bar { flex-wrap: wrap; gap: 8px; }
+            .nav-links { flex-wrap: wrap; order: 3; width: 100%; }
+            .nav-links a { padding: 6px 14px; font-size: 12px; }
+            .search-box { flex-wrap: wrap; border-radius: 16px; }
+            .search-box input { padding: 12px 16px; font-size: 14px; width: 100%; }
+            .search-box button { padding: 12px 24px; font-size: 14px; width: 100%; justify-content: center; }
+            .search-hero h1 { font-size: 32px; }
+            .profile-card { flex-direction: column; text-align: center; }
+            .profile-card .info { display: flex; flex-direction: column; align-items: center; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .login-box { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-window" id="appWindow">
+    <!-- macOS Заголовок -->
+    <div class="window-header" id="windowHeader">
+        <div class="window-controls">
+            <div class="dot close" id="closeBtn" title="Закрыть"></div>
+            <div class="dot minimize" id="minimizeBtn" title="Свернуть"></div>
+            <div class="dot maximize" id="maximizeBtn" title="Развернуть"></div>
+        </div>
+        <div class="window-title">Menace<span>SEARCH</span> Pro</div>
+        <div class="window-actions">
+            <button class="icon-btn" id="settingsQuick" title="Настройки"><i class="fas fa-cog"></i></button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН ВХОДА -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-box">
+            <div class="logo-icon"><img class="app-logo" src="assets/menace-logo.png" alt="Логотип MenaceSEARCH" /></div>
+            <h1>Menace<span>SEARCH</span></h1>
+            <p>Войдите через Telegram для доступа</p>
+
+            <div class="hwid-display">
+                <i class="fas fa-microchip"></i>
+                <span id="hwidDisplay">Загрузка HWID...</span>
+            </div>
+
+            <button class="login-btn telegram-btn" id="loginBtn" disabled>
+                <i class="fab fa-telegram-plane"></i> Войти через Telegram
+            </button>
+
+            <div class="login-status" id="loginStatus">Нажмите кнопку для входа через Telegram</div>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="main-content" id="mainContent">
+        <!-- Навигация -->
+        <div class="nav-bar">
+            <div class="brand">
+                <img class="app-logo" src="assets/menace-logo.png" alt="Логотип MenaceSEARCH" />
+                <span>Menace<span style="color:#ff2d95;">SEARCH</span> <small>Pro</small></span>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a class="active" data-page="search"><i class="fas fa-search"></i> Поиск</a>
+                <a data-page="history"><i class="fas fa-clock"></i> История</a>
+                <a data-page="settings"><i class="fas fa-sliders-h"></i> Настройки</a>
+                <a data-page="account"><i class="fas fa-user"></i> Аккаунт</a>
+                <a data-page="admin" id="adminLink" style="display:none;"><i class="fas fa-shield-alt"></i> Админ</a>
+            </div>
+            <div class="nav-right">
+                <div class="user-badge" id="userBadge">
+                    <div class="avatar" id="userAvatar">M</div>
+                    <span class="name" id="userName">Пользователь</span>
+                    <span class="plan" id="userPlan">Бесплатно</span>
+                </div>
+                <span class="status-dot"></span>
+            </div>
+        </div>
+
+        <!-- СТРАНИЦА: ПОИСК -->
+        <div class="page active" id="page-search">
+            <div class="search-hero">
+                <h1>Глобальный поиск</h1>
+                <p>Введите email, телефон, логин или ФИО для поиска</p>
+            </div>
+            <div class="search-box" id="searchBox">
+                <input type="text" id="searchInput" placeholder="example@gmail.com, +7 900 123-45-67..." />
+                <button id="searchBtn"><i class="fas fa-arrow-right"></i> Найти</button>
+            </div>
+            <div class="filter-chips" id="filterChips">
+                <span class="chip active" data-filter="all">Все</span>
+                <span class="chip" data-filter="email">Email</span>
+                <span class="chip" data-filter="phone">Телефон</span>
+                <span class="chip" data-filter="login">Логин</span>
+                <span class="chip" data-filter="name">ФИО</span>
+                <span class="chip" data-filter="address">Адрес</span>
+                <span class="chip" data-filter="social">Соцсети</span>
+            </div>
+
+            <div id="resultsContainer" style="margin-top: 12px;">
+                <div class="results-header" id="resultsHeader" style="display:none;">
+                    <h3><i class="fas fa-database"></i> Результаты <span id="resultCount"></span></h3>
+                    <div class="actions">
+                        <button id="copyAllBtn"><i class="fas fa-copy"></i> Копировать всё</button>
+                        <button id="exportBtn"><i class="fas fa-download"></i> Экспорт</button>
+                        <button class="primary" id="clearResultsBtn"><i class="fas fa-times"></i> Очистить</button>
+                    </div>
+                </div>
+                <div class="result-grid" id="resultGrid">
+                    <div class="no-results">
+                        <i class="fas fa-search big-icon"></i>
+                        <span style="font-size:16px; color:rgba(255,255,255,0.2);">Выполните поиск</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- СТРАНИЦА: ИСТОРИЯ (ОБНОВЛЕННАЯ) -->
+        <div class="page" id="page-history">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
+                <h3 style="color:#fff; font-weight:700; font-size:22px;">
+                    <i class="fas fa-clock" style="color:#ff2d95; margin-right:8px;"></i> История запросов
+                </h3>
+                <div style="display:flex; gap:8px;">
+                    <button id="exportHistoryBtn" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,20,120,0.08); color:rgba(255,255,255,0.7); padding:8px 18px; border-radius:12px; cursor:pointer; font-size:13px; font-weight:500; transition:all 0.2s;">
+                        <i class="fas fa-download" style="margin-right:6px; color:#ff2d95;"></i> Скачать
+                    </button>
+                    <select id="historyFormatSelect" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,20,120,0.08); color:rgba(255,255,255,0.7); padding:8px 12px; border-radius:12px; cursor:pointer; font-size:13px; outline:none;">
+                        <option value="json" style="background:#141014; color:#fff;">JSON</option>
+                        <option value="csv" style="background:#141014; color:#fff;">CSV</option>
+                        <option value="html" style="background:#141014; color:#fff;">HTML</option>
+                    </select>
+                    <button id="clearHistoryBtn" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,20,120,0.08); color:#ff5f57; padding:8px 16px; border-radius:12px; cursor:pointer; font-size:13px; transition:all 0.2s;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="historyList" class="history-list-container">
+                <div class="no-results" style="padding:40px 0;">
+                    <i class="fas fa-clock"></i>
+                    <span style="font-size:16px; color:rgba(255,255,255,0.2);">История пуста</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- СТРАНИЦА: НАСТРОЙКИ -->
+        <div class="page" id="page-settings">
+            <h3 style="color:#fff; font-weight:700; font-size:22px; margin-bottom:20px;">
+                <i class="fas fa-sliders-h" style="color:#ff2d95; margin-right:8px;"></i> Настройки
+            </h3>
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <h4>Интерфейс</h4>
+                    <div class="setting-row">
+                        <label>Тёмная тема</label>
+                        <div class="toggle active" id="darkToggle">
+                            <div class="thumb"></div>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <label>Анимации</label>
+                        <div class="toggle active" id="animationsToggle">
+                            <div class="thumb"></div>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <label>Уведомления</label>
+                        <div class="toggle active" id="notificationsToggle">
+                            <div class="thumb"></div>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <label>Масштаб</label>
+                        <select id="scaleSelect">
+                            <option value="100">100%</option>
+                            <option value="110">110%</option>
+                            <option value="90">90%</option>
+                            <option value="80">80%</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="settings-card">
+                    <h4>Безопасность</h4>
+                    <div class="setting-row">
+                        <label>HWID</label>
+                        <span style="color:rgba(255,255,255,0.3); font-size:12px; font-family:monospace;" id="settingsHwid">...</span>
+                    </div>
+                    <div class="setting-row">
+                        <label for="apiTokenInput">API-токен</label>
+                        <input id="apiTokenInput" type="password" autocomplete="off" placeholder="Введите токен" />
+                    </div>
+                    <div class="setting-row">
+                        <label>Доступ к API</label>
+                        <button id="saveApiTokenBtn" style="background:rgba(255,45,149,0.15); border:1px solid rgba(255,45,149,0.3); color:#fff; padding:6px 16px; border-radius:8px; cursor:pointer;">Сохранить</button>
+                    </div>
+                    <div class="setting-row">
+                        <label>Очистить кэш</label>
+                        <button id="clearCacheBtn" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); color:rgba(255,255,255,0.5); padding:6px 16px; border-radius:8px; cursor:pointer;">Очистить</button>
+                    </div>
+                    <div class="setting-row">
+                        <label>Версия</label>
+                        <span style="color:rgba(255,255,255,0.3); font-size:13px; font-weight:600;">0.0.2 Pro</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- СТРАНИЦА: АККАУНТ (ОБНОВЛЕННАЯ) -->
+        <div class="page" id="page-account">
+            <h3 style="color:#fff; font-weight:700; font-size:22px; margin-bottom:20px;">
+                <i class="fas fa-user-shield" style="color:#ff2d95; margin-right:8px;"></i> Мой аккаунт
+            </h3>
+            <div id="profileSection">
+                <div class="profile-card">
+                    <div class="avatar" id="profileAvatar">M</div>
+                    <div class="info">
+                        <h3 id="profileName">Пользователь</h3>
+                        <p id="profileTelegram">@username</p>
+                        <div>
+                            <span class="plan-badge" id="profilePlan"><i class="fas fa-gem"></i> Бесплатный</span>
+                        </div>
+                        <p style="margin-top:10px; font-size:13px; color:rgba(255,255,255,0.4);" id="profileExpiry"></p>
+                        <p style="margin-top:4px; font-size:12px; color:rgba(255,255,255,0.2); font-family:monospace;" id="profileHwid"></p>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <button id="logoutBtn" style="background:rgba(255,95,87,0.1); border:1px solid rgba(255,95,87,0.2); color:#ff5f57; padding:10px 22px; border-radius:12px; cursor:pointer; font-size:14px; font-weight:600; transition:all 0.2s;">
+                            <i class="fas fa-sign-out-alt" style="margin-right:6px;"></i> Выйти
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="icon"><i class="fas fa-fire"></i></div>
+                        <div class="number" id="statQueriesUsed">0</div>
+                        <div class="label">Использовано запросов</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon"><i class="fas fa-bolt"></i></div>
+                        <div class="number" id="statQueriesLeft" style="color:#ff2d95;">0</div>
+                        <div class="label">Осталось лимита</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="number" id="statTotalQueries">0</div>
+                        <div class="label">Всего поисков</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon"><i class="fas fa-infinity"></i></div>
+                        <div class="number" id="statPlanLimit">0</div>
+                        <div class="label">Макс. лимит</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- СТРАНИЦА: АДМИН -->
+        <div class="page" id="page-admin">
+            <h3 style="color:#fff; font-weight:700; font-size:22px; margin-bottom:20px;">
+                <i class="fas fa-shield-alt" style="color:#ff2d95; margin-right:8px;"></i> Админ-панель
+            </h3>
+            <div style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
+                <button id="adminRefreshBtn" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); padding:8px 20px; border-radius:12px; cursor:pointer; font-weight:500;">
+                    <i class="fas fa-sync" style="margin-right:6px;"></i> Обновить
+                </button>
+                <button id="adminAddUserBtn" style="background:linear-gradient(135deg,#ff2d95,#d41a7a); border:none; color:#fff; padding:8px 20px; border-radius:12px; cursor:pointer; font-weight:600; box-shadow:0 4px 15px rgba(255,45,149,0.2);">
+                    <i class="fas fa-user-plus" style="margin-right:6px;"></i> Добавить пользователя
+                </button>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="admin-users-table" id="adminUsersTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Telegram</th>
+                            <th>Имя</th>
+                            <th>План</th>
+                            <th>До</th>
+                            <th>HWID</th>
+                            <th>Запросов</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminUsersBody">
+                        <tr>
+                            <td colspan="8" style="text-align:center; color:rgba(255,255,255,0.2); padding:30px 0;">Загрузка...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- МОДАЛЬ ПОДПИСКИ -->
+<div class="modal-overlay" id="subscriptionModal">
+    <div class="modal-box">
+        <h3>Управление подпиской</h3>
+        <p id="modalUserInfo">Пользователь: @username</p>
+        <div class="form-group">
+            <label>Тип подписки</label>
+            <select id="modalPlanSelect">
+                <option value="basic">Бесплатный (0 запросов)</option>
+                <option value="pro">Pro (500 запросов)</option>
+                <option value="business">Бизнес (безлимит)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Действует до</label>
+            <input type="date" id="modalExpiryDate" />
+        </div>
+        <div class="form-group">
+            <label>HWID привязка</label>
+            <input type="text" id="modalHwidInput" placeholder="Оставьте пустым для снятия привязки" />
+        </div>
+        <div class="modal-actions">
+            <button class="cancel" id="modalCancel">Отмена</button>
+            <button class="confirm" id="modalConfirm">Сохранить</button>
+        </div>
+    </div>
+</div>
+
+<!-- МОДАЛЬ ДОБАВЛЕНИЯ ПОЛЬЗОВАТЕЛЯ -->
+<div class="modal-overlay" id="addUserModal">
+    <div class="modal-box">
+        <h3>Добавить пользователя</h3>
+        <p>Заполните данные нового пользователя</p>
+        <div class="form-group">
+            <label>Telegram ID или @username</label>
+            <input type="text" id="addTgInput" placeholder="@username или 12345678" />
+        </div>
+        <div class="form-group">
+            <label>Имя</label>
+            <input type="text" id="addNameInput" placeholder="Имя пользователя" />
+        </div>
+        <div class="form-group">
+            <label>План</label>
+            <select id="addPlanSelect">
+                <option value="basic">Бесплатный</option>
+                <option value="pro">Pro (500 запросов)</option>
+                <option value="business">Бизнес (Безлимит)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Действует до</label>
+            <input type="date" id="addExpiryInput" />
+        </div>
+        <div class="form-group">
+            <label>HWID (необязательно)</label>
+            <input type="text" id="addHwidInput" placeholder="Привязка к HWID" />
+        </div>
+        <div class="modal-actions">
+            <button class="cancel" id="addUserCancel">Отмена</button>
+            <button class="confirm" id="addUserConfirm">Создать</button>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    'use strict';
+
+    let HWID = 'Загрузка…';
+
+    // ===== СОСТОЯНИЕ =====
+    const state = {
+        currentPage: 'search',
+        searchResults: [],
+        isLoggedIn: false,
+        currentUser: null,
+        users: [],
+        searchHistory: JSON.parse(localStorage.getItem('menacesearch_history') || '[]'),
+        apiToken: localStorage.getItem('menacesearch_api_token') || '',
+        apiUrl: 'https://leakosintapi.com/'
+    };
+
+    // ===== МАППИНГ ПОЛЕЙ =====
+    const FIELD_MAP = {
+        'FULLNAME': { label: 'ФИО', icon: 'fa-user', color: '#ff2d95' },
+        'NAME': { label: 'Имя', icon: 'fa-user', color: '#ff2d95' },
+        'Firstname': { label: 'Имя', icon: 'fa-user', color: '#ff2d95' },
+        'Lastname': { label: 'Фамилия', icon: 'fa-user', color: '#ff2d95' },
+        'PHONE': { label: 'Телефон', icon: 'fa-phone', color: '#4CAF50' },
+        'EMAIL': { label: 'Email', icon: 'fa-envelope', color: '#2196F3' },
+        'PASSPORT': { label: 'Паспорт', icon: 'fa-id-card', color: '#FF9800' },
+        'INN': { label: 'ИНН', icon: 'fa-hashtag', color: '#9C27B0' },
+        'SNILS': { label: 'СНИЛС', icon: 'fa-hashtag', color: '#9C27B0' },
+        'ADDRESS': { label: 'Адрес', icon: 'fa-home', color: '#795548' },
+        'BDAY': { label: 'Дата рождения', icon: 'fa-calendar-days', color: '#E91E63' },
+        'LOGIN': { label: 'Логин', icon: 'fa-user-circle', color: '#00BCD4' },
+        'USERNAME': { label: 'Имя пользователя', icon: 'fa-user-circle', color: '#00BCD4' },
+        'TELEGRAM': { label: 'Telegram', icon: 'fab fa-telegram', color: '#0088cc' },
+        'VK': { label: 'ВКонтакте', icon: 'fab fa-vk', color: '#4a76a8' },
+        'INSTAGRAM': { label: 'Instagram', icon: 'fab fa-instagram', color: '#E1306C' },
+        'CARD_NUMBER': { label: 'Номер карты', icon: 'fa-credit-card', color: '#F44336' },
+    };
+
+    function getFieldLabel(key) {
+        return FIELD_MAP[key]?.label || String(key).replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+    }
+
+    function getFieldIconClass(key) {
+        const icon = FIELD_MAP[key]?.icon || 'fa-circle-info';
+        return icon.startsWith('fab ') ? icon.replace('fab ', 'fa-brands ') : `fa-solid ${icon}`;
+    }
+
+    function getFieldColor(key) {
+        return FIELD_MAP[key]?.color || '#9E9E9E';
+    }
+
+    function escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>'"]/g, char => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+        })[char]);
+    }
+
+    // ===== DOM ЭЛЕМЕНТЫ =====
+    const loginScreen = document.getElementById('loginScreen');
+    const mainContent = document.getElementById('mainContent');
+    const loginBtn = document.getElementById('loginBtn');
+    const loginStatus = document.getElementById('loginStatus');
+    const hwidDisplay = document.getElementById('hwidDisplay');
+    const settingsHwid = document.getElementById('settingsHwid');
+
+    const navLinks = document.querySelectorAll('#navLinks a');
+    const pages = document.querySelectorAll('.page');
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const resultGrid = document.getElementById('resultGrid');
+    const resultsHeader = document.getElementById('resultsHeader');
+    const resultCount = document.getElementById('resultCount');
+    const filterChips = document.querySelectorAll('#filterChips .chip');
+    const copyAllBtn = document.getElementById('copyAllBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const clearResultsBtn = document.getElementById('clearResultsBtn');
+    const userBadge = document.getElementById('userBadge');
+    const userAvatar = document.getElementById('userAvatar');
+    const userName = document.getElementById('userName');
+    const userPlan = document.getElementById('userPlan');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const minimizeBtn = document.getElementById('minimizeBtn');
+    const maximizeBtn = document.getElementById('maximizeBtn');
+    const settingsQuick = document.getElementById('settingsQuick');
+
+    const profileAvatar = document.getElementById('profileAvatar');
+    const profileName = document.getElementById('profileName');
+    const profileTelegram = document.getElementById('profileTelegram');
+    const profilePlan = document.getElementById('profilePlan');
+    const profileExpiry = document.getElementById('profileExpiry');
+    const profileHwid = document.getElementById('profileHwid');
+    const statQueriesUsed = document.getElementById('statQueriesUsed');
+    const statQueriesLeft = document.getElementById('statQueriesLeft');
+    const statTotalQueries = document.getElementById('statTotalQueries');
+    const statPlanLimit = document.getElementById('statPlanLimit');
+
+    const adminLink = document.getElementById('adminLink');
+    const adminUsersBody = document.getElementById('adminUsersBody');
+    const adminRefreshBtn = document.getElementById('adminRefreshBtn');
+    const adminAddUserBtn = document.getElementById('adminAddUserBtn');
+    const subscriptionModal = document.getElementById('subscriptionModal');
+    const modalUserInfo = document.getElementById('modalUserInfo');
+    const modalPlanSelect = document.getElementById('modalPlanSelect');
+    const modalExpiryDate = document.getElementById('modalExpiryDate');
+    const modalHwidInput = document.getElementById('modalHwidInput');
+    const modalCancel = document.getElementById('modalCancel');
+    const modalConfirm = document.getElementById('modalConfirm');
+    const clearCacheBtn = document.getElementById('clearCacheBtn');
+
+    const exportHistoryBtn = document.getElementById('exportHistoryBtn');
+    const historyFormatSelect = document.getElementById('historyFormatSelect');
+    const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+    const apiTokenInput = document.getElementById('apiTokenInput');
+    const saveApiTokenBtn = document.getElementById('saveApiTokenBtn');
+
+    if (apiTokenInput) apiTokenInput.value = state.apiToken;
+
+    async function initializeHardwareId() {
+        try {
+            HWID = await window.electronAPI.getHWID();
+        } catch {
+            HWID = 'HWID-недоступен';
+        }
+        hwidDisplay.textContent = HWID;
+        if (settingsHwid) settingsHwid.textContent = HWID;
+        loginBtn.disabled = false;
+    }
+
+    // ===== БАЗА ДАННЫХ =====
+    function getUsers() {
+        try {
+            return JSON.parse(localStorage.getItem('menacesearch_users') || '[]');
+        } catch { return []; }
+    }
+
+    function saveUsers(users) {
+        localStorage.setItem('menacesearch_users', JSON.stringify(users));
+    }
+
+    function getCurrentUser() {
+        try {
+            const data = JSON.parse(localStorage.getItem('menacesearch_session') || 'null');
+            if (data && data.telegramId) {
+                const users = getUsers();
+                const user = users.find(u => u.telegramId === data.telegramId);
+                if (user) return user;
+            }
+            return null;
+        } catch { return null; }
+    }
+
+    function saveSession(user) {
+        if (user) {
+            localStorage.setItem('menacesearch_session', JSON.stringify({ telegramId: user.telegramId }));
+        } else {
+            localStorage.removeItem('menacesearch_session');
+        }
+    }
+
+    function getPlanLimit(plan) {
+        const map = { 'basic': 0, 'pro': 500, 'business': Infinity };
+        return map[plan] || 0;
+    }
+
+    function isPlanExpired(user) {
+        if (!user.planExpiry) return false;
+        if (user.plan === 'business') return false;
+        return new Date(user.planExpiry) < new Date();
+    }
+
+    function canMakeQuery(user) {
+        if (!user) return false;
+        if (user.isAdmin) return true;
+        if (!user.isPremium) {
+            showNotification('<i class="fas fa-times-circle" style="color:#ff5f57;"></i> Для поиска нужен Premium план.');
+            return false;
+        }
+        if (user.hwid && user.hwid !== HWID) return false;
+        const limit = getPlanLimit(user.plan);
+        if (limit === Infinity) return true;
+        return (user.queriesUsed || 0) < limit;
+    }
+
+    // ===== ИНИЦИАЛИЗАЦИЯ ПОЛЬЗОВАТЕЛЕЙ =====
+    function initUsers() {
+        let users = getUsers();
+        if (users.length === 0) {
+            const admin = {
+                id: 1,
+                telegramId: 'admin',
+                telegramUsername: 'admin',
+                name: 'Администратор',
+                plan: 'business',
+                planExpiry: new Date(Date.now() + 365 * 86400000).toISOString(),
+                queriesUsed: 0,
+                totalQueries: 0,
+                hwid: HWID,
+                isAdmin: true,
+                isPremium: true,
+                createdAt: new Date().toISOString()
+            };
+            users.push(admin);
+
+            const myUser = {
+                id: 2,
+                telegramId: '8148135765',
+                telegramUsername: 'atilizup',
+                name: 'A7L130H',
+                plan: 'business',
+                planExpiry: new Date(Date.now() + 365 * 86400000).toISOString(),
+                queriesUsed: 0,
+                totalQueries: 0,
+                hwid: HWID,
+                isAdmin: true,
+                isPremium: true,
+                createdAt: new Date().toISOString()
+            };
+            users.push(myUser);
+            saveUsers(users);
+        }
+        return users;
+    }
+
+    function loadCurrentUser() {
+        const user = getCurrentUser();
+        if (user) {
+            const users = getUsers();
+            const fresh = users.find(u => u.id === user.id);
+            if (fresh) {
+                state.isLoggedIn = true;
+                state.currentUser = fresh;
+                updateUIForUser(fresh);
+                showMainApp();
+                return fresh;
+            }
+        }
+        state.isLoggedIn = false;
+        state.currentUser = null;
+        showLoginScreen();
+        return null;
+    }
+
+    function showLoginScreen() {
+        loginScreen.classList.remove('hidden');
+        mainContent.classList.remove('active');
+    }
+
+    function showMainApp() {
+        loginScreen.classList.add('hidden');
+        mainContent.classList.add('active');
+    }
+
+    function updateUIForUser(user) {
+        const avatar = (user.name || user.telegramUsername || 'U')[0].toUpperCase();
+        userAvatar.textContent = avatar;
+        userName.textContent = user.name || user.telegramUsername || 'Пользователь';
+
+        let planLabel = '<i class="fas fa-gem" style="color:rgba(255,255,255,0.2);"></i> Бесплатно';
+        let planClass = 'plan';
+
+        if (user.isAdmin) {
+            planLabel = '<i class="fas fa-crown" style="color:#ffd700;"></i> Админ';
+            planClass += ' admin';
+        } else if (user.isPremium) {
+            planLabel = '<i class="fas fa-star" style="color:#ffd700;"></i> Premium';
+            planClass += ' premium';
+        } else {
+            planClass += ' expired';
+        }
+
+        userPlan.innerHTML = planLabel;
+        userPlan.className = planClass;
+
+        profileAvatar.textContent = avatar;
+        profileName.textContent = user.name || user.telegramUsername || 'Пользователь';
+        profileTelegram.textContent = user.telegramUsername ? '@' + user.telegramUsername : 'ID: ' + user.telegramId;
+
+        let profilePlanLabel = 'Бесплатный';
+        let profilePlanClass = 'plan-badge';
+
+        if (user.isAdmin) {
+            profilePlanLabel = '<i class="fas fa-crown" style="color:#ffd700;"></i> Администратор';
+            profilePlanClass += ' admin';
+        } else if (user.isPremium) {
+            profilePlanLabel = '<i class="fas fa-star" style="color:#ffd700;"></i> Premium';
+            profilePlanClass += ' premium';
+        } else {
+            profilePlanClass += ' expired';
+        }
+
+        profilePlan.innerHTML = profilePlanLabel;
+        profilePlan.className = profilePlanClass;
+
+        if (user.isAdmin) {
+            profileExpiry.innerHTML = '<i class="fas fa-infinity" style="color:#ff2d95; margin-right:4px;"></i> Полный доступ без ограничений';
+        } else if (user.isPremium && user.planExpiry) {
+            const d = new Date(user.planExpiry);
+            profileExpiry.textContent = `Действует до: ${d.toLocaleDateString('ru-RU')}`;
+        } else {
+            profileExpiry.textContent = 'Бесплатный план (поиск ограничен)';
+        }
+
+        profileHwid.textContent = 'HWID: ' + (user.hwid || 'Не привязан');
+
+        const users = getUsers();
+        const current = users.find(u => u.id === user.id);
+        if (current) {
+            statQueriesUsed.textContent = current.queriesUsed || 0;
+            statTotalQueries.textContent = current.totalQueries || 0;
+
+            let limit = 0;
+            if (user.isAdmin) {
+                limit = Infinity;
+            } else if (user.isPremium) {
+                limit = 500;
+            } else {
+                limit = 0;
+            }
+
+            const left = Math.max(0, limit - (current.queriesUsed || 0));
+            statQueriesLeft.textContent = user.isAdmin ? '∞' : (user.isPremium ? left : '0');
+            statPlanLimit.textContent = limit === Infinity ? '∞' : limit;
+        }
+
+        adminLink.style.display = user.isAdmin ? 'block' : 'none';
+    }
+
+    // ===== АВТОРИЗАЦИЯ =====
+    function loginWithTelegram(tgUser) {
+        const telegramId = String(tgUser.id);
+        const displayName = tgUser.first_name + (tgUser.last_name ? ' ' + tgUser.last_name : '');
+        const username = tgUser.username || '';
+        const photoUrl = tgUser.photo_url || '';
+        let users = getUsers();
+
+        let user = users.find(u => u.telegramId === telegramId);
+        if (!user && username) {
+            user = users.find(u => u.telegramUsername === username);
+        }
+
+        if (!user) {
+            const newUser = {
+                id: Date.now(),
+                telegramId: telegramId,
+                telegramUsername: username,
+                name: displayName || username || 'Пользователь',
+                plan: 'basic',
+                planExpiry: null,
+                queriesUsed: 0,
+                totalQueries: 0,
+                hwid: HWID,
+                isAdmin: false,
+                isPremium: false,
+                createdAt: new Date().toISOString(),
+                photoUrl: photoUrl
+            };
+            users.push(newUser);
+            saveUsers(users);
+            user = newUser;
+            showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Вы зарегистрированы!');
+        }
+
+        user.name = displayName || user.name;
+        user.telegramUsername = username || user.telegramUsername;
+        user.photoUrl = photoUrl || user.photoUrl;
+        if (!user.hwid) user.hwid = HWID;
+        
+        saveUsers(users);
+        saveSession(user);
+        
+        state.isLoggedIn = true;
+        state.currentUser = user;
+        updateUIForUser(user);
+        showMainApp();
+        loginStatus.textContent = '✅ Вход выполнен!';
+        loginStatus.className = 'login-status success';
+        loadHistory();
+        return true;
+    }
+
+    function logout() {
+        saveSession(null);
+        state.isLoggedIn = false;
+        state.currentUser = null;
+        showLoginScreen();
+        loginStatus.textContent = 'Нажмите кнопку для входа через Telegram';
+        loginStatus.className = 'login-status';
+    }
+
+    // ===== АДРЕС БЭКЕНДА (Render) =====
+    const API_URL = 'https://menacesearch-backend.onrender.com'; // <--- Ваша ссылка от Render (без / на конце)
+
+    // ===== АДМИН-ФУНКЦИЯ (Загрузка пользователей с сервера) =====
+    async function loadAdminUsers() {
+        try {
+            // 1. Делаем запрос к нашему бэкенду на Render
+            const response = await fetch(`${API_URL}/api/admin/users`);
+            const data = await response.json();
+            
+            const users = data.users || []; // Получаем массив с сервера
+
+            // 2. Если пользователей нет — показываем заглушку
+            if (users.length === 0) {
+                adminUsersBody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:rgba(255,255,255,0.2); padding:30px 0;">Нет пользователей</td></tr>`;
+                return;
+            }
+
+            // 3. Рендерим полученные с сервера данные в HTML
+            let html = '';
+            users.forEach(u => {
+                let planLabel = 'Бесплатно';
+                let planClass = 'basic';
+                
+                if (u.is_admin) {
+                    planLabel = '<i class="fas fa-crown"></i> Админ';
+                    planClass = 'business';
+                } else if (u.plan === 'pro' || u.plan === 'business') {
+                    planLabel = '<i class="fas fa-star"></i> Premium';
+                    planClass = 'pro';
+                }
+                
+                const expiry = u.plan_expiry ? new Date(u.plan_expiry).toLocaleDateString('ru-RU') : '∞';
+                const hwidDisplay = u.hwid ? u.hwid.substring(0, 10) + '...' : '—';
+                const hwidFull = u.hwid || '—';
+
+                html += `<tr>
+                    <td>${u.id}</td>
+                    <td>@${escapeHtml(u.username || u.telegram_id)}</td>
+                    <td>${escapeHtml(u.first_name || '-')}</td>
+                    <td><span class="plan-badge ${planClass}">${planLabel}</span></td>
+                    <td>${expiry}</td>
+                    <td class="hwid-cell" title="${escapeHtml(hwidFull)}">${escapeHtml(hwidDisplay)}</td>
+                    <td>${u.queries_used || 0}</td>
+                    <td>
+                        <div class="actions-cell">
+                            ${u.is_admin ? '' : (u.plan !== 'free' ? 
+                                `<button class="revoke" onclick="window.togglePremium('${u.telegram_id}', false)"><i class="fas fa-minus-circle"></i> Отключить</button>` :
+                                `<button class="grant" onclick="window.togglePremium('${u.telegram_id}', true)"><i class="fas fa-star"></i> Выдать Premium</button>`
+                            )}
+                            <button class="grant" onclick="window.openSubscriptionModal('${u.telegram_id}')"><i class="fas fa-pen"></i></button>
+                        </div>
+                    </td>
+                </tr>`;
+            });
+
+            adminUsersBody.innerHTML = html;
+
+        } catch (error) {
+            console.error('Ошибка загрузки пользователей:', error);
+            adminUsersBody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#ff4d4d; padding:20px 0;">Ошибка подключения к серверу</td></tr>`;
+        }
+    }
+
+    // ===== ФУНКЦИЯ АВТОРИЗАЦИИ =====
+    async function loginWithTelegram(telegramAuthData) {
+        try {
+            const response = await fetch(`${API_URL}/api/auth/telegram`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(telegramAuthData)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                console.log('Пользователь авторизован на сервере:', data.user);
+                // Сохраняем Telegram ID в локальную сессию
+                localStorage.setItem('currentUser', JSON.stringify(data.user));
+                
+                // Если зашёл админ — обновляем список
+                if (data.user.is_admin) {
+                    loadAdminUsers();
+                }
+            } else {
+                alert('Ошибка авторизации: ' + data.error);
+            }
+        } catch (err) {
+            alert('Не удалось связаться с сервером. Проверьте интернет-соединение!');
+        }
+    }
+
+    // ===== УВЕДОМЛЕНИЯ =====
+    function showNotification(msg) {
+        const div = document.createElement('div');
+        div.style.cssText = `
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: #141014; color: #fff; padding: 12px 28px; border-radius: 16px;
+            border: 1px solid rgba(255,45,149,0.2); box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            font-size: 14px; font-weight: 500; z-index: 9999; transition: all 0.3s;
+            border-left: 4px solid #ff2d95; max-width: 90vw; text-align: center;
+        `;
+        div.innerHTML = msg;
+        document.body.appendChild(div);
+        setTimeout(() => {
+            div.style.opacity = '0';
+            div.style.transform = 'translateX(-50%) translateY(20px)';
+            setTimeout(() => div.remove(), 300);
+        }, 3000);
+    }
+
+    // ===== ГЛОБАЛЬНЫЕ ФУНКЦИИ ДЛЯ АДМИН-ПАНЕЛИ =====
+    window.togglePremium = function(userId, enable) {
+        const users = getUsers();
+        const user = users.find(u => u.id === userId);
+        if (!user) {
+            showNotification('Пользователь не найден');
+            return;
+        }
+        if (user.isAdmin) {
+            showNotification('Администратор всегда имеет доступ');
+            return;
+        }
+        user.isPremium = enable;
+        user.plan = enable ? 'pro' : 'basic';
+        user.planExpiry = enable ? new Date(Date.now() + 30 * 86400000).toISOString() : null;
+        
+        saveUsers(users);
+        loadAdminUsers();
+        showNotification(enable ? '<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Premium выдан!' : '<i class="fas fa-times-circle" style="color:#ff5f57;"></i> Premium отключён');
+    };
+
+    window.openSubscriptionModal = function(userId) {
+        const users = getUsers();
+        const user = users.find(u => u.id === userId);
+        if (!user) return;
+        modalUserInfo.textContent = `Пользователь: @${user.telegramUsername || user.telegramId}`;
+        modalPlanSelect.value = user.plan || 'basic';
+        if (user.planExpiry) {
+            modalExpiryDate.value = new Date(user.planExpiry).toISOString().split('T')[0];
+        } else {
+            modalExpiryDate.value = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
+        }
+        modalHwidInput.value = user.hwid || '';
+        subscriptionModal.dataset.userId = userId;
+        subscriptionModal.classList.add('active');
+    };
+
+    window.deleteUser = function(userId) {
+        if (!confirm('Удалить пользователя?')) return;
+        let users = getUsers();
+        const user = users.find(u => u.id === userId);
+        if (user && user.isAdmin) {
+            alert('Нельзя удалить администратора');
+            return;
+        }
+        users = users.filter(u => u.id !== userId);
+        saveUsers(users);
+        loadAdminUsers();
+        showNotification('<i class="fas fa-trash"></i> Пользователь удалён');
+    };
+
+    // ===== ПОИСК =====
+    async function performSearch(query) {
+        if (!query.trim()) {
+            resultGrid.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-exclamation-circle big-icon"></i>
+                    <span style="font-size:16px; color:rgba(255,255,255,0.2);">Введите запрос для поиска</span>
+                </div>
+            `;
+            resultsHeader.style.display = 'none';
+            return;
+        }
+
+        const user = getCurrentUser();
+        if (!user) {
+            showNotification('Сначала войдите в систему');
+            return;
+        }
+
+        if (!canMakeQuery(user)) {
+            let reason = 'Лимит запросов исчерпан';
+            if (isPlanExpired(user)) reason = 'Подписка истекла';
+            if (user.hwid && user.hwid !== HWID) reason = 'HWID не совпадает';
+            showNotification(reason);
+            return;
+        }
+
+        if (!state.apiToken || state.apiToken.length < 10) {
+            resultGrid.innerHTML = `
+                <div class="no-results" style="color: #ffaa00;">
+                    <i class="fas fa-key big-icon" style="color:#ffaa00;"></i>
+                    <span style="font-size:16px;"><i class="fas fa-times-circle" style="color:#ff5f57;"></i> API токен не указан</span>
+                    <div style="margin-top:12px; font-size:13px; color:rgba(255,255,255,0.3);">
+                        Перейдите в настройки и укажите ваш API токен
+                    </div>
+                </div>
+            `;
+            resultsHeader.style.display = 'none';
+            return;
+        }
+
+        resultGrid.innerHTML = `
+            <div class="no-results">
+                <i class="fas fa-spinner fa-pulse big-icon" style="color:#ff2d95;"></i>
+                <span style="font-size:16px; color:rgba(255,255,255,0.4);">Поиск данных...</span>
+            </div>
+        `;
+
+        try {
+            const payload = {
+                token: state.apiToken.trim(),
+                request: query.trim(),
+                limit: 200,
+                lang: 'ru'
+            };
+
+            let response;
+            if (window.electronAPI && window.electronAPI.apiRequest) {
+                response = await window.electronAPI.apiRequest(payload);
+            } else {
+                const fetchRes = await fetch(state.apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                response = { ok: fetchRes.ok, status: fetchRes.status, data: await fetchRes.json() };
+            }
+
+            if (!response.ok) {
+                throw new Error(`HTTP Error ${response.status}`);
+            }
+
+            const data = response.data;
+            if (!data.List || Object.keys(data.List).length === 0) {
+                resultGrid.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-database big-icon"></i>
+                        <span style="font-size:16px; color:rgba(255,255,255,0.2);">Ничего не найдено</span>
+                    </div>
+                `;
+                resultsHeader.style.display = 'none';
+                return;
+            }
+
+            const users = getUsers();
+            const idx = users.findIndex(u => u.id === user.id);
+            if (idx !== -1) {
+                users[idx].queriesUsed = (users[idx].queriesUsed || 0) + 1;
+                users[idx].totalQueries = (users[idx].totalQueries || 0) + 1;
+                saveUsers(users);
+                loadCurrentUser();
+            }
+
+            renderResults(data);
+            resultsHeader.style.display = 'flex';
+
+        } catch (err) {
+            console.error('Ошибка поиска:', err);
+            resultGrid.innerHTML = `
+                <div class="no-results" style="color: #ff5f57;">
+                    <i class="fas fa-exclamation-triangle big-icon" style="color:#ff5f57;"></i>
+                    <span style="font-size:16px;">Ошибка выполнения запроса</span>
+                </div>
+            `;
+            resultsHeader.style.display = 'none';
+        }
+    }
+
+    function renderResults(data, saveToHistory = true) {
+        const list = data.List;
+        let totalRecords = 0;
+        let html = '';
+        const allData = [];
+
+        for (const dbName in list) {
+            const db = list[dbName];
+            if (dbName === 'No results found' || !db.Data || db.Data.length === 0) continue;
+
+            const infoLeak = db.InfoLeak || '';
+            totalRecords += db.Data.length;
+
+            db.Data.forEach((item) => {
+                allData.push({ source: dbName, data: item, info: infoLeak });
+                const priorityKeys = ['FULLNAME', 'NAME', 'PHONE', 'EMAIL', 'PASSPORT', 'INN', 'BDAY'];
+                const sortedKeys = Object.keys(item).sort((a, b) => {
+                    const aP = priorityKeys.includes(a) ? 0 : 1;
+                    const bP = priorityKeys.includes(b) ? 0 : 1;
+                    return aP !== bP ? aP - bP : a.localeCompare(b);
+                });
+
+                html += `<div class="result-card">`;
+                html += `<div class="card-header">`;
+                html += `<span class="source"><i class="fas fa-folder-open"></i> ${escapeHtml(dbName)}</span>`;
+                html += `<span class="tag">${sortedKeys.length} полей</span>`;
+                html += `</div><div class="data-row">`;
+                sortedKeys.forEach(key => {
+                    const val = item[key];
+                    if (!val) return;
+                    const label = getFieldLabel(key);
+                    const icon = getFieldIconClass(key);
+                    const color = getFieldColor(key);
+                    html += `<span class="field">`;
+                    html += `<i class="${icon}" style="color:${color}; width:16px; text-align:center; font-size:13px;"></i>`;
+                    html += `<strong style="color:rgba(255,255,255,0.3); font-weight:400; font-size:12px;">${escapeHtml(label)}:</strong>`;
+                    html += `<span class="value" style="color:rgba(255,255,255,0.85); font-size:13px; word-break:break-all;">${escapeHtml(val)}</span>`;
+                    html += `</span>`;
+                });
+                html += `</div><div class="card-footer">`;
+                html += `<span class="meta"><i class="fas fa-info-circle"></i> ${escapeHtml(infoLeak || 'Источник данных')}</span>`;
+                html += `<button class="copy-btn" onclick="window.copyResult(this, '${encodeURIComponent(JSON.stringify(item)).replace(/'/g, '%27')}')"><i class="fas fa-copy"></i> Копировать</button>`;
+                html += `</div></div>`;
+            });
+        }
+
+        if (totalRecords === 0) {
+            resultGrid.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-database big-icon"></i>
+                    <span style="font-size:16px; color:rgba(255,255,255,0.2);">Данные не найдены</span>
+                </div>
+            `;
+            resultsHeader.style.display = 'none';
+            return;
+        }
+
+        state.searchResults = allData;
+        resultGrid.innerHTML = html;
+        resultsHeader.style.display = 'flex';
+        resultCount.textContent = `${totalRecords} записей`;
+
+        if (saveToHistory) {
+            state.searchHistory.unshift({
+                query: searchInput.value,
+                count: totalRecords,
+                time: new Date().toLocaleString('ru-RU'),
+                results: data
+            });
+            if (state.searchHistory.length > 50) state.searchHistory.pop();
+            localStorage.setItem('menacesearch_history', JSON.stringify(state.searchHistory));
+            loadHistory();
+        }
+    }
+
+    window.copyResult = function(btn, encodedData) {
+        try {
+            const data = JSON.parse(decodeURIComponent(encodedData));
+            const text = Object.entries(data).map(([k,v]) => `${k}: ${v}`).join('\n');
+            navigator.clipboard.writeText(text).then(() => {
+                btn.classList.add('copied');
+                btn.innerHTML = '<i class="fas fa-check"></i> Скопировано';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = '<i class="fas fa-copy"></i> Копировать';
+                }, 2000);
+            });
+        } catch(e) {}
+    };
+
+    function copyAllResults() {
+        if (state.searchResults.length === 0) return;
+        const text = state.searchResults.map(r => {
+            const dataStr = Object.entries(r.data).map(([k,v]) => `${k}: ${v}`).join(', ');
+            return `[${r.source}] ${dataStr}`;
+        }).join('\n\n');
+        navigator.clipboard.writeText(text).then(() => {
+            copyAllBtn.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
+            setTimeout(() => {
+                copyAllBtn.innerHTML = '<i class="fas fa-copy"></i> Копировать всё';
+            }, 2000);
+        });
+    }
+
+    function exportResults() {
+        if (state.searchResults.length === 0) return;
+        const data = state.searchResults.map(r => ({ source: r.source, ...r.data }));
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `menacesearch_${Date.now()}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    // ===== ИСТОРИЯ (ОБНОВЛЕННЫЙ ВЫВОД) =====
+    function loadHistory() {
+        const list = document.getElementById('historyList');
+        if (state.searchHistory.length === 0) {
+            list.innerHTML = `<div class="no-results" style="padding:40px 0;"><i class="fas fa-clock"></i> История поиска пуста</div>`;
+            return;
+        }
+        list.innerHTML = state.searchHistory.map((item, index) => `
+            <div class="history-item">
+                <div class="left-info">
+                    <div class="icon-box"><i class="fas fa-search"></i></div>
+                    <div>
+                        <div class="query-text">${escapeHtml(item.query)}</div>
+                        <div class="time-text"><i class="far fa-calendar-alt"></i> ${escapeHtml(item.time)}</div>
+                    </div>
+                </div>
+                <div class="right-actions">
+                    <span class="count-badge">${item.count} результатов</span>
+                    <button class="open-btn" type="button" onclick="window.openHistoryEntry(${index})">
+                        <i class="fas fa-eye"></i> Просмотр
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    window.openHistoryEntry = function(index) {
+        const entry = state.searchHistory[index];
+        if (!entry?.results) {
+            showNotification('Сохранённые результаты не найдены');
+            return;
+        }
+        searchInput.value = entry.query || '';
+        switchPage('search');
+        renderResults(entry.results, false);
+        showNotification(`Результаты загружены из истории`);
+    };
+
+    function clearHistory() {
+        if (state.searchHistory.length === 0) return;
+        if (!confirm('Очистить всю историю?')) return;
+        state.searchHistory = [];
+        localStorage.setItem('menacesearch_history', JSON.stringify(state.searchHistory));
+        loadHistory();
+        showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> История очищена');
+    }
+
+    function switchPage(pageId) {
+        state.currentPage = pageId;
+        pages.forEach(p => p.classList.remove('active'));
+        const target = document.getElementById('page-' + pageId);
+        if (target) target.classList.add('active');
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`#navLinks a[data-page="${pageId}"]`);
+        if (link) link.classList.add('active');
+
+        if (pageId === 'admin' && state.currentUser?.isAdmin) {
+            loadAdminUsers();
+        }
+        if (pageId === 'search') {
+            resultsHeader.style.display = state.searchResults.length > 0 ? 'flex' : 'none';
+        }
+        if (pageId === 'history') {
+            loadHistory();
+        }
+    }
+
+    // ===== СОБЫТИЯ И ОБРАБОТЧИКИ =====
+
+    loginBtn.addEventListener('click', async function() {
+        if (!window.electronAPI?.openTelegramAuth) {
+            loginStatus.textContent = '❌ Доступно только в Electron приложении';
+            loginStatus.className = 'login-status error';
+            return;
+        }
+
+        loginBtn.disabled = true;
+        loginStatus.textContent = 'Открытие Telegram...';
+
+        try {
+            const result = await window.electronAPI.openTelegramAuth();
+            if (result.ok && result.user) {
+                loginWithTelegram(result.user);
+            } else {
+                loginStatus.textContent = 'Ошибка авторизации';
+                loginStatus.className = 'login-status error';
+            }
+        } catch {
+            loginStatus.textContent = 'Ошибка вызова Telegram API';
+            loginStatus.className = 'login-status error';
+        } finally {
+            loginBtn.disabled = false;
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const page = this.dataset.page;
+            if (page === 'admin' && !state.currentUser?.isAdmin) {
+                showNotification('Доступ запрещён');
+                return;
+            }
+            switchPage(page);
+        });
+    });
+
+    searchBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        performSearch(searchInput.value);
+    });
+
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            performSearch(searchInput.value);
+        }
+    });
+
+    filterChips.forEach(chip => {
+        chip.addEventListener('click', function() {
+            filterChips.forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    copyAllBtn.addEventListener('click', copyAllResults);
+    exportBtn.addEventListener('click', exportResults);
+
+    clearResultsBtn.addEventListener('click', function() {
+        state.searchResults = [];
+        resultGrid.innerHTML = `
+            <div class="no-results">
+                <i class="fas fa-search big-icon"></i>
+                <span style="font-size:16px; color:rgba(255,255,255,0.2);">Выполните поиск</span>
+            </div>
+        `;
+        resultsHeader.style.display = 'none';
+    });
+
+    document.querySelectorAll('.toggle').forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+        });
+    });
+
+    settingsQuick.addEventListener('click', function() {
+        switchPage('settings');
+    });
+
+    logoutBtn.addEventListener('click', logout);
+
+    adminRefreshBtn.addEventListener('click', function() {
+        loadAdminUsers();
+        showNotification('<i class="fas fa-sync"></i> Таблица обновлена');
+    });
+
+    // ФИКС КНОПКИ "ДОБАВИТЬ ПОЛЬЗОВАТЕЛЯ"
+    const addUserModal = document.getElementById('addUserModal');
+    const addTgInput = document.getElementById('addTgInput');
+    const addNameInput = document.getElementById('addNameInput');
+    const addPlanSelect = document.getElementById('addPlanSelect');
+    const addExpiryInput = document.getElementById('addExpiryInput');
+    const addHwidInput = document.getElementById('addHwidInput');
+    const addUserCancel = document.getElementById('addUserCancel');
+    const addUserConfirm = document.getElementById('addUserConfirm');
+
+    // Открытие окна
+    adminAddUserBtn.addEventListener('click', function() {
+        addTgInput.value = '';
+        addNameInput.value = '';
+        addPlanSelect.value = 'pro';
+        addExpiryInput.value = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
+        addHwidInput.value = '';
+        addUserModal.classList.add('active');
+    });
+
+    // Закрытие
+    addUserCancel.addEventListener('click', function() {
+        addUserModal.classList.remove('active');
+    });
+
+    // Подтверждение
+    addUserConfirm.addEventListener('click', function() {
+        const tg = addTgInput.value.trim().replace('@', '');
+        if (!tg) {
+            showNotification('Введите Telegram ID или Username');
+            return;
+        }
+
+        const users = getUsers();
+        if (users.find(u => u.telegramId === tg || u.telegramUsername === tg)) {
+            showNotification('Пользователь уже существует');
+            return;
+        }
+
+        const newUser = {
+            id: Date.now(),
+            telegramId: tg,
+            telegramUsername: tg,
+            name: addNameInput.value.trim() || tg,
+            plan: addPlanSelect.value,
+            planExpiry: addExpiryInput.value ? addExpiryInput.value + 'T00:00:00.000Z' : null,
+            queriesUsed: 0,
+            totalQueries: 0,
+            hwid: addHwidInput.value.trim() || null,
+            isAdmin: false,
+            isPremium: addPlanSelect.value === 'pro' || addPlanSelect.value === 'business',
+            createdAt: new Date().toISOString()
+        };
+
+        users.push(newUser);
+        saveUsers(users);
+        loadAdminUsers();
+        addUserModal.classList.remove('active');
+        showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Пользователь добавлен!');
+    });
+
+    modalCancel.addEventListener('click', function() {
+        subscriptionModal.classList.remove('active');
+    });
+
+    modalConfirm.addEventListener('click', function() {
+        const userId = parseInt(subscriptionModal.dataset.userId);
+        const plan = modalPlanSelect.value;
+        const expiry = modalExpiryDate.value;
+        const hwid = modalHwidInput.value.trim() || null;
+        
+        if (!expiry) {
+            showNotification('Укажите дату');
+            return;
+        }
+        
+        const users = getUsers();
+        const idx = users.findIndex(u => u.id === userId);
+        if (idx !== -1) {
+            users[idx].plan = plan;
+            users[idx].planExpiry = expiry + 'T00:00:00.000Z';
+            users[idx].hwid = hwid;
+            users[idx].isPremium = plan === 'pro' || plan === 'business';
+            saveUsers(users);
+            loadAdminUsers();
+            if (state.currentUser && state.currentUser.id === userId) {
+                loadCurrentUser();
+            }
+            showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Данные сохранены');
+            subscriptionModal.classList.remove('active');
+        }
+    });
+
+    clearCacheBtn.addEventListener('click', function() {
+        localStorage.removeItem('menacesearch_history');
+        state.searchHistory = [];
+        loadHistory();
+        showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Кэш очищен');
+    });
+
+    if (clearHistoryBtn) clearHistoryBtn.addEventListener('click', clearHistory);
+
+    if (saveApiTokenBtn && apiTokenInput) {
+        saveApiTokenBtn.addEventListener('click', function() {
+            state.apiToken = apiTokenInput.value.trim();
+            localStorage.setItem('menacesearch_api_token', state.apiToken);
+            showNotification(state.apiToken ? 'API-токен сохранён' : 'API-токен удалён');
+        });
+    }
+
+    // ИНИЦИАЛИЗАЦИЯ
+    initUsers();
+    loadHistory();
+    initializeHardwareId().then(loadCurrentUser);
+
+    window.electronAPI = window.electronAPI || {
+        closeWindow: () => { if (confirm('Закрыть программу?')) window.close(); },
+        minimizeWindow: () => {},
+        maximizeWindow: () => {}
+    };
+
+})();
+</script>
+</body>
+</html>
