@@ -21,7 +21,7 @@
             height: 100%;
             overflow: hidden;
             background: transparent;
-            font-family: "Segoe UI", sans-serif;
+            font-family: 'Inter', "Segoe UI", sans-serif;
             user-select: none;
             -webkit-user-select: none;
             -webkit-font-smoothing: antialiased;
@@ -337,13 +337,6 @@
             overflow: hidden;
             flex-shrink: 0;
         }
-        .nav-right .user-badge .avatar img,
-        .profile-card .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
         .nav-right .user-badge .name {
             color: rgba(255, 255, 255, 0.7);
             font-size: 13px;
@@ -355,6 +348,9 @@
             background: rgba(255, 45, 149, 0.06);
             padding: 2px 10px;
             border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         .nav-right .user-badge .plan.expired {
             color: #ff5f57;
@@ -396,7 +392,6 @@
             padding: 10px 0 20px 0;
         }
         
-        /* ПЕРЕЛИВАЮЩАЯСЯ НАДПИСЬ ГЛОБАЛЬНЫЙ ПОИСК */
         .search-hero h1 {
             font-size: 48px;
             font-weight: 800;
@@ -666,7 +661,7 @@
             color: rgba(255, 45, 149, 0.15);
         }
 
-        /* ===== ИСТОРИЯ (ОБНОВЛЕННЫЙ ВНЕШНИЙ ВИД) ===== */
+        /* ===== ИСТОРИЯ ===== */
         .history-list-container {
             display: flex;
             flex-direction: column;
@@ -820,7 +815,7 @@
             background: #ff2d95;
         }
 
-        /* ===== АККАУНТ (ОБНОВЛЕННЫЙ ВНЕШНИЙ ВИД) ===== */
+        /* ===== АККАУНТ ===== */
         .profile-card {
             display: flex;
             gap: 24px;
@@ -947,13 +942,23 @@
             font-size: 12px;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
         .admin-users-table .actions-cell button:hover {
             background: rgba(255, 255, 255, 0.08);
             color: #fff;
         }
-        .admin-users-table .actions-cell button.grant { color: #ff2d95; }
-        .admin-users-table .actions-cell button.grant:hover { background: rgba(255, 45, 149, 0.1); }
+        .admin-users-table .actions-cell button.edit-btn { 
+            color: #ff2d95; 
+            border-color: rgba(255, 45, 149, 0.2); 
+            background: rgba(255, 45, 149, 0.05);
+        }
+        .admin-users-table .actions-cell button.edit-btn:hover { 
+            background: rgba(255, 45, 149, 0.2); 
+            color: #fff;
+        }
         .admin-users-table .actions-cell button.revoke { color: #ff5f57; }
         .admin-users-table .actions-cell button.revoke:hover { background: rgba(255, 95, 87, 0.1); }
         
@@ -962,6 +967,9 @@
             border-radius: 50px;
             font-size: 12px;
             font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
         .admin-users-table .plan-badge.basic {
             background: rgba(255, 255, 255, 0.04);
@@ -1006,15 +1014,19 @@
             padding: 32px;
             max-width: 440px;
             width: 90%;
-            border: 1px solid rgba(255, 20, 120, 0.08);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 20, 120, 0.12);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 45, 149, 0.05);
         }
         .modal-box h3 {
             color: #fff;
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
+        .modal-box h3 i { color: #ff2d95; }
         .modal-box p {
             color: rgba(255, 255, 255, 0.3);
             font-size: 14px;
@@ -1038,7 +1050,12 @@
             font-size: 14px;
             outline: none;
         }
-        .modal-box .form-group input:focus {
+        .modal-box .form-group select option {
+            background: #141014;
+            color: #fff;
+        }
+        .modal-box .form-group input:focus,
+        .modal-box .form-group select:focus {
             border-color: rgba(255, 45, 149, 0.3);
         }
         .modal-box .modal-actions {
@@ -1055,6 +1072,9 @@
             font-size: 14px;
             font-weight: 600;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
         .modal-box .modal-actions .cancel {
             background: rgba(255, 255, 255, 0.04);
@@ -1150,7 +1170,7 @@
                 <div class="user-badge" id="userBadge">
                     <div class="avatar" id="userAvatar">M</div>
                     <span class="name" id="userName">Пользователь</span>
-                    <span class="plan" id="userPlan">Бесплатно</span>
+                    <span class="plan" id="userPlan"><i class="fas fa-user-check"></i> Бесплатно</span>
                 </div>
                 <span class="status-dot"></span>
             </div>
@@ -1194,7 +1214,7 @@
             </div>
         </div>
 
-        <!-- СТРАНИЦА: ИСТОРИЯ (ОБНОВЛЕННАЯ) -->
+        <!-- СТРАНИЦА: ИСТОРИЯ -->
         <div class="page" id="page-history">
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
                 <h3 style="color:#fff; font-weight:700; font-size:22px;">
@@ -1284,7 +1304,7 @@
             </div>
         </div>
 
-        <!-- СТРАНИЦА: АККАУНТ (ОБНОВЛЕННАЯ) -->
+        <!-- СТРАНИЦА: АККАУНТ -->
         <div class="page" id="page-account">
             <h3 style="color:#fff; font-weight:700; font-size:22px; margin-bottom:20px;">
                 <i class="fas fa-user-shield" style="color:#ff2d95; margin-right:8px;"></i> Мой аккаунт
@@ -1374,7 +1394,7 @@
 <!-- МОДАЛЬ ПОДПИСКИ -->
 <div class="modal-overlay" id="subscriptionModal">
     <div class="modal-box">
-        <h3>Управление подпиской</h3>
+        <h3><i class="fas fa-user-gear"></i> Управление пользователем</h3>
         <p id="modalUserInfo">Пользователь: @username</p>
         <div class="form-group">
             <label>Тип подписки</label>
@@ -1393,8 +1413,8 @@
             <input type="text" id="modalHwidInput" placeholder="Оставьте пустым для снятия привязки" />
         </div>
         <div class="modal-actions">
-            <button class="cancel" id="modalCancel">Отмена</button>
-            <button class="confirm" id="modalConfirm">Сохранить</button>
+            <button class="cancel" id="modalCancel"><i class="fas fa-times"></i> Отмена</button>
+            <button class="confirm" id="modalConfirm"><i class="fas fa-check"></i> Сохранить</button>
         </div>
     </div>
 </div>
@@ -1402,7 +1422,7 @@
 <!-- МОДАЛЬ ДОБАВЛЕНИЯ ПОЛЬЗОВАТЕЛЯ -->
 <div class="modal-overlay" id="addUserModal">
     <div class="modal-box">
-        <h3>Добавить пользователя</h3>
+        <h3><i class="fas fa-user-plus"></i> Добавить пользователя</h3>
         <p>Заполните данные нового пользователя</p>
         <div class="form-group">
             <label>Telegram ID или @username</label>
@@ -1429,8 +1449,8 @@
             <input type="text" id="addHwidInput" placeholder="Привязка к HWID" />
         </div>
         <div class="modal-actions">
-            <button class="cancel" id="addUserCancel">Отмена</button>
-            <button class="confirm" id="addUserConfirm">Создать</button>
+            <button class="cancel" id="addUserCancel"><i class="fas fa-times"></i> Отмена</button>
+            <button class="confirm" id="addUserConfirm"><i class="fas fa-plus"></i> Создать</button>
         </div>
     </div>
 </div>
@@ -1440,6 +1460,7 @@
     'use strict';
 
     let HWID = 'Загрузка…';
+    const API_URL = 'https://menacesearch-backend.onrender.com';
 
     // ===== СОСТОЯНИЕ =====
     const state = {
@@ -1517,9 +1538,6 @@
     const userName = document.getElementById('userName');
     const userPlan = document.getElementById('userPlan');
     const logoutBtn = document.getElementById('logoutBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const minimizeBtn = document.getElementById('minimizeBtn');
-    const maximizeBtn = document.getElementById('maximizeBtn');
     const settingsQuick = document.getElementById('settingsQuick');
 
     const profileAvatar = document.getElementById('profileAvatar');
@@ -1546,8 +1564,6 @@
     const modalConfirm = document.getElementById('modalConfirm');
     const clearCacheBtn = document.getElementById('clearCacheBtn');
 
-    const exportHistoryBtn = document.getElementById('exportHistoryBtn');
-    const historyFormatSelect = document.getElementById('historyFormatSelect');
     const clearHistoryBtn = document.getElementById('clearHistoryBtn');
     const apiTokenInput = document.getElementById('apiTokenInput');
     const saveApiTokenBtn = document.getElementById('saveApiTokenBtn');
@@ -1558,7 +1574,7 @@
         try {
             HWID = await window.electronAPI.getHWID();
         } catch {
-            HWID = 'HWID-недоступен';
+            HWID = 'HWID-LOCAL-DEV';
         }
         hwidDisplay.textContent = HWID;
         if (settingsHwid) settingsHwid.textContent = HWID;
@@ -1581,7 +1597,7 @@
             const data = JSON.parse(localStorage.getItem('menacesearch_session') || 'null');
             if (data && data.telegramId) {
                 const users = getUsers();
-                const user = users.find(u => u.telegramId === data.telegramId);
+                const user = users.find(u => String(u.telegramId) === String(data.telegramId));
                 if (user) return user;
             }
             return null;
@@ -1694,7 +1710,7 @@
         userAvatar.textContent = avatar;
         userName.textContent = user.name || user.telegramUsername || 'Пользователь';
 
-        let planLabel = '<i class="fas fa-gem" style="color:rgba(255,255,255,0.2);"></i> Бесплатно';
+        let planLabel = '<i class="fas fa-user"></i> Бесплатно';
         let planClass = 'plan';
 
         if (user.isAdmin) {
@@ -1764,160 +1780,6 @@
         adminLink.style.display = user.isAdmin ? 'block' : 'none';
     }
 
-    // ===== АВТОРИЗАЦИЯ =====
-    function loginWithTelegram(tgUser) {
-        const telegramId = String(tgUser.id);
-        const displayName = tgUser.first_name + (tgUser.last_name ? ' ' + tgUser.last_name : '');
-        const username = tgUser.username || '';
-        const photoUrl = tgUser.photo_url || '';
-        let users = getUsers();
-
-        let user = users.find(u => u.telegramId === telegramId);
-        if (!user && username) {
-            user = users.find(u => u.telegramUsername === username);
-        }
-
-        if (!user) {
-            const newUser = {
-                id: Date.now(),
-                telegramId: telegramId,
-                telegramUsername: username,
-                name: displayName || username || 'Пользователь',
-                plan: 'basic',
-                planExpiry: null,
-                queriesUsed: 0,
-                totalQueries: 0,
-                hwid: HWID,
-                isAdmin: false,
-                isPremium: false,
-                createdAt: new Date().toISOString(),
-                photoUrl: photoUrl
-            };
-            users.push(newUser);
-            saveUsers(users);
-            user = newUser;
-            showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Вы зарегистрированы!');
-        }
-
-        user.name = displayName || user.name;
-        user.telegramUsername = username || user.telegramUsername;
-        user.photoUrl = photoUrl || user.photoUrl;
-        if (!user.hwid) user.hwid = HWID;
-        
-        saveUsers(users);
-        saveSession(user);
-        
-        state.isLoggedIn = true;
-        state.currentUser = user;
-        updateUIForUser(user);
-        showMainApp();
-        loginStatus.textContent = '✅ Вход выполнен!';
-        loginStatus.className = 'login-status success';
-        loadHistory();
-        return true;
-    }
-
-    function logout() {
-        saveSession(null);
-        state.isLoggedIn = false;
-        state.currentUser = null;
-        showLoginScreen();
-        loginStatus.textContent = 'Нажмите кнопку для входа через Telegram';
-        loginStatus.className = 'login-status';
-    }
-
-    // ===== АДРЕС БЭКЕНДА (Render) =====
-    const API_URL = 'https://menacesearch-backend.onrender.com'; // <--- Ваша ссылка от Render (без / на конце)
-
-    // ===== АДМИН-ФУНКЦИЯ (Загрузка пользователей с сервера) =====
-    async function loadAdminUsers() {
-        try {
-            // 1. Делаем запрос к нашему бэкенду на Render
-            const response = await fetch(`${API_URL}/api/admin/users`);
-            const data = await response.json();
-            
-            const users = data.users || []; // Получаем массив с сервера
-
-            // 2. Если пользователей нет — показываем заглушку
-            if (users.length === 0) {
-                adminUsersBody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:rgba(255,255,255,0.2); padding:30px 0;">Нет пользователей</td></tr>`;
-                return;
-            }
-
-            // 3. Рендерим полученные с сервера данные в HTML
-            let html = '';
-            users.forEach(u => {
-                let planLabel = 'Бесплатно';
-                let planClass = 'basic';
-                
-                if (u.is_admin) {
-                    planLabel = '<i class="fas fa-crown"></i> Админ';
-                    planClass = 'business';
-                } else if (u.plan === 'pro' || u.plan === 'business') {
-                    planLabel = '<i class="fas fa-star"></i> Premium';
-                    planClass = 'pro';
-                }
-                
-                const expiry = u.plan_expiry ? new Date(u.plan_expiry).toLocaleDateString('ru-RU') : '∞';
-                const hwidDisplay = u.hwid ? u.hwid.substring(0, 10) + '...' : '—';
-                const hwidFull = u.hwid || '—';
-
-                html += `<tr>
-                    <td>${u.id}</td>
-                    <td>@${escapeHtml(u.username || u.telegram_id)}</td>
-                    <td>${escapeHtml(u.first_name || '-')}</td>
-                    <td><span class="plan-badge ${planClass}">${planLabel}</span></td>
-                    <td>${expiry}</td>
-                    <td class="hwid-cell" title="${escapeHtml(hwidFull)}">${escapeHtml(hwidDisplay)}</td>
-                    <td>${u.queries_used || 0}</td>
-                    <td>
-                        <div class="actions-cell">
-                            ${u.is_admin ? '' : (u.plan !== 'free' ? 
-                                `<button class="revoke" onclick="window.togglePremium('${u.telegram_id}', false)"><i class="fas fa-minus-circle"></i> Отключить</button>` :
-                                `<button class="grant" onclick="window.togglePremium('${u.telegram_id}', true)"><i class="fas fa-star"></i> Выдать Premium</button>`
-                            )}
-                            <button class="grant" onclick="window.openSubscriptionModal('${u.telegram_id}')"><i class="fas fa-pen"></i></button>
-                        </div>
-                    </td>
-                </tr>`;
-            });
-
-            adminUsersBody.innerHTML = html;
-
-        } catch (error) {
-            console.error('Ошибка загрузки пользователей:', error);
-            adminUsersBody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#ff4d4d; padding:20px 0;">Ошибка подключения к серверу</td></tr>`;
-        }
-    }
-
-    // ===== ФУНКЦИЯ АВТОРИЗАЦИИ =====
-    async function loginWithTelegram(telegramAuthData) {
-        try {
-            const response = await fetch(`${API_URL}/api/auth/telegram`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(telegramAuthData)
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                console.log('Пользователь авторизован на сервере:', data.user);
-                // Сохраняем Telegram ID в локальную сессию
-                localStorage.setItem('currentUser', JSON.stringify(data.user));
-                
-                // Если зашёл админ — обновляем список
-                if (data.user.is_admin) {
-                    loadAdminUsers();
-                }
-            } else {
-                alert('Ошибка авторизации: ' + data.error);
-            }
-        } catch (err) {
-            alert('Не удалось связаться с сервером. Проверьте интернет-соединение!');
-        }
-    }
-
     // ===== УВЕДОМЛЕНИЯ =====
     function showNotification(msg) {
         const div = document.createElement('div');
@@ -1937,40 +1799,125 @@
         }, 3000);
     }
 
-    // ===== ГЛОБАЛЬНЫЕ ФУНКЦИИ ДЛЯ АДМИН-ПАНЕЛИ =====
-    window.togglePremium = function(userId, enable) {
+    // ===== АДМИН-ФУНКЦИЯ (Загрузка пользователей из локальной базы) =====
+    function loadAdminUsers() {
         const users = getUsers();
-        const user = users.find(u => u.id === userId);
+        if (users.length === 0) {
+            adminUsersBody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:rgba(255,255,255,0.2); padding:30px 0;">Нет пользователей</td></tr>`;
+            return;
+        }
+
+        let html = '';
+        users.forEach(u => {
+            let planLabel = 'Бесплатно';
+            let planClass = 'basic';
+            
+            if (u.isAdmin) {
+                planLabel = '<i class="fas fa-crown" style="color:#ffd700;"></i> Админ';
+                planClass = 'business';
+            } else if (u.isPremium || u.plan === 'pro' || u.plan === 'business') {
+                planLabel = '<i class="fas fa-star" style="color:#ffd700;"></i> Premium';
+                planClass = 'pro';
+            }
+            
+            const expiry = u.planExpiry ? new Date(u.planExpiry).toLocaleDateString('ru-RU') : '∞';
+            const hwidDisplay = u.hwid ? u.hwid.substring(0, 10) + '...' : '—';
+
+            html += `<tr>
+                <td>${u.id}</td>
+                <td>@${escapeHtml(u.telegramUsername || u.telegramId)}</td>
+                <td>${escapeHtml(u.name || '-')}</td>
+                <td><span class="plan-badge ${planClass}">${planLabel}</span></td>
+                <td>${expiry}</td>
+                <td class="hwid-cell">${escapeHtml(hwidDisplay)}</td>
+                <td>${u.queriesUsed || 0}</td>
+                <td>
+                    <div class="actions-cell">
+                        <button class="edit-btn" onclick="window.openSubscriptionModal('${u.id}')"><i class="fas fa-pen"></i> Изменить</button>
+                        <button class="revoke" onclick="window.deleteUser(${u.id})"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>`;
+        });
+
+        adminUsersBody.innerHTML = html;
+    }
+
+    // ===== АВТОРИЗАЦИЯ =====
+    function loginWithTelegram(tgUser) {
+        const telegramId = String(tgUser.id || tgUser.telegramId || 'user_' + Date.now());
+        const displayName = tgUser.first_name ? (tgUser.first_name + (tgUser.last_name ? ' ' + tgUser.last_name : '')) : (tgUser.name || 'Пользователь');
+        const username = tgUser.username || tgUser.telegramUsername || '';
+        let users = getUsers();
+
+        let user = users.find(u => String(u.telegramId) === telegramId || (username && u.telegramUsername === username));
+
         if (!user) {
-            showNotification('Пользователь не найден');
-            return;
+            user = {
+                id: Date.now(),
+                telegramId: telegramId,
+                telegramUsername: username,
+                name: displayName,
+                plan: 'basic',
+                planExpiry: null,
+                queriesUsed: 0,
+                totalQueries: 0,
+                hwid: HWID,
+                isAdmin: false,
+                isPremium: false,
+                createdAt: new Date().toISOString()
+            };
+            users.push(user);
+            saveUsers(users);
+            showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Вы зарегистрированы!');
         }
-        if (user.isAdmin) {
-            showNotification('Администратор всегда имеет доступ');
-            return;
-        }
-        user.isPremium = enable;
-        user.plan = enable ? 'pro' : 'basic';
-        user.planExpiry = enable ? new Date(Date.now() + 30 * 86400000).toISOString() : null;
+
+        user.name = displayName || user.name;
+        user.telegramUsername = username || user.telegramUsername;
+        if (!user.hwid) user.hwid = HWID;
         
         saveUsers(users);
-        loadAdminUsers();
-        showNotification(enable ? '<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Premium выдан!' : '<i class="fas fa-times-circle" style="color:#ff5f57;"></i> Premium отключён');
-    };
+        saveSession(user);
+        
+        state.isLoggedIn = true;
+        state.currentUser = user;
+        updateUIForUser(user);
+        showMainApp();
+        loginStatus.textContent = 'Вход выполнен!';
+        loginStatus.className = 'login-status success';
+        loadHistory();
+        return true;
+    }
 
-    window.openSubscriptionModal = function(userId) {
+    function logout() {
+        saveSession(null);
+        state.isLoggedIn = false;
+        state.currentUser = null;
+        showLoginScreen();
+        loginStatus.textContent = 'Нажмите кнопку для входа через Telegram';
+        loginStatus.className = 'login-status';
+    }
+
+    // ===== ГЛОБАЛЬНЫЕ ФУНКЦИИ ДЛЯ АДМИН-ПАНЕЛИ =====
+    window.openSubscriptionModal = function(userIdKey) {
         const users = getUsers();
-        const user = users.find(u => u.id === userId);
-        if (!user) return;
+        const user = users.find(u => String(u.id) === String(userIdKey) || String(u.telegramId) === String(userIdKey));
+        if (!user) {
+            showNotification('<i class="fas fa-exclamation-triangle" style="color:#ff5f57;"></i> Пользователь не найден');
+            return;
+        }
+        
         modalUserInfo.textContent = `Пользователь: @${user.telegramUsername || user.telegramId}`;
-        modalPlanSelect.value = user.plan || 'basic';
+        modalPlanSelect.value = user.plan || (user.isPremium ? 'pro' : 'basic');
+        
         if (user.planExpiry) {
             modalExpiryDate.value = new Date(user.planExpiry).toISOString().split('T')[0];
         } else {
             modalExpiryDate.value = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
         }
+        
         modalHwidInput.value = user.hwid || '';
-        subscriptionModal.dataset.userId = userId;
+        subscriptionModal.dataset.userId = user.id;
         subscriptionModal.classList.add('active');
     };
 
@@ -2212,7 +2159,7 @@
         URL.revokeObjectURL(url);
     }
 
-    // ===== ИСТОРИЯ (ОБНОВЛЕННЫЙ ВЫВОД) =====
+    // ===== ИСТОРИЯ =====
     function loadHistory() {
         const list = document.getElementById('historyList');
         if (state.searchHistory.length === 0) {
@@ -2282,28 +2229,29 @@
     // ===== СОБЫТИЯ И ОБРАБОТЧИКИ =====
 
     loginBtn.addEventListener('click', async function() {
-        if (!window.electronAPI?.openTelegramAuth) {
-            loginStatus.textContent = '❌ Доступно только в Electron приложении';
-            loginStatus.className = 'login-status error';
-            return;
-        }
-
         loginBtn.disabled = true;
-        loginStatus.textContent = 'Открытие Telegram...';
+        loginStatus.textContent = 'Авторизация...';
 
-        try {
-            const result = await window.electronAPI.openTelegramAuth();
-            if (result.ok && result.user) {
-                loginWithTelegram(result.user);
-            } else {
-                loginStatus.textContent = 'Ошибка авторизации';
+        if (window.electronAPI?.openTelegramAuth) {
+            try {
+                const result = await window.electronAPI.openTelegramAuth();
+                if (result.ok && result.user) {
+                    loginWithTelegram(result.user);
+                } else {
+                    loginStatus.textContent = 'Ошибка авторизации';
+                    loginStatus.className = 'login-status error';
+                }
+            } catch {
+                loginStatus.textContent = 'Ошибка вызова Telegram API';
                 loginStatus.className = 'login-status error';
+            } finally {
+                loginBtn.disabled = false;
             }
-        } catch {
-            loginStatus.textContent = 'Ошибка вызова Telegram API';
-            loginStatus.className = 'login-status error';
-        } finally {
-            loginBtn.disabled = false;
+        } else {
+            // Фолбэк для разработки в браузере
+            setTimeout(() => {
+                loginWithTelegram({ id: '8148135765', first_name: 'A7L130H', username: 'atilizup' });
+            }, 500);
         }
     });
 
@@ -2369,7 +2317,7 @@
         showNotification('<i class="fas fa-sync"></i> Таблица обновлена');
     });
 
-    // ФИКС КНОПКИ "ДОБАВИТЬ ПОЛЬЗОВАТЕЛЯ"
+    // МОДАЛЬ ДОБАВЛЕНИЯ ПОЛЬЗОВАТЕЛЯ
     const addUserModal = document.getElementById('addUserModal');
     const addTgInput = document.getElementById('addTgInput');
     const addNameInput = document.getElementById('addNameInput');
@@ -2379,7 +2327,6 @@
     const addUserCancel = document.getElementById('addUserCancel');
     const addUserConfirm = document.getElementById('addUserConfirm');
 
-    // Открытие окна
     adminAddUserBtn.addEventListener('click', function() {
         addTgInput.value = '';
         addNameInput.value = '';
@@ -2389,12 +2336,10 @@
         addUserModal.classList.add('active');
     });
 
-    // Закрытие
     addUserCancel.addEventListener('click', function() {
         addUserModal.classList.remove('active');
     });
 
-    // Подтверждение
     addUserConfirm.addEventListener('click', function() {
         const tg = addTgInput.value.trim().replace('@', '');
         if (!tg) {
@@ -2403,7 +2348,7 @@
         }
 
         const users = getUsers();
-        if (users.find(u => u.telegramId === tg || u.telegramUsername === tg)) {
+        if (users.find(u => String(u.telegramId) === tg || u.telegramUsername === tg)) {
             showNotification('Пользователь уже существует');
             return;
         }
@@ -2434,14 +2379,15 @@
         subscriptionModal.classList.remove('active');
     });
 
+    // ИСПРАВЛЕННАЯ ЛОГИКА СОХРАНЕНИЯ РЕДАКТИРОВАНИЯ ПОЛЬЗОВАТЕЛЯ
     modalConfirm.addEventListener('click', function() {
-        const userId = parseInt(subscriptionModal.dataset.userId);
+        const userId = parseInt(subscriptionModal.dataset.userId, 10);
         const plan = modalPlanSelect.value;
         const expiry = modalExpiryDate.value;
         const hwid = modalHwidInput.value.trim() || null;
         
         if (!expiry) {
-            showNotification('Укажите дату');
+            showNotification('Укажите дату окончания подписки');
             return;
         }
         
@@ -2457,8 +2403,10 @@
             if (state.currentUser && state.currentUser.id === userId) {
                 loadCurrentUser();
             }
-            showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Данные сохранены');
+            showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Данные пользователя обновлены');
             subscriptionModal.classList.remove('active');
+        } else {
+            showNotification('<i class="fas fa-exclamation-triangle" style="color:#ff5f57;"></i> Не удалось найти пользователя');
         }
     });
 
@@ -2484,11 +2432,13 @@
     loadHistory();
     initializeHardwareId().then(loadCurrentUser);
 
-    window.electronAPI = window.electronAPI || {
-        closeWindow: () => { if (confirm('Закрыть программу?')) window.close(); },
-        minimizeWindow: () => {},
-        maximizeWindow: () => {}
-    };
+    if (!window.electronAPI) {
+        window.electronAPI = {
+            closeWindow: () => { if (confirm('Закрыть программу?')) window.close(); },
+            minimizeWindow: () => {},
+            maximizeWindow: () => {}
+        };
+    }
 
 })();
 </script>

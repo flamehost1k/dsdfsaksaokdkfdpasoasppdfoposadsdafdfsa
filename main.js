@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu, Tray, nativeImage, shell } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, Tray, nativeImage, shell, globalShortcut } = require('electron');
 const path = require('path');
 const http = require('http');
 const fs = require('fs');
@@ -47,9 +47,30 @@ function getAssetPath(fileName) {
     return path.join(__dirname, 'assets', fileName);
 }
 
+// 🔒 Полноценное подписание и валидация HMAC Telegram
 function verifyTelegramAuth(data) {
-    if (!data || typeof data !== 'object') return false;
-    // Временно пропускаем проверку HMAC для теста:
+    if (!data || typeof data !== 'object' || !data.hash) return false;
+    if (!TELEGRAM_BOT_TOKEN) {
+        console.warn('[auth] TELEGRAM_BOT_TOKEN не задан! Валидация пропускается.');
+        return true; 
+    }
+
+    const { hash, ...checkData } = data;
+    const checkString = Object.keys(checkData)
+        .sort()
+        .map((k) => `${k}=${checkData[k]}`)
+        .join('\n');
+
+    const secretKey = crypto.createHash('sha256').update(TELEGRAM_BOT_TOKEN).digest();
+    const hmac = crypto.createHmac('sha256', secretKey).update(checkString).digest('hex');
+
+    if (hmac !== hash) return false;
+
+    if (checkData.auth_date) {
+        const authAge = Math.floor(Date.now() / 1000) - Number(checkData.auth_date);
+        if (authAge > AUTH_MAX_AGE_SEC || authAge < -300) return false;
+    }
+
     return true;
 }
 
@@ -121,7 +142,6 @@ function startAuthServer(onAuth) {
                         res.end('Не удалось загрузить страницу авторизации.');
                         return;
                     }
-                    const callback = encodeURIComponent(getAuthCallbackUrl());
                     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
                     res.end(html
                         .replace(/__BOT_USERNAME__/g, TELEGRAM_BOT_USERNAME)
@@ -174,7 +194,7 @@ function openTelegramAuthWindow() {
         const handleAuthPayload = (rawData) => {
             const data = normalizeTelegramAuthData(rawData);
             if (!verifyTelegramAuth(data)) {
-                finish(reject, new Error('Неверная подпись Telegram. Проверьте TELEGRAM_BOT_TOKEN.'));
+                finish(reject, new Error('Недействительные данные авторизации Telegram!'));
                 return;
             }
             finish(resolve, mapTelegramUser(data));
@@ -185,17 +205,25 @@ function openTelegramAuthWindow() {
             handleAuthPayload(data);
         };
 
-        try {
-            if (!AUTH_PAGE_URL) {
-                console.warn('[auth] authPageUrl не задан. Для Telegram Login Widget нужен HTTPS-домен.');
-                console.warn('[auth] Смотрите telegram.config.example.js — GitHub Pages или ngrok.');
+        // Обработчик перехвата редиректа внутри окна авторизации
+        const checkNavigationUrl = (url) => {
+            if (url.includes('/callback?') || url.includes(`${AUTH_CALLBACK_PORT}/callback`)) {
+                try {
+                    const parsedUrl = new URL(url);
+                    const data = parseAuthQuery(parsedUrl.searchParams);
+                    handleAuthPayload(data);
+                } catch (e) {
+                    console.error('[auth] Ошибка разбора callback URL:', e);
+                }
             }
+        };
 
+        try {
             await startAuthServer(handleAuthPayload);
 
             authWindow = new BrowserWindow({
-                width: 420,
-                height: 360,
+                width: 440,
+                height: 380,
                 parent: mainWindow,
                 modal: Boolean(mainWindow),
                 resizable: false,
@@ -214,6 +242,10 @@ function openTelegramAuthWindow() {
             });
 
             if (useLocalPreload) ipcMain.on('telegram-auth-data', onAuthData);
+
+            // 🔥 ПЕРЕХВАТ РЕДИРЕКТА С GITHUB PAGES НА LOCALHOST:
+            authWindow.webContents.on('will-navigate', (_e, url) => checkNavigationUrl(url));
+            authWindow.webContents.on('will-redirect', (_e, url) => checkNavigationUrl(url));
 
             authWindow.once('ready-to-show', () => authWindow?.show());
             authWindow.on('closed', () => finish(reject, new Error('Авторизация отменена')));
@@ -342,6 +374,16 @@ app.whenReady().then(() => {
     createWindow();
     createTray();
 
+    // 🛠 Включаем клавишу F12 и Ctrl+Shift+I для открывания консоли разработчика
+    globalShortcut.register('F12', () => {
+        const win = BrowserWindow.getFocusedWindow();
+        if (win) win.webContents.toggleDevTools();
+    });
+    globalShortcut.register('CommandOrControl+Shift+I', () => {
+        const win = BrowserWindow.getFocusedWindow();
+        if (win) win.webContents.toggleDevTools();
+    });
+
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
     });
@@ -352,6 +394,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('before-quit', () => {
+    globalShortcut.unregisterAll();
     tray?.destroy();
     authServer?.close();
 });

@@ -7,31 +7,14 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: #0d0d14;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100vh; background: #0d0d14;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             color: rgba(255, 255, 255, 0.6);
         }
-        h2 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 8px;
-        }
-        p {
-            font-size: 13px;
-            margin-bottom: 24px;
-            text-align: center;
-            max-width: 320px;
-            line-height: 1.5;
-        }
-        .widget-wrap {
-            min-height: 48px;
-        }
+        h2 { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 8px; }
+        p { font-size: 13px; margin-bottom: 24px; text-align: center; max-width: 320px; line-height: 1.5; }
+        .widget-wrap { min-height: 48px; }
     </style>
 </head>
 <body>
@@ -53,11 +36,13 @@
                 }
             });
 
-            // Берём порт/ссылку редиректа из URL или по дефолту на 127.0.0.1:3847
-            const urlParams = new URLSearchParams(window.location.search);
-            const redirectUrl = urlParams.get('callback') || 'http://127.0.0.1:3847/callback';
+            const redirectUrl = `http://127.0.0.1:3847/callback?${params.toString()}`;
 
-            window.location.href = `${redirectUrl}?${params.toString()}`;
+            // 1. Попытка перенаправления
+            window.location.href = redirectUrl;
+
+            // 2. Резервная отправка запроса через fetch (если редирект заблокирован браузером)
+            fetch(redirectUrl, { mode: 'no-cors' }).catch(() => {});
         }
     </script>
 </body>
