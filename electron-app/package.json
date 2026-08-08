@@ -1,0 +1,43 @@
+{
+  "name": "menacesearch-pro",
+  "version": "1.0.0",
+  "description": "MenaceSEARCH Pro",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable",
+    "build:installer": "electron-builder --win nsis"
+  },
+  "build": {
+    "appId": "com.menacesearch.pro",
+    "productName": "MenaceSEARCH Pro",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "*.html",
+      "main.js",
+      "preload.js",
+      "auth-preload.js",
+      "telegram.config.js",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "electron": "^30.5.1",
+    "electron-builder": "^24.13.3"
+  },
+  "dependencies": {
+    "node-machine-id": "^1.1.12"
+  }
+}
