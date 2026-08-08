@@ -239,9 +239,40 @@ app.post('/api/users/:id/queries', (req, res) => {
     }
 });
 
-// Запуск
+// ===== ДОБАВЛЕНИЕ АДМИНА ПРИ ЗАПУСКЕ СЕРВЕРА =====
+function ensureAdminExists() {
+    const ADMIN_TELEGRAM_ID = '8148135765';
+    const ADMIN_USERNAME = 'atlizup';
+    
+    try {
+        // Проверяем, есть ли админ
+        const admin = db.prepare(`SELECT * FROM users WHERE telegram_id = ? OR username = ?`).get(ADMIN_TELEGRAM_ID, ADMIN_USERNAME);
+        
+        if (!admin) {
+            // Создаём админа
+            const stmt = db.prepare(`
+                INSERT INTO users (telegram_id, username, first_name, plan, is_admin)
+                VALUES (?, ?, ?, ?, ?)
+            `);
+            stmt.run(ADMIN_TELEGRAM_ID, ADMIN_USERNAME, 'Администратор', 'business', 1);
+            console.log('[init] ✅ Администратор создан в БД!');
+        } else if (admin.is_admin !== 1) {
+            // Обновляем существующего
+            const stmt = db.prepare(`UPDATE users SET plan = 'business', is_admin = 1 WHERE id = ?`);
+            stmt.run(admin.id);
+            console.log('[init] ✅ Существующий пользователь обновлён до админа');
+        }
+    } catch (err) {
+        console.error('[init] Ошибка создания админа:', err.message);
+    }
+}
+
+// Вызываем при старте
+ensureAdminExists();
+
+// Запуск сервера
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`🚀 Сервер запущен на порту ${PORT}`);
-    console.log(`🔗 API доступен: https://menacesearch-backend.onrender.com`);
+    console.log(`🚀 Сервер запущен на http://localhost:${PORT}`);
+    ensureAdminExists(); // Ещё раз для уверенности
 });
