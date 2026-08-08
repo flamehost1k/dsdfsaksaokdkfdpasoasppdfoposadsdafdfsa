@@ -43,6 +43,47 @@
             transition: border-radius .18s ease, inset .18s ease, box-shadow .18s ease;
         }
 
+        /* ===== ТЕМЫ ===== */
+        :root {
+            --bg-primary: #0a080c;
+            --bg-secondary: #0e1015;
+            --bg-card: rgba(255, 255, 255, 0.02);
+            --bg-card-hover: rgba(255, 255, 255, 0.04);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.3);
+            --border-color: rgba(255, 20, 120, 0.04);
+            --accent: #ff2d95;
+            --accent-hover: #d41a7a;
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            --radius: 16px;
+            --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f5f5f7;
+            --bg-secondary: #ffffff;
+            --bg-card: rgba(0, 0, 0, 0.02);
+            --bg-card-hover: rgba(0, 0, 0, 0.04);
+            --text-primary: #1a1a1a;
+            --text-secondary: rgba(0, 0, 0, 0.7);
+            --text-muted: rgba(0, 0, 0, 0.3);
+            --border-color: rgba(0, 0, 0, 0.06);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="light"] .app-window,
+        [data-theme="light"] .main-content { background:#f4f6fa !important; }
+        [data-theme="light"] .window-header,
+        [data-theme="light"] .nav-bar { background:linear-gradient(100deg,#fff 0%,#f6f8fc 100%) !important; }
+        [data-theme="light"] .settings-card,
+        [data-theme="light"] .social-link { background:rgba(20,30,55,.035); border-color:rgba(20,30,55,.10); }
+        [data-theme="light"] .settings-card h4,
+        [data-theme="light"] .settings-card .setting-row label,
+        [data-theme="light"] .about-meta,
+        [data-theme="light"] .social-link { color:rgba(20,26,39,.72); }
+        [data-theme="light"] #page-settings > h3,
+        [data-theme="light"] .about-meta strong { color:#171c2b !important; }
+
         .app-window.maximized {
             inset: 0;
             border-radius: 0;
@@ -53,13 +94,17 @@
             align-items: center;
             justify-content: space-between;
             padding: 14px 20px 10px 20px;
-            background: #0a080c !important;
-            border-bottom: 1px solid rgba(255, 20, 120, 0.04);
+            background: linear-gradient(100deg, #100a11 0%, #0d1018 52%, #0a0b10 100%) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             flex-shrink: 0;
             min-height: 52px;
             backdrop-filter: none !important;
             -webkit-backdrop-filter: none !important;
+            -webkit-app-region: drag;
+            cursor: grab;
         }
+
+        .window-header:active { cursor: grabbing; }
 
         .window-controls {
             display: flex;
@@ -73,8 +118,16 @@
             border-radius: 50%;
             transition: all 0.2s;
             cursor: pointer;
+            border: 0;
+            padding: 0;
+            appearance: none;
         }
         .window-controls .dot:hover { transform: scale(1.15); }
+        .window-controls .dot:focus-visible,
+        .window-actions .icon-btn:focus-visible {
+            outline: 2px solid rgba(255, 45, 149, .9);
+            outline-offset: 3px;
+        }
         .window-controls .dot.close { background: #ff5f57; }
         .window-controls .dot.close:hover { background: #ff3b30; }
         .window-controls .dot.minimize { background: #ffbd2e; }
@@ -91,6 +144,7 @@
             left: 50%;
             transform: translateX(-50%);
             white-space: nowrap;
+            text-shadow: 0 0 20px rgba(255, 45, 149, .18);
         }
         .window-title span { color: #ff2d95; font-weight: 700; }
 
@@ -104,6 +158,7 @@
             cursor: pointer;
             transition: all 0.2s;
             font-size: 14px;
+            -webkit-app-region: no-drag;
         }
         .window-actions .icon-btn:hover {
             background: rgba(255, 20, 120, 0.06);
@@ -789,31 +844,104 @@
             border-color: rgba(255, 45, 149, 0.2);
         }
         .settings-card .toggle {
-            width: 44px;
-            height: 24px;
-            background: rgba(255, 255, 255, 0.04);
+            width: 46px;
+            height: 26px;
+            flex: 0 0 46px;
+            padding: 0;
+            border: 1px solid rgba(255,255,255,.10);
+            appearance: none;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.06);
             border-radius: 50px;
             cursor: pointer;
             position: relative;
-            transition: all 0.3s;
+            outline: none;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.18);
+            transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
         }
         .settings-card .toggle.active {
-            background: rgba(255, 45, 149, 0.15);
+            background: linear-gradient(135deg, #ff4aa2, #e62284);
+            border-color: rgba(255,82,169,.7);
+            box-shadow: 0 4px 12px rgba(255,45,149,.25);
         }
         .settings-card .toggle .thumb {
             width: 20px;
             height: 20px;
-            background: rgba(255, 255, 255, 0.15);
+            background: #c8cfdb;
             border-radius: 50%;
             position: absolute;
             top: 2px;
             left: 2px;
-            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,.25);
+            transition: transform .22s cubic-bezier(.22,1,.36,1), background .2s ease;
         }
         .settings-card .toggle.active .thumb {
-            left: 22px;
-            background: #ff2d95;
+            transform: translateX(20px);
+            background: #fff;
         }
+        .settings-card .toggle:focus-visible,
+        .social-link:focus-visible {
+            outline: 2px solid #ff2d95;
+            outline-offset: 2px;
+        }
+        .about-card { grid-column: 1 / -1; }
+        .about-title { display:flex; align-items:center; gap:10px; color:#fff; margin-bottom:14px; }
+        .about-title i { color:#ff2d95; }
+        .about-meta { color:rgba(255,255,255,.45); font-size:13px; line-height:1.8; }
+        .social-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin-top:16px; }
+        .social-link { display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:12px; color:rgba(255,255,255,.75); text-decoration:none; background:rgba(255,255,255,.025); border:1px solid rgba(255,255,255,.06); transition:var(--transition); }
+        .social-link:hover { color:#fff; border-color:rgba(255,45,149,.38); background:rgba(255,45,149,.09); transform:translateY(-2px); }
+        .social-link i { width:18px; color:#ff2d95; text-align:center; }
+        [data-animations="off"] *, [data-animations="off"] *::before, [data-animations="off"] *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+
+        /* Light theme: explicit component palette. Most of the original UI was
+           designed with white-on-dark values, so variables alone are not enough. */
+        [data-theme="light"] .main-content { background:#f4f6fb !important; color:#20293a; }
+        [data-theme="light"] .nav-bar,
+        [data-theme="light"] .window-header { border-color:rgba(27,39,63,.12) !important; }
+        [data-theme="light"] .nav-bar .brand span,
+        [data-theme="light"] .nav-links a,
+        [data-theme="light"] .nav-right .user-badge,
+        [data-theme="light"] .window-title { color:#253047 !important; }
+        [data-theme="light"] .page > h3,
+        [data-theme="light"] .settings-card h4,
+        [data-theme="light"] .about-title,
+        [data-theme="light"] .profile-card .info h3,
+        [data-theme="light"] .stat-card .number,
+        [data-theme="light"] .results-header h3,
+        [data-theme="light"] .history-item .query-text { color:#182235 !important; }
+        [data-theme="light"] .page p,
+        [data-theme="light"] .settings-card .setting-row label,
+        [data-theme="light"] .about-meta,
+        [data-theme="light"] .profile-card .info p,
+        [data-theme="light"] .stat-card .label,
+        [data-theme="light"] .history-item,
+        [data-theme="light"] .admin-users-table td,
+        [data-theme="light"] .admin-users-table th { color:rgba(28,39,59,.72) !important; }
+        [data-theme="light"] .history-item .time-text { color:rgba(28,39,59,.58) !important; }
+        [data-theme="light"] .settings-card,
+        [data-theme="light"] .profile-card,
+        [data-theme="light"] .stat-card,
+        [data-theme="light"] .history-item,
+        [data-theme="light"] .result-card,
+        [data-theme="light"] .admin-users-table,
+        [data-theme="light"] .modal-content { background:#fff !important; border-color:rgba(27,39,63,.12) !important; box-shadow:0 10px 30px rgba(26,38,61,.08); }
+        [data-theme="light"] .search-box,
+        [data-theme="light"] .settings-card .setting-row input,
+        [data-theme="light"] .settings-card .setting-row select,
+        [data-theme="light"] .chip,
+        [data-theme="light"] .history-item .open-btn { background:#fff !important; color:#27334a !important; border-color:rgba(27,39,63,.14) !important; }
+        [data-theme="light"] .search-box input,
+        [data-theme="light"] .settings-card .setting-row input,
+        [data-theme="light"] .settings-card .setting-row select { color:#1c2638 !important; }
+        [data-theme="light"] .search-box input::placeholder { color:rgba(28,38,56,.48) !important; }
+        [data-theme="light"] .social-link { background:#fff !important; color:#27334a !important; border-color:rgba(27,39,63,.12) !important; }
+        [data-theme="light"] .social-link:hover { color:#182235 !important; background:#fff5fa !important; }
+        [data-theme="light"] .settings-card .toggle { background:#e5eaf2; border-color:#c7d0de; box-shadow:inset 0 1px 2px rgba(33,48,70,.12); }
+        [data-theme="light"] .settings-card .toggle .thumb { background:#fff; box-shadow:0 2px 5px rgba(36,51,73,.22); }
+        [data-theme="light"] .settings-card .toggle.active { background:linear-gradient(135deg,#ff4aa2,#e62284); border-color:#ed3f94; }
+        [data-theme="light"] .main-content :not(button)[style*="color:#fff"],
+        [data-theme="light"] .main-content :not(button)[style*="color: #fff"] { color:#182235 !important; }
 
         /* ===== АККАУНТ ===== */
         .profile-card {
@@ -1092,6 +1220,75 @@
             box-shadow: 0 4px 20px rgba(255, 45, 149, 0.2);
         }
 
+        /* ===== АДМИН-ПАНЕЛЬ СТИЛИ ===== */
+        .plan-badge {
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .plan-badge.basic {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.4);
+        }
+        .plan-badge.pro {
+            background: rgba(255, 45, 149, 0.12);
+            color: #ff2d95;
+        }
+        .plan-badge.business {
+            background: rgba(255, 215, 0, 0.12);
+            color: #ffd700;
+        }
+        .plan-badge.expired {
+            background: rgba(255, 95, 87, 0.12);
+            color: #ff5f57;
+        }
+        .plan-badge.admin {
+            background: rgba(108, 92, 231, 0.15);
+            color: #a29bfe;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .actions-cell button {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .actions-cell button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+        }
+        .actions-cell .edit-btn {
+            color: #ff2d95;
+            border-color: rgba(255, 45, 149, 0.15);
+            background: rgba(255, 45, 149, 0.04);
+        }
+        .actions-cell .edit-btn:hover {
+            background: rgba(255, 45, 149, 0.15);
+        }
+        .actions-cell .revoke {
+            color: #ff5f57;
+            border-color: rgba(255, 95, 87, 0.15);
+        }
+        .actions-cell .revoke:hover {
+            background: rgba(255, 95, 87, 0.1);
+        }
+
         /* АДАПТИВНОСТЬ */
         @media screen and (max-width: 1024px) {
             .app-window { width: 96vw; height: 90vh; max-height: 90vh; }
@@ -1121,9 +1318,9 @@
     <!-- macOS Заголовок -->
     <div class="window-header" id="windowHeader">
         <div class="window-controls">
-            <div class="dot close" id="closeBtn" title="Закрыть"></div>
-            <div class="dot minimize" id="minimizeBtn" title="Свернуть"></div>
-            <div class="dot maximize" id="maximizeBtn" title="Развернуть"></div>
+            <button class="dot close" id="closeBtn" type="button" title="Закрыть" aria-label="Закрыть"></button>
+            <button class="dot minimize" id="minimizeBtn" type="button" title="Свернуть" aria-label="Свернуть"></button>
+            <button class="dot maximize" id="maximizeBtn" type="button" title="Развернуть" aria-label="Развернуть окно"></button>
         </div>
         <div class="window-title">Menace<span>SEARCH</span> Pro</div>
         <div class="window-actions">
@@ -1252,21 +1449,21 @@
                     <h4>Интерфейс</h4>
                     <div class="setting-row">
                         <label>Тёмная тема</label>
-                        <div class="toggle active" id="darkToggle">
+                        <button class="toggle active" id="darkToggle" type="button" role="switch" aria-checked="true" aria-label="Тёмная тема">
                             <div class="thumb"></div>
-                        </div>
+                        </button>
                     </div>
                     <div class="setting-row">
                         <label>Анимации</label>
-                        <div class="toggle active" id="animationsToggle">
+                        <button class="toggle active" id="animationsToggle" type="button" role="switch" aria-checked="true" aria-label="Анимации">
                             <div class="thumb"></div>
-                        </div>
+                        </button>
                     </div>
                     <div class="setting-row">
                         <label>Уведомления</label>
-                        <div class="toggle active" id="notificationsToggle">
+                        <button class="toggle active" id="notificationsToggle" type="button" role="switch" aria-checked="true" aria-label="Уведомления">
                             <div class="thumb"></div>
-                        </div>
+                        </button>
                     </div>
                     <div class="setting-row">
                         <label>Масштаб</label>
@@ -1301,6 +1498,23 @@
                         <span style="color:rgba(255,255,255,0.3); font-size:13px; font-weight:600;">0.0.2 Pro</span>
                     </div>
                 </div>
+                <section class="settings-card about-card" aria-labelledby="aboutTitle">
+                    <h4 class="about-title" id="aboutTitle"><i class="fas fa-circle-info"></i> О приложении</h4>
+                    <div class="about-meta">
+                        <strong style="color:#fff; font-size:16px;">MenaceSEARCH Pro</strong><br>
+                        Версия <strong style="color:#fff;" id="appVersion">0.0.2 Pro</strong><br>
+                        Дата обновления: <span id="updateDate">—</span><br>
+                        Лицензия: Proprietary
+                    </div>
+                    <h4 class="about-title" style="margin-top:20px;"><i class="fas fa-globe"></i> Социальные сети</h4>
+                    <div class="social-list">
+                        <a class="social-link" href="https://t.me/nematra" data-external-link><i class="fab fa-telegram"></i><span>Telegram — канал</span></a>
+                        <a class="social-link" href="https://t.me/menacesearch" data-external-link><i class="fab fa-telegram"></i><span>Telegram — канал создателя</span></a>
+                        <a class="social-link" href="https://t.me/atlizup" data-external-link><i class="fab fa-telegram"></i><span>Telegram — лс создателя</span></a>
+                        <a class="social-link" href="https://discord.gg/brodyagi" data-external-link><i class="fab fa-discord"></i><span>Discord — сервер сообщества</span></a>
+                    </div>
+                    <p class="about-meta" style="margin-top:18px;">© 2026 MenaceSEARCH Pro</p>
+                </section>
             </div>
         </div>
 
@@ -1455,53 +1669,74 @@
     </div>
 </div>
 
+
 <script>
-(function() {
+(function () {
     'use strict';
 
-    let HWID = 'Загрузка…';
     const API_URL = 'https://menacesearch-backend.onrender.com';
+    const SEARCH_API_URL = 'https://leakosintapi.com/';
+    const UI_SETTINGS_KEY = 'menacesearch_ui_settings';
 
-    // ===== СОСТОЯНИЕ =====
+    let HWID = 'HWID-LOCAL-DEV';
+
+    const DEFAULT_UI_SETTINGS = {
+        theme: 'dark',
+        animations: true,
+        notifications: true,
+        scale: 100
+    };
+
     const state = {
         currentPage: 'search',
         searchResults: [],
         isLoggedIn: false,
         currentUser: null,
         users: [],
-        searchHistory: JSON.parse(localStorage.getItem('menacesearch_history') || '[]'),
+        searchHistory: [],
         apiToken: localStorage.getItem('menacesearch_api_token') || '',
-        apiUrl: 'https://leakosintapi.com/'
+        apiUrl: SEARCH_API_URL
     };
 
-    // ===== МАППИНГ ПОЛЕЙ =====
+    try {
+        state.searchHistory = JSON.parse(
+            localStorage.getItem('menacesearch_history') || '[]'
+        );
+        if (!Array.isArray(state.searchHistory)) state.searchHistory = [];
+    } catch {
+        state.searchHistory = [];
+    }
+
     const FIELD_MAP = {
-        'FULLNAME': { label: 'ФИО', icon: 'fa-user', color: '#ff2d95' },
-        'NAME': { label: 'Имя', icon: 'fa-user', color: '#ff2d95' },
-        'Firstname': { label: 'Имя', icon: 'fa-user', color: '#ff2d95' },
-        'Lastname': { label: 'Фамилия', icon: 'fa-user', color: '#ff2d95' },
-        'PHONE': { label: 'Телефон', icon: 'fa-phone', color: '#4CAF50' },
-        'EMAIL': { label: 'Email', icon: 'fa-envelope', color: '#2196F3' },
-        'PASSPORT': { label: 'Паспорт', icon: 'fa-id-card', color: '#FF9800' },
-        'INN': { label: 'ИНН', icon: 'fa-hashtag', color: '#9C27B0' },
-        'SNILS': { label: 'СНИЛС', icon: 'fa-hashtag', color: '#9C27B0' },
-        'ADDRESS': { label: 'Адрес', icon: 'fa-home', color: '#795548' },
-        'BDAY': { label: 'Дата рождения', icon: 'fa-calendar-days', color: '#E91E63' },
-        'LOGIN': { label: 'Логин', icon: 'fa-user-circle', color: '#00BCD4' },
-        'USERNAME': { label: 'Имя пользователя', icon: 'fa-user-circle', color: '#00BCD4' },
-        'TELEGRAM': { label: 'Telegram', icon: 'fab fa-telegram', color: '#0088cc' },
-        'VK': { label: 'ВКонтакте', icon: 'fab fa-vk', color: '#4a76a8' },
-        'INSTAGRAM': { label: 'Instagram', icon: 'fab fa-instagram', color: '#E1306C' },
-        'CARD_NUMBER': { label: 'Номер карты', icon: 'fa-credit-card', color: '#F44336' },
+        FULLNAME: { label: 'ФИО', icon: 'fa-user', color: '#ff2d95' },
+        NAME: { label: 'Имя', icon: 'fa-user', color: '#ff2d95' },
+        Firstname: { label: 'Имя', icon: 'fa-user', color: '#ff2d95' },
+        Lastname: { label: 'Фамилия', icon: 'fa-user', color: '#ff2d95' },
+        PHONE: { label: 'Телефон', icon: 'fa-phone', color: '#4CAF50' },
+        EMAIL: { label: 'Email', icon: 'fa-envelope', color: '#2196F3' },
+        PASSPORT: { label: 'Паспорт', icon: 'fa-id-card', color: '#FF9800' },
+        INN: { label: 'ИНН', icon: 'fa-hashtag', color: '#9C27B0' },
+        SNILS: { label: 'СНИЛС', icon: 'fa-hashtag', color: '#9C27B0' },
+        ADDRESS: { label: 'Адрес', icon: 'fa-home', color: '#795548' },
+        BDAY: { label: 'Дата рождения', icon: 'fa-calendar-days', color: '#E91E63' },
+        LOGIN: { label: 'Логин', icon: 'fa-user-circle', color: '#00BCD4' },
+        USERNAME: { label: 'Имя пользователя', icon: 'fa-user-circle', color: '#00BCD4' },
+        TELEGRAM: { label: 'Telegram', icon: 'fa-brands fa-telegram', color: '#0088cc' },
+        VK: { label: 'ВКонтакте', icon: 'fa-brands fa-vk', color: '#4a76a8' },
+        INSTAGRAM: { label: 'Instagram', icon: 'fa-brands fa-instagram', color: '#E1306C' },
+        CARD_NUMBER: { label: 'Номер карты', icon: 'fa-credit-card', color: '#F44336' }
     };
 
     function getFieldLabel(key) {
-        return FIELD_MAP[key]?.label || String(key).replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+        return FIELD_MAP[key]?.label ||
+            String(key).replace(/_/g, ' ').toLowerCase()
+                .replace(/\b\w/g, ch => ch.toUpperCase());
     }
 
     function getFieldIconClass(key) {
         const icon = FIELD_MAP[key]?.icon || 'fa-circle-info';
-        return icon.startsWith('fab ') ? icon.replace('fab ', 'fa-brands ') : `fa-solid ${icon}`;
+        if (icon.includes('fa-brands')) return icon;
+        return `fa-solid ${icon}`;
     }
 
     function getFieldColor(key) {
@@ -1510,11 +1745,122 @@
 
     function escapeHtml(value) {
         return String(value ?? '').replace(/[&<>'"]/g, char => ({
-            '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
         })[char]);
     }
 
-    // ===== DOM ЭЛЕМЕНТЫ =====
+    function normalizeUser(raw) {
+        if (!raw) return null;
+
+        return {
+            id: raw.id ?? raw.user_id ?? raw.userId ?? null,
+            telegramId: String(raw.telegram_id ?? raw.telegramId ?? ''),
+            telegramUsername: raw.username ?? raw.telegram_username ?? raw.telegramUsername ?? '',
+            name: raw.first_name
+                ? `${raw.first_name}${raw.last_name ? ` ${raw.last_name}` : ''}`
+                : (raw.name ?? ''),
+            firstName: raw.first_name ?? raw.firstName ?? raw.name ?? '',
+            lastName: raw.last_name ?? raw.lastName ?? '',
+            username: raw.username ?? raw.telegram_username ?? raw.telegramUsername ?? '',
+            plan: raw.plan ?? (raw.is_premium === 1 || raw.isPremium ? 'pro' : 'basic'),
+            planExpiry: raw.plan_expiry ?? raw.planExpiry ?? null,
+            queriesUsed: Number(raw.queries_used ?? raw.queriesUsed ?? 0),
+            totalQueries: Number(raw.total_queries ?? raw.totalQueries ?? 0),
+            hwid: raw.hwid ?? null,
+            isAdmin: raw.is_admin === 1 || raw.is_admin === true || raw.isAdmin === true,
+            isPremium: raw.is_premium === 1 || raw.is_premium === true || raw.isPremium === true,
+            photoUrl: raw.photo_url ?? raw.photoUrl ?? '',
+            createdAt: raw.created_at ?? raw.createdAt ?? null
+        };
+    }
+
+    function normalizeUsers(list) {
+        return Array.isArray(list) ? list.map(normalizeUser).filter(Boolean) : [];
+    }
+
+    function toServerUser(user) {
+        return {
+            id: user.id ?? undefined,
+            telegramId: user.telegramId ?? user.telegram_id ?? '',
+            username: user.telegramUsername ?? user.username ?? '',
+            name: user.name ?? user.firstName ?? '',
+            plan: user.plan ?? (user.isPremium ? 'pro' : 'basic'),
+            planExpiry: user.planExpiry ?? user.plan_expiry ?? null,
+            hwid: user.hwid ?? '',
+            isAdmin: Boolean(user.isAdmin ?? user.is_admin),
+            isPremium: Boolean(user.isPremium ?? user.is_premium),
+            photoUrl: user.photoUrl ?? user.photo_url ?? ''
+        };
+    }
+
+    async function fetchJson(url, options = {}) {
+        const isBackendRequest = String(url).startsWith(API_URL);
+
+        if (isBackendRequest && typeof window.electronAPI?.backendRequest === 'function') {
+            const parsedBody = options.body
+                ? (typeof options.body === 'string'
+                    ? JSON.parse(options.body)
+                    : options.body)
+                : undefined;
+
+            const result = await window.electronAPI.backendRequest({
+                path: String(url).slice(API_URL.length) || '/',
+                method: options.method || 'GET',
+                body: parsedBody
+            });
+
+            if (!result?.ok) {
+                throw new Error(
+                    result?.error || `HTTP ${result?.status || 0}`
+                );
+            }
+
+            return result.data || {};
+        }
+
+        const response = await fetch(url, {
+            ...options,
+            headers: {
+                ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+                ...(options.headers || {})
+            }
+        });
+
+        let data = {};
+        try {
+            data = await response.json();
+        } catch {
+            data = {};
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || data.message || `HTTP ${response.status}`
+            );
+        }
+
+        return data;
+    }
+
+    // Electron API fallback. Native functionality is supplied by preload.js.
+    if (!window.electronAPI) {
+        window.electronAPI = {
+            closeWindow: () => {
+                if (confirm('Закрыть программу?')) window.close();
+            },
+            minimizeWindow: () => {},
+            maximizeWindow: () => {},
+            openExternal: async url => window.open(url, '_blank', 'noopener,noreferrer'),
+            setZoom: async () => {},
+            getVersion: async () => null
+        };
+    }
+
+    // DOM
     const loginScreen = document.getElementById('loginScreen');
     const mainContent = document.getElementById('mainContent');
     const loginBtn = document.getElementById('loginBtn');
@@ -1524,21 +1870,28 @@
 
     const navLinks = document.querySelectorAll('#navLinks a');
     const pages = document.querySelectorAll('.page');
+
     const searchInput = document.getElementById('searchInput');
     const searchBtn = document.getElementById('searchBtn');
     const resultGrid = document.getElementById('resultGrid');
     const resultsHeader = document.getElementById('resultsHeader');
     const resultCount = document.getElementById('resultCount');
     const filterChips = document.querySelectorAll('#filterChips .chip');
+
     const copyAllBtn = document.getElementById('copyAllBtn');
     const exportBtn = document.getElementById('exportBtn');
     const clearResultsBtn = document.getElementById('clearResultsBtn');
+
     const userBadge = document.getElementById('userBadge');
     const userAvatar = document.getElementById('userAvatar');
     const userName = document.getElementById('userName');
     const userPlan = document.getElementById('userPlan');
+
     const logoutBtn = document.getElementById('logoutBtn');
     const settingsQuick = document.getElementById('settingsQuick');
+    const closeBtn = document.getElementById('closeBtn');
+    const minimizeBtn = document.getElementById('minimizeBtn');
+    const maximizeBtn = document.getElementById('maximizeBtn');
 
     const profileAvatar = document.getElementById('profileAvatar');
     const profileName = document.getElementById('profileName');
@@ -1546,6 +1899,7 @@
     const profilePlan = document.getElementById('profilePlan');
     const profileExpiry = document.getElementById('profileExpiry');
     const profileHwid = document.getElementById('profileHwid');
+
     const statQueriesUsed = document.getElementById('statQueriesUsed');
     const statQueriesLeft = document.getElementById('statQueriesLeft');
     const statTotalQueries = document.getElementById('statTotalQueries');
@@ -1555,6 +1909,7 @@
     const adminUsersBody = document.getElementById('adminUsersBody');
     const adminRefreshBtn = document.getElementById('adminRefreshBtn');
     const adminAddUserBtn = document.getElementById('adminAddUserBtn');
+
     const subscriptionModal = document.getElementById('subscriptionModal');
     const modalUserInfo = document.getElementById('modalUserInfo');
     const modalPlanSelect = document.getElementById('modalPlanSelect');
@@ -1562,139 +1917,352 @@
     const modalHwidInput = document.getElementById('modalHwidInput');
     const modalCancel = document.getElementById('modalCancel');
     const modalConfirm = document.getElementById('modalConfirm');
-    const clearCacheBtn = document.getElementById('clearCacheBtn');
 
+    const addUserModal = document.getElementById('addUserModal');
+    const addTgInput = document.getElementById('addTgInput');
+    const addNameInput = document.getElementById('addNameInput');
+    const addPlanSelect = document.getElementById('addPlanSelect');
+    const addExpiryInput = document.getElementById('addExpiryInput');
+    const addHwidInput = document.getElementById('addHwidInput');
+    const addUserCancel = document.getElementById('addUserCancel');
+    const addUserConfirm = document.getElementById('addUserConfirm');
+
+    const clearCacheBtn = document.getElementById('clearCacheBtn');
     const clearHistoryBtn = document.getElementById('clearHistoryBtn');
     const apiTokenInput = document.getElementById('apiTokenInput');
     const saveApiTokenBtn = document.getElementById('saveApiTokenBtn');
 
+    const appWindow = document.getElementById('appWindow');
+
+    closeBtn?.addEventListener('click', () => window.electronAPI?.closeWindow?.());
+    minimizeBtn?.addEventListener('click', () => window.electronAPI?.minimizeWindow?.());
+    maximizeBtn?.addEventListener('click', () => {
+        window.electronAPI?.maximizeWindow?.();
+        appWindow?.classList.toggle('maximized');
+    });
+
     if (apiTokenInput) apiTokenInput.value = state.apiToken;
 
-    async function initializeHardwareId() {
+    // ---------- Settings ----------
+    let uiSettings = { ...DEFAULT_UI_SETTINGS };
+
+    function readUiSettings() {
         try {
-            HWID = await window.electronAPI.getHWID();
+            const saved = JSON.parse(
+                localStorage.getItem(UI_SETTINGS_KEY) || '{}'
+            );
+            return {
+                theme: saved.theme === 'light' ? 'light' : 'dark',
+                animations: saved.animations !== false,
+                notifications: saved.notifications !== false,
+                scale: [80, 90, 100, 110].includes(Number(saved.scale))
+                    ? Number(saved.scale)
+                    : 100
+            };
         } catch {
-            HWID = 'HWID-LOCAL-DEV';
+            return { ...DEFAULT_UI_SETTINGS };
         }
-        hwidDisplay.textContent = HWID;
-        if (settingsHwid) settingsHwid.textContent = HWID;
-        loginBtn.disabled = false;
     }
 
-    // ===== БАЗА ДАННЫХ =====
-    function getUsers() {
+    function updateToggle(toggle, enabled) {
+        if (!toggle) return;
+        toggle.classList.toggle('active', enabled);
+        toggle.setAttribute('aria-checked', String(enabled));
+    }
+
+    function applyUiSettings() {
+        document.documentElement.setAttribute('data-theme', uiSettings.theme);
+        document.documentElement.setAttribute(
+            'data-animations',
+            uiSettings.animations ? 'on' : 'off'
+        );
+
+        localStorage.setItem('theme', uiSettings.theme);
+        localStorage.setItem(UI_SETTINGS_KEY, JSON.stringify(uiSettings));
+
+        updateToggle(
+            document.getElementById('darkToggle'),
+            uiSettings.theme === 'dark'
+        );
+        updateToggle(
+            document.getElementById('animationsToggle'),
+            uiSettings.animations
+        );
+        updateToggle(
+            document.getElementById('notificationsToggle'),
+            uiSettings.notifications
+        );
+
+        const scaleSelect = document.getElementById('scaleSelect');
+        if (scaleSelect) scaleSelect.value = String(uiSettings.scale);
+
+        const zoomFactor = uiSettings.scale / 100;
         try {
-            return JSON.parse(localStorage.getItem('menacesearch_users') || '[]');
-        } catch { return []; }
+            const result = window.electronAPI?.setZoom?.(zoomFactor);
+            if (result?.catch) result.catch(() => {});
+        } catch {}
+
+        if (!window.electronAPI?.setZoom) {
+            document.body.style.zoom = String(zoomFactor);
+        }
     }
 
-    function saveUsers(users) {
-        localStorage.setItem('menacesearch_users', JSON.stringify(users));
+    function updateUiSettings(patch) {
+        uiSettings = { ...uiSettings, ...patch };
+        applyUiSettings();
     }
 
-    function getCurrentUser() {
+    function initializeUiSettings() {
+        uiSettings = readUiSettings();
+        applyUiSettings();
+
+        document.getElementById('darkToggle')?.addEventListener(
+            'click',
+            () => updateUiSettings({
+                theme: uiSettings.theme === 'dark' ? 'light' : 'dark'
+            })
+        );
+
+        document.getElementById('animationsToggle')?.addEventListener(
+            'click',
+            () => updateUiSettings({
+                animations: !uiSettings.animations
+            })
+        );
+
+        document.getElementById('notificationsToggle')?.addEventListener(
+            'click',
+            () => updateUiSettings({
+                notifications: !uiSettings.notifications
+            })
+        );
+
+        document.getElementById('scaleSelect')?.addEventListener(
+            'change',
+            event => updateUiSettings({
+                scale: Number(event.target.value)
+            })
+        );
+
+        document.querySelectorAll('[data-external-link]').forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                const url = link.href;
+                try {
+                    const result = window.electronAPI?.openExternal?.(url);
+                    if (result?.catch) {
+                        result.catch(() =>
+                            window.open(url, '_blank', 'noopener,noreferrer')
+                        );
+                    }
+                } catch {
+                    window.open(url, '_blank', 'noopener,noreferrer');
+                }
+            });
+        });
+
+        const version = document.getElementById('appVersion');
         try {
-            const data = JSON.parse(localStorage.getItem('menacesearch_session') || 'null');
-            if (data && data.telegramId) {
-                const users = getUsers();
-                const user = users.find(u => String(u.telegramId) === String(data.telegramId));
-                if (user) return user;
+            const result = window.electronAPI?.getVersion?.();
+            if (result?.then) {
+                result.then(value => {
+                    if (version && value) version.textContent = `${value} Pro`;
+                }).catch(() => {});
             }
-            return null;
-        } catch { return null; }
+        } catch {}
+
+        const updateDate = document.getElementById('updateDate');
+        if (updateDate) updateDate.textContent = '08.08.2026';
     }
 
-    function saveSession(user) {
-        if (user) {
-            localStorage.setItem('menacesearch_session', JSON.stringify({ telegramId: user.telegramId }));
-        } else {
-            localStorage.removeItem('menacesearch_session');
+    // ---------- Notifications ----------
+    function showNotification(message) {
+        if (!uiSettings.notifications) return;
+
+        const div = document.createElement('div');
+        div.style.cssText = `
+            position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+            background:#141014;color:#fff;padding:12px 28px;border-radius:16px;
+            border:1px solid rgba(255,45,149,.2);
+            box-shadow:0 20px 60px rgba(0,0,0,.8);
+            font-size:14px;font-weight:500;z-index:9999;
+            transition:all .3s;border-left:4px solid #ff2d95;
+            max-width:90vw;text-align:center;
+        `;
+        div.innerHTML = message;
+        document.body.appendChild(div);
+
+        setTimeout(() => {
+            div.style.opacity = '0';
+            div.style.transform = 'translateX(-50%) translateY(20px)';
+            setTimeout(() => div.remove(), 300);
+        }, 3000);
+    }
+
+    // ---------- Hardware ID ----------
+    async function initializeHardwareId() {
+        loginBtn.disabled = true;
+        loginBtn.innerHTML =
+            '<i class="fab fa-telegram-plane"></i> Подготовка...';
+        document.body.style.cursor = 'wait';
+
+        try {
+            if (typeof window.electronAPI?.getHWID !== 'function') {
+                throw new Error('Electron API недоступен');
+            }
+
+            HWID = await Promise.race([
+                Promise.resolve(window.electronAPI.getHWID()),
+                new Promise((_, reject) =>
+                    setTimeout(
+                        () => reject(new Error('Таймаут получения HWID')),
+                        4000
+                    )
+                )
+            ]);
+
+            HWID = String(HWID || 'HWID-LOCAL-DEV');
+        } catch (error) {
+            console.warn('[hwid]', error?.message || error);
+            HWID = 'HWID-LOCAL-DEV';
+        } finally {
+            document.body.style.cursor = 'default';
+            if (hwidDisplay) hwidDisplay.textContent = HWID;
+            if (settingsHwid) settingsHwid.textContent = HWID;
+            loginBtn.disabled = false;
+            loginBtn.innerHTML =
+                '<i class="fab fa-telegram-plane"></i> Войти через Telegram';
         }
     }
 
+    // ---------- Backend ----------
+    async function getUsers() {
+        try {
+            const data = await fetchJson(`${API_URL}/api/admin/users`);
+            return normalizeUsers(data.users || data.data || []);
+        } catch (error) {
+            console.error('[users]', error);
+            return [];
+        }
+    }
+
+    async function loadUsers() {
+        state.users = await getUsers();
+        return state.users;
+    }
+
+    async function saveUser(user) {
+        try {
+            const data = await fetchJson(`${API_URL}/api/users`, {
+                method: 'POST',
+                body: JSON.stringify(toServerUser(user))
+            });
+
+            return {
+                success: data.success !== false,
+                ...data
+            };
+        } catch (error) {
+            console.error('[saveUser]', error);
+            return { success: false, error: error.message };
+        }
+    }
+
+    async function updateSubscription(userId, plan, planExpiry, hwid) {
+        try {
+            return await fetchJson(`${API_URL}/api/admin/subscription`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    userId,
+                    plan,
+                    planExpiry,
+                    hwid: hwid ?? null
+                })
+            });
+        } catch (error) {
+            console.error('[subscription]', error);
+            return { success: false, error: error.message };
+        }
+    }
+
+    async function deleteUserRequest(userId) {
+        try {
+            return await fetchJson(`${API_URL}/api/admin/users/${encodeURIComponent(userId)}`, {
+                method: 'DELETE'
+            });
+        } catch (error) {
+            console.error('[deleteUser]', error);
+            return { success: false, error: error.message };
+        }
+    }
+
+    async function updateQueries(userId, queriesUsed, totalQueries) {
+        try {
+            return await fetchJson(`${API_URL}/api/users/${encodeURIComponent(userId)}/queries`, {
+                method: 'POST',
+                body: JSON.stringify({ queriesUsed, totalQueries })
+            });
+        } catch (error) {
+            console.error('[queries]', error);
+            return { success: false, error: error.message };
+        }
+    }
+
+    // ---------- Users / session ----------
     function getPlanLimit(plan) {
-        const map = { 'basic': 0, 'pro': 500, 'business': Infinity };
-        return map[plan] || 0;
+        return {
+            basic: 0,
+            free: 0,
+            pro: 500,
+            business: Infinity
+        }[plan] ?? 0;
     }
 
     function isPlanExpired(user) {
-        if (!user.planExpiry) return false;
-        if (user.plan === 'business') return false;
-        return new Date(user.planExpiry) < new Date();
+        if (!user?.planExpiry) return false;
+        if (user.isAdmin || user.plan === 'business') return false;
+        const date = new Date(user.planExpiry);
+        return Number.isFinite(date.getTime()) && date < new Date();
     }
 
-    function canMakeQuery(user) {
-        if (!user) return false;
-        if (user.isAdmin) return true;
-        if (!user.isPremium) {
-            showNotification('<i class="fas fa-times-circle" style="color:#ff5f57;"></i> Для поиска нужен Premium план.');
-            return false;
+    function saveSession(user) {
+        if (!user) {
+            localStorage.removeItem('menacesearch_session');
+            return;
         }
-        if (user.hwid && user.hwid !== HWID) return false;
-        const limit = getPlanLimit(user.plan);
-        if (limit === Infinity) return true;
-        return (user.queriesUsed || 0) < limit;
+
+        localStorage.setItem(
+            'menacesearch_session',
+            JSON.stringify({
+                userId: user.id ?? null,
+                telegramId: user.telegramId ?? null
+            })
+        );
     }
 
-    // ===== ИНИЦИАЛИЗАЦИЯ ПОЛЬЗОВАТЕЛЕЙ =====
-    function initUsers() {
-        let users = getUsers();
-        if (users.length === 0) {
-            const admin = {
-                id: 1,
-                telegramId: 'admin',
-                telegramUsername: 'admin',
-                name: 'Администратор',
-                plan: 'business',
-                planExpiry: new Date(Date.now() + 365 * 86400000).toISOString(),
-                queriesUsed: 0,
-                totalQueries: 0,
-                hwid: HWID,
-                isAdmin: true,
-                isPremium: true,
-                createdAt: new Date().toISOString()
-            };
-            users.push(admin);
-
-            const myUser = {
-                id: 2,
-                telegramId: '8148135765',
-                telegramUsername: 'atilizup',
-                name: 'A7L130H',
-                plan: 'business',
-                planExpiry: new Date(Date.now() + 365 * 86400000).toISOString(),
-                queriesUsed: 0,
-                totalQueries: 0,
-                hwid: HWID,
-                isAdmin: true,
-                isPremium: true,
-                createdAt: new Date().toISOString()
-            };
-            users.push(myUser);
-            saveUsers(users);
+    function getSession() {
+        try {
+            const value = JSON.parse(
+                localStorage.getItem('menacesearch_session') || 'null'
+            );
+            return value && typeof value === 'object' ? value : null;
+        } catch {
+            return null;
         }
-        return users;
     }
 
-    function loadCurrentUser() {
-        const user = getCurrentUser();
-        if (user) {
-            const users = getUsers();
-            const fresh = users.find(u => u.id === user.id);
-            if (fresh) {
-                state.isLoggedIn = true;
-                state.currentUser = fresh;
-                updateUIForUser(fresh);
-                showMainApp();
-                return fresh;
-            }
-        }
-        state.isLoggedIn = false;
-        state.currentUser = null;
-        showLoginScreen();
-        return null;
+    function findCurrentUser(session) {
+        if (!session) return null;
+
+        return state.users.find(user =>
+            (session.userId != null &&
+                String(user.id) === String(session.userId)) ||
+            (session.telegramId != null &&
+                String(user.telegramId) === String(session.telegramId))
+        ) || null;
     }
 
+    // ---------- UI ----------
     function showLoginScreen() {
         loginScreen.classList.remove('hidden');
         mainContent.classList.remove('active');
@@ -1706,269 +2274,217 @@
     }
 
     function updateUIForUser(user) {
-        const avatar = (user.name || user.telegramUsername || 'U')[0].toUpperCase();
-        userAvatar.textContent = avatar;
-        userName.textContent = user.name || user.telegramUsername || 'Пользователь';
+        if (!user) return;
 
-        let planLabel = '<i class="fas fa-user"></i> Бесплатно';
-        let planClass = 'plan';
+        const avatar =
+            (user.firstName || user.username || user.name || 'U')
+                .trim()
+                .charAt(0)
+                .toUpperCase() || 'U';
+
+        const displayName =
+            user.firstName ||
+            user.name ||
+            (user.username ? `@${user.username}` : 'Пользователь');
+
+        userAvatar.textContent = avatar;
+        userName.textContent = displayName;
 
         if (user.isAdmin) {
-            planLabel = '<i class="fas fa-crown" style="color:#ffd700;"></i> Админ';
-            planClass += ' admin';
-        } else if (user.isPremium) {
-            planLabel = '<i class="fas fa-star" style="color:#ffd700;"></i> Premium';
-            planClass += ' premium';
+            userPlan.innerHTML = '<i class="fas fa-shield-alt"></i> Админ';
+            userPlan.className = 'plan';
+        } else if (user.isPremium && !isPlanExpired(user)) {
+            userPlan.innerHTML = '<i class="fas fa-gem"></i> Premium';
+            userPlan.className = 'plan';
         } else {
-            planClass += ' expired';
+            userPlan.innerHTML = '<i class="fas fa-user"></i> Бесплатно';
+            userPlan.className = 'plan expired';
         }
-
-        userPlan.innerHTML = planLabel;
-        userPlan.className = planClass;
 
         profileAvatar.textContent = avatar;
-        profileName.textContent = user.name || user.telegramUsername || 'Пользователь';
-        profileTelegram.textContent = user.telegramUsername ? '@' + user.telegramUsername : 'ID: ' + user.telegramId;
-
-        let profilePlanLabel = 'Бесплатный';
-        let profilePlanClass = 'plan-badge';
-
-        if (user.isAdmin) {
-            profilePlanLabel = '<i class="fas fa-crown" style="color:#ffd700;"></i> Администратор';
-            profilePlanClass += ' admin';
-        } else if (user.isPremium) {
-            profilePlanLabel = '<i class="fas fa-star" style="color:#ffd700;"></i> Premium';
-            profilePlanClass += ' premium';
-        } else {
-            profilePlanClass += ' expired';
-        }
-
-        profilePlan.innerHTML = profilePlanLabel;
-        profilePlan.className = profilePlanClass;
+        profileName.textContent = displayName;
+        profileTelegram.textContent = user.username
+            ? `@${user.username}`
+            : `ID: ${user.telegramId || '—'}`;
 
         if (user.isAdmin) {
-            profileExpiry.innerHTML = '<i class="fas fa-infinity" style="color:#ff2d95; margin-right:4px;"></i> Полный доступ без ограничений';
-        } else if (user.isPremium && user.planExpiry) {
-            const d = new Date(user.planExpiry);
-            profileExpiry.textContent = `Действует до: ${d.toLocaleDateString('ru-RU')}`;
+            profilePlan.innerHTML =
+                '<i class="fas fa-shield-alt"></i> Администратор';
+            profilePlan.className = 'plan-badge admin';
+            profileExpiry.innerHTML =
+                '<i class="fas fa-infinity" style="color:#ff2d95;margin-right:4px;"></i> Полный доступ без ограничений';
+        } else if (user.isPremium && !isPlanExpired(user)) {
+            profilePlan.innerHTML =
+                '<i class="fas fa-gem"></i> Premium';
+            profilePlan.className = 'plan-badge pro';
+
+            profileExpiry.textContent = user.planExpiry
+                ? `Действует до: ${new Date(user.planExpiry).toLocaleDateString('ru-RU')}`
+                : 'Срок не указан';
         } else {
-            profileExpiry.textContent = 'Бесплатный план (поиск ограничен)';
+            profilePlan.innerHTML =
+                '<i class="fas fa-user"></i> Бесплатный';
+            profilePlan.className = 'plan-badge basic';
+            profileExpiry.textContent = user.planExpiry
+                ? `Подписка истекла: ${new Date(user.planExpiry).toLocaleDateString('ru-RU')}`
+                : 'Бесплатный план (поиск ограничен)';
         }
 
-        profileHwid.textContent = 'HWID: ' + (user.hwid || 'Не привязан');
+        profileHwid.textContent =
+            `HWID: ${user.hwid || 'Не привязан'}`;
 
-        const users = getUsers();
-        const current = users.find(u => u.id === user.id);
-        if (current) {
-            statQueriesUsed.textContent = current.queriesUsed || 0;
-            statTotalQueries.textContent = current.totalQueries || 0;
+        statQueriesUsed.textContent = String(user.queriesUsed || 0);
+        statTotalQueries.textContent = String(user.totalQueries || 0);
 
-            let limit = 0;
-            if (user.isAdmin) {
-                limit = Infinity;
-            } else if (user.isPremium) {
-                limit = 500;
-            } else {
-                limit = 0;
-            }
+        const limit = user.isAdmin
+            ? Infinity
+            : getPlanLimit(user.plan);
 
-            const left = Math.max(0, limit - (current.queriesUsed || 0));
-            statQueriesLeft.textContent = user.isAdmin ? '∞' : (user.isPremium ? left : '0');
-            statPlanLimit.textContent = limit === Infinity ? '∞' : limit;
-        }
+        statQueriesLeft.textContent = limit === Infinity
+            ? '∞'
+            : String(Math.max(0, limit - (user.queriesUsed || 0)));
+
+        statPlanLimit.textContent =
+            limit === Infinity ? '∞' : String(limit);
 
         adminLink.style.display = user.isAdmin ? 'block' : 'none';
     }
 
-    // ===== УВЕДОМЛЕНИЯ =====
-    function showNotification(msg) {
-        const div = document.createElement('div');
-        div.style.cssText = `
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: #141014; color: #fff; padding: 12px 28px; border-radius: 16px;
-            border: 1px solid rgba(255,45,149,0.2); box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-            font-size: 14px; font-weight: 500; z-index: 9999; transition: all 0.3s;
-            border-left: 4px solid #ff2d95; max-width: 90vw; text-align: center;
-        `;
-        div.innerHTML = msg;
-        document.body.appendChild(div);
-        setTimeout(() => {
-            div.style.opacity = '0';
-            div.style.transform = 'translateX(-50%) translateY(20px)';
-            setTimeout(() => div.remove(), 300);
-        }, 3000);
-    }
+    async function refreshCurrentUser() {
+        await loadUsers();
 
-    // ===== АДМИН-ФУНКЦИЯ (Загрузка пользователей из локальной базы) =====
-    function loadAdminUsers() {
-        const users = getUsers();
-        if (users.length === 0) {
-            adminUsersBody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:rgba(255,255,255,0.2); padding:30px 0;">Нет пользователей</td></tr>`;
-            return;
-        }
-
-        let html = '';
-        users.forEach(u => {
-            let planLabel = 'Бесплатно';
-            let planClass = 'basic';
-            
-            if (u.isAdmin) {
-                planLabel = '<i class="fas fa-crown" style="color:#ffd700;"></i> Админ';
-                planClass = 'business';
-            } else if (u.isPremium || u.plan === 'pro' || u.plan === 'business') {
-                planLabel = '<i class="fas fa-star" style="color:#ffd700;"></i> Premium';
-                planClass = 'pro';
-            }
-            
-            const expiry = u.planExpiry ? new Date(u.planExpiry).toLocaleDateString('ru-RU') : '∞';
-            const hwidDisplay = u.hwid ? u.hwid.substring(0, 10) + '...' : '—';
-
-            html += `<tr>
-                <td>${u.id}</td>
-                <td>@${escapeHtml(u.telegramUsername || u.telegramId)}</td>
-                <td>${escapeHtml(u.name || '-')}</td>
-                <td><span class="plan-badge ${planClass}">${planLabel}</span></td>
-                <td>${expiry}</td>
-                <td class="hwid-cell">${escapeHtml(hwidDisplay)}</td>
-                <td>${u.queriesUsed || 0}</td>
-                <td>
-                    <div class="actions-cell">
-                        <button class="edit-btn" onclick="window.openSubscriptionModal('${u.id}')"><i class="fas fa-pen"></i> Изменить</button>
-                        <button class="revoke" onclick="window.deleteUser(${u.id})"><i class="fas fa-trash"></i></button>
-                    </div>
-                </td>
-            </tr>`;
-        });
-
-        adminUsersBody.innerHTML = html;
-    }
-
-    // ===== АВТОРИЗАЦИЯ =====
-    function loginWithTelegram(tgUser) {
-        const telegramId = String(tgUser.id || tgUser.telegramId || 'user_' + Date.now());
-        const displayName = tgUser.first_name ? (tgUser.first_name + (tgUser.last_name ? ' ' + tgUser.last_name : '')) : (tgUser.name || 'Пользователь');
-        const username = tgUser.username || tgUser.telegramUsername || '';
-        let users = getUsers();
-
-        let user = users.find(u => String(u.telegramId) === telegramId || (username && u.telegramUsername === username));
+        const session = getSession();
+        const user = findCurrentUser(session);
 
         if (!user) {
-            user = {
-                id: Date.now(),
-                telegramId: telegramId,
-                telegramUsername: username,
-                name: displayName,
-                plan: 'basic',
-                planExpiry: null,
-                queriesUsed: 0,
-                totalQueries: 0,
-                hwid: HWID,
-                isAdmin: false,
-                isPremium: false,
-                createdAt: new Date().toISOString()
-            };
-            users.push(user);
-            saveUsers(users);
-            showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Вы зарегистрированы!');
+            state.isLoggedIn = false;
+            state.currentUser = null;
+            showLoginScreen();
+            return null;
         }
 
-        user.name = displayName || user.name;
-        user.telegramUsername = username || user.telegramUsername;
-        if (!user.hwid) user.hwid = HWID;
-        
-        saveUsers(users);
-        saveSession(user);
-        
         state.isLoggedIn = true;
         state.currentUser = user;
         updateUIForUser(user);
         showMainApp();
-        loginStatus.textContent = 'Вход выполнен!';
-        loginStatus.className = 'login-status success';
+
+        if (user.isAdmin) await loadAdminUsers();
+        return user;
+    }
+
+    // ---------- Telegram auth ----------
+    async function loginWithTelegram(serverUser) {
+        if (!serverUser?.id && !serverUser?.telegram_id) {
+            throw new Error('Сервер не вернул пользователя после авторизации');
+        }
+
+        // ВАЖНО: пользователь уже создан/обновлён сервером через
+        // POST /api/auth/telegram. Клиент больше не создаёт его сам.
+        const user = normalizeUser(serverUser);
+
+        if (!user) {
+            throw new Error('Сервер вернул некорректные данные пользователя');
+        }
+
+        if (user.hwid && user.hwid !== HWID && !user.isAdmin) {
+            throw new Error('Этот аккаунт привязан к другому устройству');
+        }
+
+        // Сохраняем только идентификатор серверного пользователя.
+        saveSession(user);
+        state.isLoggedIn = true;
+        state.currentUser = user;
+
+        // Сразу синхронизируем профиль с БД, чтобы подписка/админские права
+        // отображались именно такими, как они записаны на сервере.
+        try {
+            await loadUsers();
+            const freshUser = state.users.find(item =>
+                String(item.id) === String(user.id) ||
+                String(item.telegramId) === String(user.telegramId)
+            );
+            if (freshUser) {
+                state.currentUser = freshUser;
+            }
+        } catch (error) {
+            console.warn('[auth] Не удалось обновить профиль после входа:', error);
+        }
+
+        updateUIForUser(state.currentUser);
+        showMainApp();
         loadHistory();
+
+        loginStatus.textContent = 'Вход выполнен';
+        loginStatus.className = 'login-status success';
+
+        if (state.currentUser.isAdmin) {
+            await loadAdminUsers();
+        }
+
         return true;
     }
 
-    function logout() {
-        saveSession(null);
-        state.isLoggedIn = false;
-        state.currentUser = null;
-        showLoginScreen();
-        loginStatus.textContent = 'Нажмите кнопку для входа через Telegram';
-        loginStatus.className = 'login-status';
+    // ---------- Search ----------
+    function canMakeQuery(user) {
+        if (!user) {
+            showNotification('Сначала войдите в систему');
+            return false;
+        }
+
+        if (user.isAdmin) return true;
+
+        if (!user.isPremium || user.plan === 'basic' || user.plan === 'free') {
+            showNotification('❌ Для поиска нужен Premium план');
+            return false;
+        }
+
+        if (isPlanExpired(user)) {
+            showNotification('❌ Срок Premium истёк');
+            return false;
+        }
+
+        if (user.hwid && user.hwid !== HWID) {
+            showNotification('❌ Аккаунт привязан к другому устройству');
+            return false;
+        }
+
+        const limit = getPlanLimit(user.plan);
+        if (limit !== Infinity && (user.queriesUsed || 0) >= limit) {
+            showNotification('❌ Лимит запросов исчерпан');
+            return false;
+        }
+
+        return true;
     }
 
-    // ===== ГЛОБАЛЬНЫЕ ФУНКЦИИ ДЛЯ АДМИН-ПАНЕЛИ =====
-    window.openSubscriptionModal = function(userIdKey) {
-        const users = getUsers();
-        const user = users.find(u => String(u.id) === String(userIdKey) || String(u.telegramId) === String(userIdKey));
-        if (!user) {
-            showNotification('<i class="fas fa-exclamation-triangle" style="color:#ff5f57;"></i> Пользователь не найден');
-            return;
-        }
-        
-        modalUserInfo.textContent = `Пользователь: @${user.telegramUsername || user.telegramId}`;
-        modalPlanSelect.value = user.plan || (user.isPremium ? 'pro' : 'basic');
-        
-        if (user.planExpiry) {
-            modalExpiryDate.value = new Date(user.planExpiry).toISOString().split('T')[0];
-        } else {
-            modalExpiryDate.value = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
-        }
-        
-        modalHwidInput.value = user.hwid || '';
-        subscriptionModal.dataset.userId = user.id;
-        subscriptionModal.classList.add('active');
-    };
-
-    window.deleteUser = function(userId) {
-        if (!confirm('Удалить пользователя?')) return;
-        let users = getUsers();
-        const user = users.find(u => u.id === userId);
-        if (user && user.isAdmin) {
-            alert('Нельзя удалить администратора');
-            return;
-        }
-        users = users.filter(u => u.id !== userId);
-        saveUsers(users);
-        loadAdminUsers();
-        showNotification('<i class="fas fa-trash"></i> Пользователь удалён');
-    };
-
-    // ===== ПОИСК =====
     async function performSearch(query) {
-        if (!query.trim()) {
+        query = String(query || '').trim();
+
+        if (!query) {
             resultGrid.innerHTML = `
                 <div class="no-results">
                     <i class="fas fa-exclamation-circle big-icon"></i>
-                    <span style="font-size:16px; color:rgba(255,255,255,0.2);">Введите запрос для поиска</span>
+                    <span style="font-size:16px;color:rgba(255,255,255,.2);">
+                        Введите запрос для поиска
+                    </span>
                 </div>
             `;
             resultsHeader.style.display = 'none';
             return;
         }
 
-        const user = getCurrentUser();
-        if (!user) {
-            showNotification('Сначала войдите в систему');
-            return;
-        }
-
-        if (!canMakeQuery(user)) {
-            let reason = 'Лимит запросов исчерпан';
-            if (isPlanExpired(user)) reason = 'Подписка истекла';
-            if (user.hwid && user.hwid !== HWID) reason = 'HWID не совпадает';
-            showNotification(reason);
-            return;
-        }
+        if (!canMakeQuery(state.currentUser)) return;
 
         if (!state.apiToken || state.apiToken.length < 10) {
             resultGrid.innerHTML = `
-                <div class="no-results" style="color: #ffaa00;">
+                <div class="no-results" style="color:#ffaa00;">
                     <i class="fas fa-key big-icon" style="color:#ffaa00;"></i>
-                    <span style="font-size:16px;"><i class="fas fa-times-circle" style="color:#ff5f57;"></i> API токен не указан</span>
-                    <div style="margin-top:12px; font-size:13px; color:rgba(255,255,255,0.3);">
-                        Перейдите в настройки и укажите ваш API токен
+                    <span style="font-size:16px;">
+                        <i class="fas fa-times-circle" style="color:#ff5f57;"></i>
+                        API-токен не указан
+                    </span>
+                    <div style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.3);">
+                        Откройте «Настройки» и сохраните API-токен.
                     </div>
                 </div>
             `;
@@ -1979,113 +2495,186 @@
         resultGrid.innerHTML = `
             <div class="no-results">
                 <i class="fas fa-spinner fa-pulse big-icon" style="color:#ff2d95;"></i>
-                <span style="font-size:16px; color:rgba(255,255,255,0.4);">Поиск данных...</span>
+                <span style="font-size:16px;color:rgba(255,255,255,.4);">
+                    Выполняется поиск...
+                </span>
             </div>
         `;
+        resultsHeader.style.display = 'none';
 
         try {
-            const payload = {
-                token: state.apiToken.trim(),
-                request: query.trim(),
-                limit: 200,
-                lang: 'ru'
-            };
+            const response = await fetch(state.apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    token: state.apiToken.trim(),
+                    request: query,
+                    limit: 200,
+                    lang: 'ru'
+                })
+            });
 
-            let response;
-            if (window.electronAPI && window.electronAPI.apiRequest) {
-                response = await window.electronAPI.apiRequest(payload);
-            } else {
-                const fetchRes = await fetch(state.apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                response = { ok: fetchRes.ok, status: fetchRes.status, data: await fetchRes.json() };
+            let data = {};
+            try {
+                data = await response.json();
+            } catch {
+                data = {};
             }
 
             if (!response.ok) {
-                throw new Error(`HTTP Error ${response.status}`);
+                throw new Error(
+                    data.error ||
+                    data.message ||
+                    `HTTP ${response.status}`
+                );
             }
 
-            const data = response.data;
-            if (!data.List || Object.keys(data.List).length === 0) {
+            if (!data.List || typeof data.List !== 'object') {
+                throw new Error('API вернуло ответ без поля List');
+            }
+
+            const hasData = Object.values(data.List).some(
+                db => Array.isArray(db?.Data) && db.Data.length > 0
+            );
+
+            if (!hasData) {
                 resultGrid.innerHTML = `
                     <div class="no-results">
                         <i class="fas fa-database big-icon"></i>
-                        <span style="font-size:16px; color:rgba(255,255,255,0.2);">Ничего не найдено</span>
+                        <span style="font-size:16px;color:rgba(255,255,255,.2);">
+                            Ничего не найдено
+                        </span>
                     </div>
                 `;
-                resultsHeader.style.display = 'none';
                 return;
             }
 
-            const users = getUsers();
-            const idx = users.findIndex(u => u.id === user.id);
-            if (idx !== -1) {
-                users[idx].queriesUsed = (users[idx].queriesUsed || 0) + 1;
-                users[idx].totalQueries = (users[idx].totalQueries || 0) + 1;
-                saveUsers(users);
-                loadCurrentUser();
+            // Count a successful search only after the API returned data.
+            if (!state.currentUser.isAdmin) {
+                const newUsed = (state.currentUser.queriesUsed || 0) + 1;
+                const newTotal = (state.currentUser.totalQueries || 0) + 1;
+
+                const result = await updateQueries(
+                    state.currentUser.id,
+                    newUsed,
+                    newTotal
+                );
+
+                if (result.success !== false) {
+                    state.currentUser.queriesUsed = newUsed;
+                    state.currentUser.totalQueries = newTotal;
+                }
             }
 
-            renderResults(data);
-            resultsHeader.style.display = 'flex';
+            renderResults(data, true);
+            updateUIForUser(state.currentUser);
+        } catch (error) {
+            console.error('[search]', error);
 
-        } catch (err) {
-            console.error('Ошибка поиска:', err);
             resultGrid.innerHTML = `
-                <div class="no-results" style="color: #ff5f57;">
+                <div class="no-results" style="color:#ff5f57;">
                     <i class="fas fa-exclamation-triangle big-icon" style="color:#ff5f57;"></i>
-                    <span style="font-size:16px;">Ошибка выполнения запроса</span>
+                    <span style="font-size:16px;">
+                        Не удалось выполнить поиск
+                    </span>
+                    <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,.3);">
+                        ${escapeHtml(error.message || 'Неизвестная ошибка')}
+                    </div>
                 </div>
             `;
-            resultsHeader.style.display = 'none';
         }
     }
 
     function renderResults(data, saveToHistory = true) {
-        const list = data.List;
+        const list = data?.List || {};
         let totalRecords = 0;
         let html = '';
         const allData = [];
 
-        for (const dbName in list) {
+        for (const dbName of Object.keys(list)) {
             const db = list[dbName];
-            if (dbName === 'No results found' || !db.Data || db.Data.length === 0) continue;
+            if (
+                dbName === 'No results found' ||
+                !Array.isArray(db?.Data) ||
+                db.Data.length === 0
+            ) continue;
 
             const infoLeak = db.InfoLeak || '';
             totalRecords += db.Data.length;
 
-            db.Data.forEach((item) => {
-                allData.push({ source: dbName, data: item, info: infoLeak });
-                const priorityKeys = ['FULLNAME', 'NAME', 'PHONE', 'EMAIL', 'PASSPORT', 'INN', 'BDAY'];
+            db.Data.forEach(item => {
+                if (!item || typeof item !== 'object') return;
+
+                allData.push({
+                    source: dbName,
+                    data: item,
+                    info: infoLeak
+                });
+
+                const priorityKeys = [
+                    'FULLNAME', 'NAME', 'PHONE', 'EMAIL',
+                    'PASSPORT', 'INN', 'BDAY'
+                ];
+
                 const sortedKeys = Object.keys(item).sort((a, b) => {
-                    const aP = priorityKeys.includes(a) ? 0 : 1;
-                    const bP = priorityKeys.includes(b) ? 0 : 1;
-                    return aP !== bP ? aP - bP : a.localeCompare(b);
+                    const ap = priorityKeys.includes(a) ? 0 : 1;
+                    const bp = priorityKeys.includes(b) ? 0 : 1;
+                    return ap !== bp ? ap - bp : a.localeCompare(b);
                 });
 
                 html += `<div class="result-card">`;
                 html += `<div class="card-header">`;
-                html += `<span class="source"><i class="fas fa-folder-open"></i> ${escapeHtml(dbName)}</span>`;
+                html += `<span class="source">
+                    <i class="fas fa-folder-open"></i>
+                    ${escapeHtml(dbName)}
+                </span>`;
                 html += `<span class="tag">${sortedKeys.length} полей</span>`;
                 html += `</div><div class="data-row">`;
+
                 sortedKeys.forEach(key => {
-                    const val = item[key];
-                    if (!val) return;
+                    const value = item[key];
+                    if (
+                        value === null ||
+                        value === undefined ||
+                        value === ''
+                    ) return;
+
                     const label = getFieldLabel(key);
                     const icon = getFieldIconClass(key);
                     const color = getFieldColor(key);
-                    html += `<span class="field">`;
-                    html += `<i class="${icon}" style="color:${color}; width:16px; text-align:center; font-size:13px;"></i>`;
-                    html += `<strong style="color:rgba(255,255,255,0.3); font-weight:400; font-size:12px;">${escapeHtml(label)}:</strong>`;
-                    html += `<span class="value" style="color:rgba(255,255,255,0.85); font-size:13px; word-break:break-all;">${escapeHtml(val)}</span>`;
-                    html += `</span>`;
+
+                    html += `
+                        <span class="field">
+                            <i class="${icon}"
+                               style="color:${color};width:16px;text-align:center;font-size:13px;"></i>
+                            <strong style="color:rgba(255,255,255,.3);font-weight:400;font-size:12px;">
+                                ${escapeHtml(label)}:
+                            </strong>
+                            <span class="value"
+                                  style="color:rgba(255,255,255,.85);font-size:13px;word-break:break-all;">
+                                ${escapeHtml(value)}
+                            </span>
+                        </span>
+                    `;
                 });
-                html += `</div><div class="card-footer">`;
-                html += `<span class="meta"><i class="fas fa-info-circle"></i> ${escapeHtml(infoLeak || 'Источник данных')}</span>`;
-                html += `<button class="copy-btn" onclick="window.copyResult(this, '${encodeURIComponent(JSON.stringify(item)).replace(/'/g, '%27')}')"><i class="fas fa-copy"></i> Копировать</button>`;
-                html += `</div></div>`;
+
+                const encoded = encodeURIComponent(
+                    JSON.stringify(item)
+                );
+
+                html += `
+                    </div>
+                    <div class="card-footer">
+                        <span class="meta">
+                            <i class="fas fa-info-circle"></i>
+                            ${escapeHtml(infoLeak || 'Источник данных')}
+                        </span>
+                        <button class="copy-btn" type="button"
+                            onclick="window.copyResult(this, '${encoded}')">
+                            <i class="fas fa-copy"></i> Копировать
+                        </button>
+                    </div>
+                </div>`;
             });
         }
 
@@ -2093,10 +2682,13 @@
             resultGrid.innerHTML = `
                 <div class="no-results">
                     <i class="fas fa-database big-icon"></i>
-                    <span style="font-size:16px; color:rgba(255,255,255,0.2);">Данные не найдены</span>
+                    <span style="font-size:16px;color:rgba(255,255,255,.2);">
+                        Данные не найдены
+                    </span>
                 </div>
             `;
             resultsHeader.style.display = 'none';
+            state.searchResults = [];
             return;
         }
 
@@ -2107,77 +2699,145 @@
 
         if (saveToHistory) {
             state.searchHistory.unshift({
-                query: searchInput.value,
+                query: searchInput.value.trim(),
                 count: totalRecords,
                 time: new Date().toLocaleString('ru-RU'),
                 results: data
             });
-            if (state.searchHistory.length > 50) state.searchHistory.pop();
-            localStorage.setItem('menacesearch_history', JSON.stringify(state.searchHistory));
+
+            if (state.searchHistory.length > 50) {
+                state.searchHistory.length = 50;
+            }
+
+            localStorage.setItem(
+                'menacesearch_history',
+                JSON.stringify(state.searchHistory)
+            );
             loadHistory();
         }
     }
 
-    window.copyResult = function(btn, encodedData) {
+    window.copyResult = async function (button, encodedData) {
         try {
             const data = JSON.parse(decodeURIComponent(encodedData));
-            const text = Object.entries(data).map(([k,v]) => `${k}: ${v}`).join('\n');
-            navigator.clipboard.writeText(text).then(() => {
-                btn.classList.add('copied');
-                btn.innerHTML = '<i class="fas fa-check"></i> Скопировано';
-                setTimeout(() => {
-                    btn.classList.remove('copied');
-                    btn.innerHTML = '<i class="fas fa-copy"></i> Копировать';
-                }, 2000);
-            });
-        } catch(e) {}
+            const text = Object.entries(data)
+                .map(([key, value]) => `${key}: ${value}`)
+                .join('\n');
+
+            await navigator.clipboard.writeText(text);
+
+            button.classList.add('copied');
+            button.innerHTML =
+                '<i class="fas fa-check"></i> Скопировано';
+
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML =
+                    '<i class="fas fa-copy"></i> Копировать';
+            }, 2000);
+        } catch (error) {
+            console.error('[copy]', error);
+            showNotification('Не удалось скопировать данные');
+        }
     };
 
-    function copyAllResults() {
-        if (state.searchResults.length === 0) return;
-        const text = state.searchResults.map(r => {
-            const dataStr = Object.entries(r.data).map(([k,v]) => `${k}: ${v}`).join(', ');
-            return `[${r.source}] ${dataStr}`;
+    async function copyAllResults() {
+        if (!state.searchResults.length) {
+            showNotification('Нет результатов для копирования');
+            return;
+        }
+
+        const text = state.searchResults.map(result => {
+            const values = Object.entries(result.data)
+                .map(([key, value]) => `${key}: ${value}`)
+                .join(', ');
+            return `[${result.source}] ${values}`;
         }).join('\n\n');
-        navigator.clipboard.writeText(text).then(() => {
-            copyAllBtn.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
+
+        try {
+            await navigator.clipboard.writeText(text);
+            copyAllBtn.innerHTML =
+                '<i class="fas fa-check"></i> Скопировано!';
             setTimeout(() => {
-                copyAllBtn.innerHTML = '<i class="fas fa-copy"></i> Копировать всё';
+                copyAllBtn.innerHTML =
+                    '<i class="fas fa-copy"></i> Копировать всё';
             }, 2000);
-        });
+        } catch {
+            showNotification('Не удалось скопировать результаты');
+        }
     }
 
     function exportResults() {
-        if (state.searchResults.length === 0) return;
-        const data = state.searchResults.map(r => ({ source: r.source, ...r.data }));
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `menacesearch_${Date.now()}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-    }
-
-    // ===== ИСТОРИЯ =====
-    function loadHistory() {
-        const list = document.getElementById('historyList');
-        if (state.searchHistory.length === 0) {
-            list.innerHTML = `<div class="no-results" style="padding:40px 0;"><i class="fas fa-clock"></i> История поиска пуста</div>`;
+        if (!state.searchResults.length) {
+            showNotification('Нет результатов для экспорта');
             return;
         }
+
+        const data = state.searchResults.map(result => ({
+            source: result.source,
+            ...result.data
+        }));
+
+        downloadBlob(
+            JSON.stringify(data, null, 2),
+            `menacesearch_${Date.now()}.json`,
+            'application/json;charset=utf-8'
+        );
+    }
+
+    function downloadBlob(content, filename, type) {
+        const blob = new Blob([content], { type });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+
+        link.href = url;
+        link.download = filename;
+        link.style.display = 'none';
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    // ---------- History ----------
+    function loadHistory() {
+        const list = document.getElementById('historyList');
+        if (!list) return;
+
+        if (!state.searchHistory.length) {
+            list.innerHTML = `
+                <div class="no-results" style="padding:40px 0;">
+                    <i class="fas fa-clock"></i>
+                    История поиска пуста
+                </div>
+            `;
+            return;
+        }
+
         list.innerHTML = state.searchHistory.map((item, index) => `
             <div class="history-item">
                 <div class="left-info">
-                    <div class="icon-box"><i class="fas fa-search"></i></div>
+                    <div class="icon-box">
+                        <i class="fas fa-search"></i>
+                    </div>
                     <div>
-                        <div class="query-text">${escapeHtml(item.query)}</div>
-                        <div class="time-text"><i class="far fa-calendar-alt"></i> ${escapeHtml(item.time)}</div>
+                        <div class="query-text">
+                            ${escapeHtml(item.query)}
+                        </div>
+                        <div class="time-text">
+                            <i class="far fa-calendar-alt"></i>
+                            ${escapeHtml(item.time)}
+                        </div>
                     </div>
                 </div>
                 <div class="right-actions">
-                    <span class="count-badge">${item.count} результатов</span>
-                    <button class="open-btn" type="button" onclick="window.openHistoryEntry(${index})">
+                    <span class="count-badge">
+                        ${Number(item.count) || 0} результатов
+                    </span>
+                    <button class="open-btn" type="button"
+                        onclick="window.openHistoryEntry(${index})">
                         <i class="fas fa-eye"></i> Просмотр
                     </button>
                 </div>
@@ -2185,262 +2845,670 @@
         `).join('');
     }
 
-    window.openHistoryEntry = function(index) {
+    window.openHistoryEntry = function (index) {
         const entry = state.searchHistory[index];
+
         if (!entry?.results) {
             showNotification('Сохранённые результаты не найдены');
             return;
         }
+
         searchInput.value = entry.query || '';
         switchPage('search');
         renderResults(entry.results, false);
-        showNotification(`Результаты загружены из истории`);
+        showNotification('Результаты загружены из истории');
     };
 
     function clearHistory() {
-        if (state.searchHistory.length === 0) return;
+        if (!state.searchHistory.length) return;
+
         if (!confirm('Очистить всю историю?')) return;
+
         state.searchHistory = [];
-        localStorage.setItem('menacesearch_history', JSON.stringify(state.searchHistory));
+        localStorage.setItem(
+            'menacesearch_history',
+            JSON.stringify([])
+        );
         loadHistory();
-        showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> История очищена');
+
+        showNotification(
+            '<i class="fas fa-check-circle" style="color:#4CAF50;"></i> История очищена'
+        );
     }
 
+    function exportHistory() {
+        if (!state.searchHistory.length) {
+            showNotification('История пуста');
+            return;
+        }
+
+        const format =
+            document.getElementById('historyFormatSelect')?.value || 'json';
+
+        if (format === 'json') {
+            downloadBlob(
+                JSON.stringify(state.searchHistory, null, 2),
+                `menacesearch_history_${Date.now()}.json`,
+                'application/json;charset=utf-8'
+            );
+            return;
+        }
+
+        if (format === 'csv') {
+            const rows = [
+                ['Запрос', 'Результатов', 'Дата'],
+                ...state.searchHistory.map(item => [
+                    item.query || '',
+                    item.count || 0,
+                    item.time || ''
+                ])
+            ];
+
+            const csv = rows
+                .map(row =>
+                    row.map(value =>
+                        `"${String(value).replace(/"/g, '""')}"`
+                    ).join(',')
+                )
+                .join('\r\n');
+
+            downloadBlob(
+                '\uFEFF' + csv,
+                `menacesearch_history_${Date.now()}.csv`,
+                'text/csv;charset=utf-8'
+            );
+            return;
+        }
+
+        const rows = state.searchHistory.map(item => `
+            <tr>
+                <td>${escapeHtml(item.query)}</td>
+                <td>${Number(item.count) || 0}</td>
+                <td>${escapeHtml(item.time)}</td>
+            </tr>
+        `).join('');
+
+        const documentHtml = `<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>MenaceSEARCH History</title>
+<style>
+body{font-family:Arial,sans-serif;padding:30px}
+table{border-collapse:collapse;width:100%}
+th,td{border:1px solid #ddd;padding:8px;text-align:left}
+th{background:#f3f3f3}
+</style></head>
+<body>
+<h1>MenaceSEARCH Pro — История</h1>
+<table><thead><tr><th>Запрос</th><th>Результатов</th><th>Дата</th></tr></thead>
+<tbody>${rows}</tbody></table>
+</body></html>`;
+
+        downloadBlob(
+            documentHtml,
+            `menacesearch_history_${Date.now()}.html`,
+            'text/html;charset=utf-8'
+        );
+    }
+
+    // ---------- Navigation ----------
     function switchPage(pageId) {
-        state.currentPage = pageId;
-        pages.forEach(p => p.classList.remove('active'));
-        const target = document.getElementById('page-' + pageId);
-        if (target) target.classList.add('active');
-        navLinks.forEach(l => l.classList.remove('active'));
-        const link = document.querySelector(`#navLinks a[data-page="${pageId}"]`);
-        if (link) link.classList.add('active');
+        if (
+            pageId === 'admin' &&
+            !state.currentUser?.isAdmin
+        ) {
+            showNotification('Доступ запрещён');
+            return;
+        }
 
-        if (pageId === 'admin' && state.currentUser?.isAdmin) {
-            loadAdminUsers();
-        }
+        state.currentPage = pageId;
+
+        pages.forEach(page => page.classList.remove('active'));
+
+        const target = document.getElementById(`page-${pageId}`);
+        if (target) target.classList.add('active');
+
+        navLinks.forEach(link => link.classList.remove('active'));
+
+        const activeLink = document.querySelector(
+            `#navLinks a[data-page="${CSS.escape(pageId)}"]`
+        );
+        if (activeLink) activeLink.classList.add('active');
+
+        if (pageId === 'admin') loadAdminUsers();
+        if (pageId === 'history') loadHistory();
         if (pageId === 'search') {
-            resultsHeader.style.display = state.searchResults.length > 0 ? 'flex' : 'none';
-        }
-        if (pageId === 'history') {
-            loadHistory();
+            resultsHeader.style.display =
+                state.searchResults.length ? 'flex' : 'none';
         }
     }
 
-    // ===== СОБЫТИЯ И ОБРАБОТЧИКИ =====
+    // ---------- Admin ----------
+    function planLabel(user) {
+        if (user.isAdmin) {
+            return ['👑 Админ', 'business'];
+        }
 
-    loginBtn.addEventListener('click', async function() {
+        if (user.isPremium && !isPlanExpired(user)) {
+            return ['⭐ Premium', 'pro'];
+        }
+
+        if (user.isPremium && isPlanExpired(user)) {
+            return ['⏳ Истёк', 'expired'];
+        }
+
+        return ['🆓 Бесплатно', 'basic'];
+    }
+
+    async function loadAdminUsers() {
+        if (!state.currentUser?.isAdmin) return;
+
+        if (!adminUsersBody) return;
+
+        adminUsersBody.innerHTML = `
+            <tr>
+                <td colspan="8"
+                    style="text-align:center;color:rgba(255,255,255,.2);padding:30px 0;">
+                    Загрузка...
+                </td>
+            </tr>
+        `;
+
+        const users = await loadUsers();
+
+        if (!users.length) {
+            adminUsersBody.innerHTML = `
+                <tr>
+                    <td colspan="8"
+                        style="text-align:center;color:rgba(255,255,255,.2);padding:30px 0;">
+                        Пользователи не найдены
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        adminUsersBody.innerHTML = users.map(user => {
+            const [label, className] = planLabel(user);
+            const expiry = user.planExpiry
+                ? new Date(user.planExpiry).toLocaleDateString('ru-RU')
+                : '∞';
+
+            const hwid = user.hwid
+                ? `${user.hwid.slice(0, 10)}…`
+                : '—';
+
+            const avatar = user.photoUrl
+                ? `<img src="${escapeHtml(user.photoUrl)}"
+                    alt=""
+                    style="width:24px;height:24px;border-radius:50%;vertical-align:middle;margin-right:6px;">`
+                : '';
+
+            return `
+                <tr>
+                    <td>${escapeHtml(user.id ?? '—')}</td>
+                    <td>
+                        ${avatar}
+                        @${escapeHtml(user.username || user.telegramId || '—')}
+                    </td>
+                    <td>${escapeHtml(user.firstName || user.name || '—')}</td>
+                    <td>
+                        <span class="plan-badge ${className}">
+                            ${label}
+                        </span>
+                    </td>
+                    <td>${escapeHtml(expiry)}</td>
+                    <td class="hwid-cell">${escapeHtml(hwid)}</td>
+                    <td>${escapeHtml(user.queriesUsed || 0)}</td>
+                    <td>
+                        <div class="actions-cell">
+                            ${user.isAdmin ? '' : `
+                                <button class="edit-btn" type="button"
+                                    onclick="window.togglePremium(${Number(user.id)})">
+                                    <i class="fas ${user.isPremium && !isPlanExpired(user)
+                                        ? 'fa-times'
+                                        : 'fa-star'}"></i>
+                                    ${user.isPremium && !isPlanExpired(user)
+                                        ? 'Отключить'
+                                        : 'Выдать Premium'}
+                                </button>
+                            `}
+                            <button class="edit-btn" type="button"
+                                onclick="window.openSubscriptionModal(${Number(user.id)})">
+                                <i class="fas fa-pen"></i>
+                            </button>
+                            ${user.isAdmin ? '' : `
+                                <button class="revoke" type="button"
+                                    onclick="window.deleteUser(${Number(user.id)})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            `}
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    window.togglePremium = async function (userId) {
+        if (!state.currentUser?.isAdmin) {
+            showNotification('Доступ запрещён');
+            return;
+        }
+
+        const user = state.users.find(
+            item => String(item.id) === String(userId)
+        );
+
+        if (!user) {
+            showNotification('Пользователь не найден');
+            return;
+        }
+
+        if (user.isAdmin) {
+            showNotification('Администратор всегда имеет полный доступ');
+            return;
+        }
+
+        const enable = !user.isPremium || isPlanExpired(user);
+        const plan = enable ? 'pro' : 'basic';
+        const expiry = enable
+            ? new Date(Date.now() + 30 * 86400000).toISOString()
+            : null;
+
+        const result = await updateSubscription(
+            user.id,
+            plan,
+            expiry,
+            user.hwid
+        );
+
+        if (result.success === false) {
+            showNotification(
+                `❌ Ошибка: ${escapeHtml(result.error || 'неизвестная ошибка')}`
+            );
+            return;
+        }
+
+        await loadUsers();
+
+        if (
+            state.currentUser &&
+            String(state.currentUser.id) === String(user.id)
+        ) {
+            state.currentUser =
+                state.users.find(item =>
+                    String(item.id) === String(user.id)
+                ) || state.currentUser;
+
+            updateUIForUser(state.currentUser);
+        }
+
+        await loadAdminUsers();
+
+        showNotification(
+            enable
+                ? '✅ Premium выдан на 30 дней'
+                : '❌ Premium отключён'
+        );
+    };
+
+    window.openSubscriptionModal = function (userId) {
+        if (!state.currentUser?.isAdmin) {
+            showNotification('Доступ запрещён');
+            return;
+        }
+
+        const user = state.users.find(
+            item => String(item.id) === String(userId)
+        );
+
+        if (!user) {
+            showNotification('Пользователь не найден');
+            return;
+        }
+
+        modalUserInfo.textContent =
+            `Пользователь: @${user.username || user.telegramId || '—'}`;
+
+        modalPlanSelect.value =
+            user.plan === 'business'
+                ? 'business'
+                : user.isPremium && !isPlanExpired(user)
+                    ? 'pro'
+                    : 'basic';
+
+        modalExpiryDate.value = user.planExpiry
+            ? new Date(user.planExpiry).toISOString().split('T')[0]
+            : new Date(Date.now() + 30 * 86400000)
+                .toISOString()
+                .split('T')[0];
+
+        modalHwidInput.value = user.hwid || '';
+        subscriptionModal.dataset.userId = String(user.id);
+        subscriptionModal.classList.add('active');
+    };
+
+    window.deleteUser = async function (userId) {
+        if (!state.currentUser?.isAdmin) {
+            showNotification('Доступ запрещён');
+            return;
+        }
+
+        const user = state.users.find(
+            item => String(item.id) === String(userId)
+        );
+
+        if (!user) {
+            showNotification('Пользователь не найден');
+            return;
+        }
+
+        if (user.isAdmin) {
+            showNotification('Нельзя удалить администратора');
+            return;
+        }
+
+        if (!confirm('Удалить пользователя?')) return;
+
+        const result = await deleteUserRequest(user.id);
+
+        if (result.success === false) {
+            showNotification(
+                `❌ Ошибка: ${escapeHtml(result.error || 'неизвестная ошибка')}`
+            );
+            return;
+        }
+
+        await loadUsers();
+        await loadAdminUsers();
+
+        showNotification('✅ Пользователь удалён');
+    };
+
+    // ---------- Events ----------
+    loginBtn.addEventListener('click', async () => {
         loginBtn.disabled = true;
         loginStatus.textContent = 'Авторизация...';
+        loginStatus.className = 'login-status';
 
-        if (window.electronAPI?.openTelegramAuth) {
-            try {
-                const result = await window.electronAPI.openTelegramAuth();
-                if (result.ok && result.user) {
-                    loginWithTelegram(result.user);
-                } else {
-                    loginStatus.textContent = 'Ошибка авторизации';
-                    loginStatus.className = 'login-status error';
-                }
-            } catch {
-                loginStatus.textContent = 'Ошибка вызова Telegram API';
-                loginStatus.className = 'login-status error';
-            } finally {
-                loginBtn.disabled = false;
+        try {
+            if (
+                typeof window.electronAPI?.openTelegramAuth !== 'function'
+            ) {
+                throw new Error(
+                    'Telegram-авторизация доступна только в приложении Electron'
+                );
             }
-        } else {
-            // Фолбэк для разработки в браузере
-            setTimeout(() => {
-                loginWithTelegram({ id: '8148135765', first_name: 'A7L130H', username: 'atilizup' });
-            }, 500);
+
+            const result =
+                await window.electronAPI.openTelegramAuth();
+
+            if (!result?.ok || !result.user) {
+                throw new Error(
+                    result?.error || 'Авторизация отменена'
+                );
+            }
+
+            await loginWithTelegram(result.user);
+        } catch (error) {
+            console.error('[auth]', error);
+
+            loginStatus.textContent =
+                `Ошибка: ${error.message || 'неизвестная ошибка'}`;
+            loginStatus.className = 'login-status error';
+        } finally {
+            loginBtn.disabled = false;
         }
     });
 
     navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const page = this.dataset.page;
-            if (page === 'admin' && !state.currentUser?.isAdmin) {
-                showNotification('Доступ запрещён');
-                return;
-            }
-            switchPage(page);
+        link.addEventListener('click', event => {
+            event.preventDefault();
+            switchPage(link.dataset.page);
         });
     });
 
-    searchBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+    searchBtn.addEventListener('click', event => {
+        event.preventDefault();
         performSearch(searchInput.value);
     });
 
-    searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
+    searchInput.addEventListener('keydown', event => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
             performSearch(searchInput.value);
         }
     });
 
     filterChips.forEach(chip => {
-        chip.addEventListener('click', function() {
-            filterChips.forEach(c => c.classList.remove('active'));
-            this.classList.add('active');
+        chip.addEventListener('click', () => {
+            filterChips.forEach(item => item.classList.remove('active'));
+            chip.classList.add('active');
         });
     });
 
     copyAllBtn.addEventListener('click', copyAllResults);
     exportBtn.addEventListener('click', exportResults);
 
-    clearResultsBtn.addEventListener('click', function() {
+    clearResultsBtn.addEventListener('click', () => {
         state.searchResults = [];
         resultGrid.innerHTML = `
             <div class="no-results">
                 <i class="fas fa-search big-icon"></i>
-                <span style="font-size:16px; color:rgba(255,255,255,0.2);">Выполните поиск</span>
+                <span style="font-size:16px;color:rgba(255,255,255,.2);">
+                    Выполните поиск
+                </span>
             </div>
         `;
         resultsHeader.style.display = 'none';
     });
 
-    document.querySelectorAll('.toggle').forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-        });
+    settingsQuick.addEventListener('click', () => switchPage('settings'));
+    userBadge.addEventListener('click', () => switchPage('account'));
+    logoutBtn.addEventListener('click', () => {
+        saveSession(null);
+        state.isLoggedIn = false;
+        state.currentUser = null;
+        showLoginScreen();
+        loginStatus.textContent = 'Войдите через Telegram';
+        loginStatus.className = 'login-status';
     });
 
-    settingsQuick.addEventListener('click', function() {
-        switchPage('settings');
-    });
-
-    logoutBtn.addEventListener('click', logout);
-
-    adminRefreshBtn.addEventListener('click', function() {
-        loadAdminUsers();
+    adminRefreshBtn.addEventListener('click', async () => {
+        await loadAdminUsers();
         showNotification('<i class="fas fa-sync"></i> Таблица обновлена');
     });
 
-    // МОДАЛЬ ДОБАВЛЕНИЯ ПОЛЬЗОВАТЕЛЯ
-    const addUserModal = document.getElementById('addUserModal');
-    const addTgInput = document.getElementById('addTgInput');
-    const addNameInput = document.getElementById('addNameInput');
-    const addPlanSelect = document.getElementById('addPlanSelect');
-    const addExpiryInput = document.getElementById('addExpiryInput');
-    const addHwidInput = document.getElementById('addHwidInput');
-    const addUserCancel = document.getElementById('addUserCancel');
-    const addUserConfirm = document.getElementById('addUserConfirm');
+    modalCancel.addEventListener('click', () => {
+        subscriptionModal.classList.remove('active');
+    });
 
-    adminAddUserBtn.addEventListener('click', function() {
+    subscriptionModal.addEventListener('click', event => {
+        if (event.target === subscriptionModal) {
+            subscriptionModal.classList.remove('active');
+        }
+    });
+
+    modalConfirm.addEventListener('click', async () => {
+        const userId = subscriptionModal.dataset.userId;
+        const plan = modalPlanSelect.value;
+        const expiry = modalExpiryDate.value;
+        const hwid = modalHwidInput.value.trim() || null;
+
+        if (!userId) {
+            showNotification('Пользователь не выбран');
+            return;
+        }
+
+        if (!expiry && plan !== 'basic') {
+            showNotification('Укажите дату окончания подписки');
+            return;
+        }
+
+        const result = await updateSubscription(
+            userId,
+            plan,
+            expiry ? `${expiry}T00:00:00.000Z` : null,
+            hwid
+        );
+
+        if (result.success === false) {
+            showNotification(
+                `❌ Ошибка: ${escapeHtml(result.error || 'неизвестная ошибка')}`
+            );
+            return;
+        }
+
+        subscriptionModal.classList.remove('active');
+
+        await loadUsers();
+        await loadAdminUsers();
+
+        if (
+            state.currentUser &&
+            String(state.currentUser.id) === String(userId)
+        ) {
+            const fresh = state.users.find(
+                item => String(item.id) === String(userId)
+            );
+
+            if (fresh) {
+                state.currentUser = fresh;
+                updateUIForUser(fresh);
+            }
+        }
+
+        showNotification('✅ Данные пользователя обновлены');
+    });
+
+    adminAddUserBtn.addEventListener('click', () => {
         addTgInput.value = '';
         addNameInput.value = '';
         addPlanSelect.value = 'pro';
-        addExpiryInput.value = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
+        addExpiryInput.value =
+            new Date(Date.now() + 30 * 86400000)
+                .toISOString()
+                .split('T')[0];
         addHwidInput.value = '';
         addUserModal.classList.add('active');
     });
 
-    addUserCancel.addEventListener('click', function() {
+    addUserCancel.addEventListener('click', () => {
         addUserModal.classList.remove('active');
     });
 
-    addUserConfirm.addEventListener('click', function() {
-        const tg = addTgInput.value.trim().replace('@', '');
-        if (!tg) {
+    addUserModal.addEventListener('click', event => {
+        if (event.target === addUserModal) {
+            addUserModal.classList.remove('active');
+        }
+    });
+
+    addUserConfirm.addEventListener('click', async () => {
+        if (!state.currentUser?.isAdmin) {
+            showNotification('Доступ запрещён');
+            return;
+        }
+
+        const telegram = addTgInput.value.trim().replace(/^@/, '');
+
+        if (!telegram) {
             showNotification('Введите Telegram ID или Username');
             return;
         }
 
-        const users = getUsers();
-        if (users.find(u => String(u.telegramId) === tg || u.telegramUsername === tg)) {
+        await loadUsers();
+
+        const exists = state.users.some(user =>
+            String(user.telegramId) === telegram ||
+            String(user.username).toLowerCase() === telegram.toLowerCase()
+        );
+
+        if (exists) {
             showNotification('Пользователь уже существует');
             return;
         }
 
-        const newUser = {
-            id: Date.now(),
-            telegramId: tg,
-            telegramUsername: tg,
-            name: addNameInput.value.trim() || tg,
-            plan: addPlanSelect.value,
-            planExpiry: addExpiryInput.value ? addExpiryInput.value + 'T00:00:00.000Z' : null,
-            queriesUsed: 0,
-            totalQueries: 0,
-            hwid: addHwidInput.value.trim() || null,
+        const plan = addPlanSelect.value;
+        const result = await saveUser({
+            telegramId: telegram,
+            telegramUsername: telegram,
+            username: telegram,
+            name: addNameInput.value.trim() || telegram,
+            plan,
+            planExpiry:
+                plan === 'basic'
+                    ? null
+                    : addExpiryInput.value
+                        ? `${addExpiryInput.value}T00:00:00.000Z`
+                        : null,
+            hwid: addHwidInput.value.trim() || '',
             isAdmin: false,
-            isPremium: addPlanSelect.value === 'pro' || addPlanSelect.value === 'business',
-            createdAt: new Date().toISOString()
-        };
+            isPremium: plan === 'pro' || plan === 'business',
+            photoUrl: ''
+        });
 
-        users.push(newUser);
-        saveUsers(users);
-        loadAdminUsers();
-        addUserModal.classList.remove('active');
-        showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Пользователь добавлен!');
-    });
-
-    modalCancel.addEventListener('click', function() {
-        subscriptionModal.classList.remove('active');
-    });
-
-    // ИСПРАВЛЕННАЯ ЛОГИКА СОХРАНЕНИЯ РЕДАКТИРОВАНИЯ ПОЛЬЗОВАТЕЛЯ
-    modalConfirm.addEventListener('click', function() {
-        const userId = parseInt(subscriptionModal.dataset.userId, 10);
-        const plan = modalPlanSelect.value;
-        const expiry = modalExpiryDate.value;
-        const hwid = modalHwidInput.value.trim() || null;
-        
-        if (!expiry) {
-            showNotification('Укажите дату окончания подписки');
+        if (!result.success) {
+            showNotification(
+                `❌ Ошибка: ${escapeHtml(result.error || 'не удалось создать пользователя')}`
+            );
             return;
         }
-        
-        const users = getUsers();
-        const idx = users.findIndex(u => u.id === userId);
-        if (idx !== -1) {
-            users[idx].plan = plan;
-            users[idx].planExpiry = expiry + 'T00:00:00.000Z';
-            users[idx].hwid = hwid;
-            users[idx].isPremium = plan === 'pro' || plan === 'business';
-            saveUsers(users);
-            loadAdminUsers();
-            if (state.currentUser && state.currentUser.id === userId) {
-                loadCurrentUser();
-            }
-            showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Данные пользователя обновлены');
-            subscriptionModal.classList.remove('active');
-        } else {
-            showNotification('<i class="fas fa-exclamation-triangle" style="color:#ff5f57;"></i> Не удалось найти пользователя');
-        }
+
+        addUserModal.classList.remove('active');
+        await loadAdminUsers();
+
+        showNotification(
+            '<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Пользователь добавлен'
+        );
     });
 
-    clearCacheBtn.addEventListener('click', function() {
+    clearCacheBtn.addEventListener('click', () => {
         localStorage.removeItem('menacesearch_history');
         state.searchHistory = [];
         loadHistory();
-        showNotification('<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Кэш очищен');
+        showNotification(
+            '<i class="fas fa-check-circle" style="color:#4CAF50;"></i> Кэш очищен'
+        );
     });
 
-    if (clearHistoryBtn) clearHistoryBtn.addEventListener('click', clearHistory);
+    clearHistoryBtn?.addEventListener('click', clearHistory);
+    document.getElementById('exportHistoryBtn')?.addEventListener(
+        'click',
+        exportHistory
+    );
 
-    if (saveApiTokenBtn && apiTokenInput) {
-        saveApiTokenBtn.addEventListener('click', function() {
-            state.apiToken = apiTokenInput.value.trim();
-            localStorage.setItem('menacesearch_api_token', state.apiToken);
-            showNotification(state.apiToken ? 'API-токен сохранён' : 'API-токен удалён');
-        });
+    saveApiTokenBtn?.addEventListener('click', () => {
+        state.apiToken = apiTokenInput.value.trim();
+        localStorage.setItem(
+            'menacesearch_api_token',
+            state.apiToken
+        );
+
+        showNotification(
+            state.apiToken
+                ? 'API-токен сохранён'
+                : 'API-токен удалён'
+        );
+    });
+
+    // ---------- Startup ----------
+    async function initializeApp() {
+        initializeUiSettings();
+        loadHistory();
+
+        await initializeHardwareId();
+
+        try {
+            await refreshCurrentUser();
+        } catch (error) {
+            console.error('[startup]', error);
+            showLoginScreen();
+        }
     }
 
-    // ИНИЦИАЛИЗАЦИЯ
-    initUsers();
-    loadHistory();
-    initializeHardwareId().then(loadCurrentUser);
-
-    if (!window.electronAPI) {
-        window.electronAPI = {
-            closeWindow: () => { if (confirm('Закрыть программу?')) window.close(); },
-            minimizeWindow: () => {},
-            maximizeWindow: () => {}
-        };
-    }
-
+    initializeApp();
 })();
 </script>
+
 </body>
 </html>

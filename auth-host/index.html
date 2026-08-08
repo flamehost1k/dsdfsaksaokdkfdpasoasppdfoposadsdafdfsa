@@ -44,7 +44,9 @@
                     params.set(key, String(value));
                 }
             });
-            window.location.href = `${getCallbackUrl()}?${params.toString()}`;
+            const callback = new URL(getCallbackUrl());
+            params.forEach((value, key) => callback.searchParams.set(key, value));
+            window.location.href = callback.toString();
         }
     </script>
 </body>
