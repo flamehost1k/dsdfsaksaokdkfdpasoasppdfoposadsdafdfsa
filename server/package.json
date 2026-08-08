@@ -1,16 +1,42 @@
 {
-  "name": "menacesearch-backend",
-  "version": "1.0.0",
-  "description": "MenaceSEARCH Backend API",
-  "main": "server.js",
+  "name": "menacesearch-pro",
+  "version": "0.1.0",
+  "description": "Лучший поисковик для Telegram",
+  "main": "main.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "electron .",
+    "build": "electron-builder --win portable",
+    "build:installer": "electron-builder --win nsis"
+  },
+  "build": {
+    "appId": "com.menacesearch.pro",
+    "productName": "MenaceSEARCH Pro",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "*.html",
+      "main.js",
+      "preload.js",
+      "auth-preload.js",
+      "telegram.config.js",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icon.ico"
+    }
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.0.0"
   },
   "dependencies": {
-    "better-sqlite3": "^13.0.2",
-    "cors": "^2.8.6",
-    "crypto": "^1.0.1",
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1"
+    "node-machine-id": "^1.1.12"
   }
 }

@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 {
   "name": "menacesearch-pro",
   "version": "0.0.2",
-  "description": "OSINT инструмент с Telegram-авторизацией и HWID",
+  "description": "MenaceSEARCH Pro is a powerful search tool that allows you to quickly find information across multiple platforms. With its intuitive interface and advanced search capabilities, MenaceSEARCH Pro makes it easy to locate the data you need, whether it's on your local machine or online.",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -27,9 +26,7 @@
       "target": [
         {
           "target": "portable",
-          "arch": [
-            "x64"
-          ]
+          "arch": ["x64"]
         }
       ],
       "icon": "assets/icon.ico"
@@ -43,49 +40,3 @@
     "node-machine-id": "^1.1.12"
   }
 }
-=======
-{
-  "name": "menacesearch-pro",
-  "version": "2.1.0",
-  "description": "OSINT инструмент с Telegram-авторизацией и HWID",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "build": "electron-builder --win portable",
-    "build:installer": "electron-builder --win nsis"
-  },
-  "build": {
-    "appId": "com.menacesearch.pro",
-    "productName": "MenaceSEARCH Pro",
-    "directories": {
-      "output": "dist"
-    },
-    "files": [
-      "*.html",
-      "main.js",
-      "preload.js",
-      "auth-preload.js",
-      "telegram.config.js",
-      "assets/**/*"
-    ],
-    "win": {
-      "target": [
-        {
-          "target": "portable",
-          "arch": [
-            "x64"
-          ]
-        }
-      ],
-      "icon": "assets/icon.ico"
-    }
-  },
-  "devDependencies": {
-    "electron": "^30.0.0",
-    "electron-builder": "^24.0.0"
-  },
-  "dependencies": {
-    "node-machine-id": "^1.1.12"
-  }
-}
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49

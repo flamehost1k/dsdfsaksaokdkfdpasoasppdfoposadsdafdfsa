@@ -9,7 +9,6 @@
         /* ===== ГЛОБАЛЬНЫЕ СТИЛИ - РОЗОВАЯ ТЕМА ===== */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-<<<<<<< HEAD
         * {
             margin: 0;
             padding: 0;
@@ -90,123 +89,17 @@
             border-radius: 0;
         }
 
-=======
-        /* ================================
-        ОСНОВА ОКНА
-        ================================ */
-
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
-
-        html,
-        body{
-            width:100%;
-            height:100%;
-            overflow:hidden;
-
-            background:transparent;
-
-            font-family:"Segoe UI",sans-serif;
-
-            user-select:none;
-
-            -webkit-user-select:none;
-
-            -webkit-font-smoothing:antialiased;
-
-            text-rendering:optimizeLegibility;
-        }
-
-        /* ================================
-        КОНТЕЙНЕР ПРИЛОЖЕНИЯ
-        ================================ */
-
-        .app-window{
-
-            position:absolute;
-
-            inset:0;
-
-            display:flex;
-
-            flex-direction:column;
-
-            overflow:hidden;
-
-            border-radius:24px;
-
-            background:#0e1015;
-
-            border:1px solid rgba(255,255,255,.05);
-
-            box-shadow:0 0 0 1px rgba(255,255,255,.03);
-
-            backdrop-filter:blur(30px);
-
-            -webkit-backdrop-filter:blur(30px);
-
-            transition:
-                border-radius .18s ease,
-                inset .18s ease,
-                box-shadow .18s ease;
-        }
-
-        /* ================================
-        РАЗВЕРНУТОЕ ОКНО
-        ================================ */
-
-        .app-window.maximized{
-
-            inset:0;
-
-            border-radius:0;
-        }
-
-        /* ================================
-        ШАПКА
-        ================================ */
-
-        .titlebar{
-
-            height:52px;
-
-            display:flex;
-
-            align-items:center;
-
-            justify-content:space-between;
-
-            padding:0 16px;
-
-            background:rgba(255,255,255,.03);
-
-            border-bottom:1px solid rgba(255,255,255,.05);
-
-            -webkit-app-region:drag;
-        }
-
-        /* ===== ЗАГОЛОВОК ОКНА ===== */
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         .window-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 14px 20px 10px 20px;
-<<<<<<< HEAD
             background: linear-gradient(100deg, #100a11 0%, #0d1018 52%, #0a0b10 100%) !important;
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-=======
-            background: #0a080c !important;
-            border-bottom: 1px solid rgba(255, 20, 120, 0.04);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             flex-shrink: 0;
             min-height: 52px;
             backdrop-filter: none !important;
             -webkit-backdrop-filter: none !important;
-<<<<<<< HEAD
             -webkit-app-region: drag;
             cursor: grab;
         }
@@ -217,108 +110,6 @@
             display: flex;
             gap: 8px;
             -webkit-app-region: no-drag;
-=======
-        }
-
-        /* ================================
-        КНОПКИ
-        ================================ */
-
-        .window-controls{
-
-            display:flex;
-
-            gap:8px;
-
-            -webkit-app-region:no-drag;
-        }
-
-        .window-btn{
-
-            width:34px;
-
-            height:34px;
-
-            border:none;
-
-            outline:none;
-
-            border-radius:10px;
-
-            cursor:pointer;
-
-            background:transparent;
-
-            color:#fff;
-
-            transition:.18s;
-        }
-
-        .window-btn:hover{
-
-            background:rgba(255,255,255,.08);
-        }
-
-        .window-btn.close:hover{
-            background:#e81123;
-        }
-
-        /* ================================
-        ОСНОВНОЙ КОНТЕНТ
-        ================================ */
-
-        .content{
-
-            flex:1;
-
-            overflow:auto;
-
-            background:#0f1117;
-        }
-
-        /* ================================
-        СКРОЛЛ
-        ================================ */
-
-        ::-webkit-scrollbar{
-
-            width:10px;
-        }
-
-        ::-webkit-scrollbar-track{
-
-            background:transparent;
-        }
-
-        ::-webkit-scrollbar-thumb{
-
-            border-radius:20px;
-
-            background:rgba(255,255,255,.12);
-        }
-
-        ::-webkit-scrollbar-thumb:hover{
-
-            background:rgba(255,255,255,.22);
-        }
-
-        body::before{
-
-            content:"";
-
-            position:fixed;
-
-            inset:0;
-
-            pointer-events:none;
-
-            border-radius:24px;
-
-            box-shadow:
-                inset 0 0 0 1px rgba(255,255,255,.05);
-
-            opacity:.8;
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
 
         .window-controls .dot {
@@ -327,7 +118,6 @@
             border-radius: 50%;
             transition: all 0.2s;
             cursor: pointer;
-<<<<<<< HEAD
             border: 0;
             padding: 0;
             appearance: none;
@@ -338,10 +128,6 @@
             outline: 2px solid rgba(255, 45, 149, .9);
             outline-offset: 3px;
         }
-=======
-        }
-        .window-controls .dot:hover { transform: scale(1.15); }
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         .window-controls .dot.close { background: #ff5f57; }
         .window-controls .dot.close:hover { background: #ff3b30; }
         .window-controls .dot.minimize { background: #ffbd2e; }
@@ -358,10 +144,7 @@
             left: 50%;
             transform: translateX(-50%);
             white-space: nowrap;
-<<<<<<< HEAD
             text-shadow: 0 0 20px rgba(255, 45, 149, .18);
-=======
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         .window-title span { color: #ff2d95; font-weight: 700; }
 
@@ -375,10 +158,7 @@
             cursor: pointer;
             transition: all 0.2s;
             font-size: 14px;
-<<<<<<< HEAD
             -webkit-app-region: no-drag;
-=======
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         .window-actions .icon-btn:hover {
             background: rgba(255, 20, 120, 0.06);
@@ -459,40 +239,6 @@
         }
         .login-box .hwid-display i { color: #ff2d95; margin-right: 8px; }
 
-<<<<<<< HEAD
-=======
-        .login-box .input-group {
-            display: flex;
-            align-items: center;
-            gap: 0;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 20, 120, 0.04);
-            border-radius: 16px;
-            padding: 4px;
-            transition: all 0.3s;
-            margin-bottom: 12px;
-        }
-        .login-box .input-group:focus-within {
-            border-color: rgba(255, 45, 149, 0.15);
-            box-shadow: 0 0 30px rgba(255, 45, 149, 0.02);
-        }
-        .login-box .input-group i {
-            padding: 0 0 0 16px;
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 16px;
-        }
-        .login-box .input-group input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 15px;
-            padding: 14px 16px;
-            font-weight: 400;
-        }
-        .login-box .input-group input::placeholder { color: rgba(255, 255, 255, 0.12); }
-
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         .login-box .login-btn {
             width: 100%;
             background: linear-gradient(135deg, #ff2d95, #d41a7a);
@@ -646,16 +392,6 @@
             overflow: hidden;
             flex-shrink: 0;
         }
-<<<<<<< HEAD
-=======
-        .nav-right .user-badge .avatar img,
-        .profile-card .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         .nav-right .user-badge .name {
             color: rgba(255, 255, 255, 0.7);
             font-size: 13px;
@@ -667,12 +403,9 @@
             background: rgba(255, 45, 149, 0.06);
             padding: 2px 10px;
             border-radius: 50px;
-<<<<<<< HEAD
             display: flex;
             align-items: center;
             gap: 5px;
-=======
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         .nav-right .user-badge .plan.expired {
             color: #ff5f57;
@@ -713,7 +446,6 @@
             text-align: center;
             padding: 10px 0 20px 0;
         }
-<<<<<<< HEAD
         
         .search-hero h1 {
             font-size: 48px;
@@ -744,21 +476,6 @@
             color: rgba(255, 255, 255, 0.3);
             font-size: 15px;
             margin-top: 6px;
-=======
-        .search-hero h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -2px;
-            background: linear-gradient(135deg, #fff 20%, #ff2d95 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .search-hero p {
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 15px;
-            margin-top: 4px;
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
 
         .search-box {
@@ -767,26 +484,16 @@
             gap: 0;
             background: rgba(255, 255, 255, 0.02);
             border-radius: 20px;
-<<<<<<< HEAD
             border: 1px solid rgba(255, 20, 120, 0.08);
-=======
-            border: 1px solid rgba(255, 20, 120, 0.04);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             padding: 4px;
             max-width: 780px;
             margin: 16px auto 0 auto;
             transition: all 0.3s;
         }
         .search-box:focus-within {
-<<<<<<< HEAD
             border-color: rgba(255, 45, 149, 0.3);
             background: rgba(255, 255, 255, 0.03);
             box-shadow: 0 0 40px rgba(255, 45, 149, 0.08);
-=======
-            border-color: rgba(255, 45, 149, 0.15);
-            background: rgba(255, 255, 255, 0.03);
-            box-shadow: 0 0 40px rgba(255, 45, 149, 0.02);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         .search-box input {
             flex: 1;
@@ -797,37 +504,9 @@
             padding: 16px 20px;
             font-weight: 400;
             min-width: 120px;
-<<<<<<< HEAD
             outline: none;
         }
         .search-box input::placeholder { color: rgba(255, 255, 255, 0.15); font-weight: 300; }
-=======
-        }
-        .search-box input::placeholder { color: rgba(255, 255, 255, 0.1); font-weight: 300; }
-        .search-box .search-options {
-            display: flex;
-            gap: 6px;
-            padding: 0 6px;
-        }
-        .search-box .search-options select {
-            background: rgba(255, 255, 255, 0.02);
-            border: none;
-            color: rgba(255, 255, 255, 0.3);
-            padding: 8px 12px;
-            border-radius: 12px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .search-box .search-options select:hover {
-            background: rgba(255, 255, 255, 0.03);
-            color: #fff;
-        }
-        .search-box .search-options select option {
-            background: #1a0e16;
-            color: #fff;
-        }
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         .search-box button {
             background: linear-gradient(135deg, #ff2d95, #d41a7a);
             border: none;
@@ -842,19 +521,11 @@
             align-items: center;
             gap: 10px;
             white-space: nowrap;
-<<<<<<< HEAD
             box-shadow: 0 4px 20px rgba(255, 45, 149, 0.12);
         }
         .search-box button:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(255, 45, 149, 0.25);
-=======
-            box-shadow: 0 4px 20px rgba(255, 45, 149, 0.06);
-        }
-        .search-box button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(255, 45, 149, 0.12);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         .search-box button:active { transform: scale(0.97); }
 
@@ -868,11 +539,7 @@
         .filter-chips .chip {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 20, 120, 0.03);
-<<<<<<< HEAD
             color: rgba(255, 255, 255, 0.3);
-=======
-            color: rgba(255, 255, 255, 0.2);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             padding: 6px 18px;
             border-radius: 50px;
             font-size: 13px;
@@ -881,21 +548,12 @@
             font-weight: 400;
         }
         .filter-chips .chip:hover {
-<<<<<<< HEAD
             background: rgba(255, 255, 255, 0.04);
             color: rgba(255, 255, 255, 0.6);
         }
         .filter-chips .chip.active {
             background: rgba(255, 45, 149, 0.08);
             border-color: rgba(255, 45, 149, 0.2);
-=======
-            background: rgba(255, 255, 255, 0.03);
-            color: rgba(255, 255, 255, 0.4);
-        }
-        .filter-chips .chip.active {
-            background: rgba(255, 45, 149, 0.06);
-            border-color: rgba(255, 45, 149, 0.1);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             color: #ff2d95;
         }
 
@@ -905,11 +563,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 12px 0 8px 0;
-<<<<<<< HEAD
             border-bottom: 1px solid rgba(255, 20, 120, 0.04);
-=======
-            border-bottom: 1px solid rgba(255, 20, 120, 0.02);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             flex-wrap: wrap;
             gap: 8px;
         }
@@ -934,11 +588,7 @@
         .results-header .actions button {
             background: rgba(255, 255, 255, 0.02);
             border: none;
-<<<<<<< HEAD
             color: rgba(255, 255, 255, 0.4);
-=======
-            color: rgba(255, 255, 255, 0.2);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             padding: 6px 14px;
             border-radius: 10px;
             font-size: 13px;
@@ -949,11 +599,7 @@
             gap: 6px;
         }
         .results-header .actions button:hover {
-<<<<<<< HEAD
             background: rgba(255, 255, 255, 0.05);
-=======
-            background: rgba(255, 255, 255, 0.03);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             color: #fff;
         }
 
@@ -981,22 +627,10 @@
         }
         .result-card:hover {
             background: rgba(255, 255, 255, 0.03);
-<<<<<<< HEAD
             border-color: rgba(255, 20, 120, 0.08);
             transform: translateX(4px);
             box-shadow: 0 4px 30px rgba(0,0,0,0.2);
         }
-=======
-            border-color: rgba(255, 20, 120, 0.06);
-            transform: translateX(4px);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
-        }
-        .result-card:nth-child(1) { animation-delay: 0.02s; }
-        .result-card:nth-child(2) { animation-delay: 0.04s; }
-        .result-card:nth-child(3) { animation-delay: 0.06s; }
-        .result-card:nth-child(4) { animation-delay: 0.08s; }
-        .result-card:nth-child(5) { animation-delay: 0.10s; }
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
 
         .result-card .card-header {
             display: flex;
@@ -1012,13 +646,8 @@
         }
         .result-card .card-header .source i { margin-right: 6px; }
         .result-card .card-header .tag {
-<<<<<<< HEAD
             background: rgba(255, 255, 255, 0.03);
             color: rgba(255, 255, 255, 0.3);
-=======
-            background: rgba(255, 255, 255, 0.02);
-            color: rgba(255, 255, 255, 0.15);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             padding: 2px 12px;
             border-radius: 50px;
             font-size: 11px;
@@ -1040,20 +669,6 @@
             margin: 2px 4px 2px 0;
             border: 1px solid rgba(255, 255, 255, 0.02);
         }
-<<<<<<< HEAD
-=======
-        .result-card .data-row .field strong {
-            color: rgba(255, 255, 255, 0.25);
-            font-weight: 400;
-            font-size: 12px;
-        }
-        .result-card .data-row .field .value {
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 400;
-            font-size: 13px;
-            word-break: break-all;
-        }
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
 
         .result-card .card-footer {
             margin-top: 12px;
@@ -1067,20 +682,12 @@
         }
         .result-card .card-footer .meta {
             font-size: 12px;
-<<<<<<< HEAD
             color: rgba(255, 255, 255, 0.2);
-=======
-            color: rgba(255, 255, 255, 0.08);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         .result-card .card-footer .copy-btn {
             background: rgba(255, 255, 255, 0.02);
             border: none;
-<<<<<<< HEAD
             color: rgba(255, 255, 255, 0.3);
-=======
-            color: rgba(255, 255, 255, 0.15);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             padding: 4px 14px;
             border-radius: 8px;
             font-size: 12px;
@@ -1088,37 +695,24 @@
             transition: all 0.2s;
         }
         .result-card .card-footer .copy-btn:hover {
-<<<<<<< HEAD
             background: rgba(255, 255, 255, 0.05);
-=======
-            background: rgba(255, 255, 255, 0.03);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             color: #fff;
         }
         .result-card .card-footer .copy-btn.copied { color: #ff2d95; }
 
         .no-results {
             text-align: center;
-<<<<<<< HEAD
             color: rgba(255, 255, 255, 0.2);
-=======
-            color: rgba(255, 255, 255, 0.06);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             padding: 60px 0;
         }
         .no-results i {
             font-size: 48px;
-<<<<<<< HEAD
             color: rgba(255, 20, 120, 0.1);
-=======
-            color: rgba(255, 20, 120, 0.02);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             margin-bottom: 16px;
             display: block;
         }
         .no-results .big-icon {
             font-size: 64px;
-<<<<<<< HEAD
             color: rgba(255, 45, 149, 0.15);
         }
 
@@ -1129,17 +723,10 @@
             gap: 10px;
             margin-top: 10px;
         }
-=======
-            color: rgba(255, 45, 149, 0.02);
-        }
-
-        /* ===== ИСТОРИЯ ===== */
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         .history-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-<<<<<<< HEAD
             padding: 14px 20px;
             background: rgba(255, 255, 255, 0.02);
             border-radius: 16px;
@@ -1213,19 +800,6 @@
             color: #fff;
             border-color: rgba(255, 45, 149, 0.3);
         }
-=======
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 20, 120, 0.02);
-            margin-bottom: 8px;
-            transition: all 0.2s;
-        }
-        .history-item:hover { background: rgba(255, 255, 255, 0.03); }
-        .history-item .query { color: rgba(255, 255, 255, 0.7); font-weight: 500; }
-        .history-item .time { color: rgba(255, 255, 255, 0.08); font-size: 13px; }
-        .history-item .status { color: #ff2d95; font-size: 13px; }
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
 
         /* ===== НАСТРОЙКИ ===== */
         .settings-grid {
@@ -1254,11 +828,7 @@
             border-bottom: 1px solid rgba(255, 20, 120, 0.02);
         }
         .settings-card .setting-row:last-child { border-bottom: none; }
-<<<<<<< HEAD
         .settings-card .setting-row label { color: rgba(255, 255, 255, 0.4); font-size: 14px; }
-=======
-        .settings-card .setting-row label { color: rgba(255, 255, 255, 0.2); font-size: 14px; }
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         .settings-card .setting-row input,
         .settings-card .setting-row select {
             background: rgba(255, 255, 255, 0.02);
@@ -1268,7 +838,6 @@
             padding: 6px 12px;
             font-size: 13px;
             width: 160px;
-<<<<<<< HEAD
             outline: none;
         }
         .settings-card .setting-row input:focus {
@@ -1294,37 +863,15 @@
             background: linear-gradient(135deg, #ff4aa2, #e62284);
             border-color: rgba(255,82,169,.7);
             box-shadow: 0 4px 12px rgba(255,45,149,.25);
-=======
-        }
-        .settings-card .setting-row input:focus {
-            border-color: rgba(255, 45, 149, 0.1);
-        }
-        .settings-card .toggle {
-            width: 44px;
-            height: 24px;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 50px;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s;
-        }
-        .settings-card .toggle.active {
-            background: rgba(255, 45, 149, 0.15);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         .settings-card .toggle .thumb {
             width: 20px;
             height: 20px;
-<<<<<<< HEAD
             background: #c8cfdb;
-=======
-            background: rgba(255, 255, 255, 0.15);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             border-radius: 50%;
             position: absolute;
             top: 2px;
             left: 2px;
-<<<<<<< HEAD
             box-shadow: 0 2px 5px rgba(0,0,0,.25);
             transition: transform .22s cubic-bezier(.22,1,.36,1), background .2s ease;
         }
@@ -1395,19 +942,10 @@
         [data-theme="light"] .settings-card .toggle.active { background:linear-gradient(135deg,#ff4aa2,#e62284); border-color:#ed3f94; }
         [data-theme="light"] .main-content :not(button)[style*="color:#fff"],
         [data-theme="light"] .main-content :not(button)[style*="color: #fff"] { color:#182235 !important; }
-=======
-            transition: all 0.3s;
-        }
-        .settings-card .toggle.active .thumb {
-            left: 22px;
-            background: #ff2d95;
-        }
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
 
         /* ===== АККАУНТ ===== */
         .profile-card {
             display: flex;
-<<<<<<< HEAD
             gap: 24px;
             padding: 24px;
             background: linear-gradient(135deg, rgba(255, 45, 149, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
@@ -1422,21 +960,6 @@
             height: 84px;
             border-radius: 50%;
             background: linear-gradient(135deg, #ff2d95, #8a0e4e);
-=======
-            gap: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 20, 120, 0.02);
-            align-items: center;
-            backdrop-filter: none !important;
-        }
-        .profile-card .avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff2d95, #d41a7a);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1445,7 +968,6 @@
             font-weight: 700;
             overflow: hidden;
             flex-shrink: 0;
-<<<<<<< HEAD
             box-shadow: 0 0 25px rgba(255, 45, 149, 0.3);
             border: 2px solid rgba(255, 255, 255, 0.1);
         }
@@ -1469,40 +991,16 @@
             background: rgba(255, 95, 87, 0.1);
             color: #ff5f57;
             border-color: rgba(255, 95, 87, 0.2);
-=======
-        }
-        .profile-card .info h3 { color: #fff; font-size: 22px; font-weight: 600; }
-        .profile-card .info p { color: rgba(255, 255, 255, 0.15); font-size: 14px; }
-        .profile-card .info .plan-badge {
-            display: inline-block;
-            background: rgba(255, 45, 149, 0.06);
-            color: #ff2d95;
-            padding: 2px 16px;
-            border-radius: 50px;
-            font-size: 13px;
-            font-weight: 500;
-            margin-top: 4px;
-        }
-        .profile-card .info .plan-badge.expired {
-            background: rgba(255, 95, 87, 0.06);
-            color: #ff5f57;
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
 
         .stats-grid {
             display: grid;
-<<<<<<< HEAD
             grid-template-columns: repeat(4, 1fr);
             gap: 14px;
-=======
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 12px;
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             margin-top: 20px;
         }
         .stat-card {
             background: rgba(255, 255, 255, 0.02);
-<<<<<<< HEAD
             border-radius: 16px;
             padding: 20px 16px;
             border: 1px solid rgba(255, 20, 120, 0.04);
@@ -1531,23 +1029,6 @@
             font-size: 12px;
             margin-top: 4px;
             font-weight: 500;
-=======
-            border-radius: 12px;
-            padding: 16px;
-            border: 1px solid rgba(255, 20, 120, 0.02);
-            text-align: center;
-            backdrop-filter: none !important;
-        }
-        .stat-card .number {
-            font-size: 28px;
-            font-weight: 700;
-            color: #ff2d95;
-        }
-        .stat-card .label {
-            color: rgba(255, 255, 255, 0.1);
-            font-size: 13px;
-            margin-top: 4px;
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
 
         /* ===== АДМИН-ПАНЕЛЬ ===== */
@@ -1558,39 +1039,22 @@
         }
         .admin-users-table th {
             text-align: left;
-<<<<<<< HEAD
             color: rgba(255, 255, 255, 0.3);
-=======
-            color: rgba(255, 255, 255, 0.15);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             font-weight: 500;
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-<<<<<<< HEAD
             padding: 10px 12px;
             border-bottom: 1px solid rgba(255, 20, 120, 0.04);
         }
         .admin-users-table td {
             padding: 12px;
             color: rgba(255, 255, 255, 0.6);
-=======
-            padding: 8px 12px;
-            border-bottom: 1px solid rgba(255, 20, 120, 0.02);
-        }
-        .admin-users-table td {
-            padding: 10px 12px;
-            color: rgba(255, 255, 255, 0.4);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             font-size: 14px;
             border-bottom: 1px solid rgba(255, 20, 120, 0.02);
         }
         .admin-users-table tr:hover td {
-<<<<<<< HEAD
             background: rgba(255, 255, 255, 0.015);
-=======
-            background: rgba(255, 255, 255, 0.01);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         .admin-users-table .actions-cell {
             display: flex;
@@ -1598,22 +1062,14 @@
             flex-wrap: wrap;
         }
         .admin-users-table .actions-cell button {
-<<<<<<< HEAD
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
             color: rgba(255, 255, 255, 0.5);
             padding: 5px 12px;
-=======
-            background: rgba(255, 255, 255, 0.02);
-            border: none;
-            color: rgba(255, 255, 255, 0.2);
-            padding: 4px 12px;
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             border-radius: 8px;
             font-size: 12px;
             cursor: pointer;
             transition: all 0.2s;
-<<<<<<< HEAD
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -1654,47 +1110,11 @@
         .admin-users-table .plan-badge.business {
             background: rgba(108, 92, 231, 0.1);
             color: #a29bfe;
-=======
-        }
-        .admin-users-table .actions-cell button:hover {
-            background: rgba(255, 255, 255, 0.03);
-            color: #fff;
-        }
-        .admin-users-table .actions-cell button.grant { color: #ff2d95; }
-        .admin-users-table .actions-cell button.grant:hover { background: rgba(255, 45, 149, 0.04); }
-        .admin-users-table .actions-cell button.revoke { color: #ff5f57; }
-        .admin-users-table .actions-cell button.revoke:hover { background: rgba(255, 95, 87, 0.04); }
-        .admin-users-table .plan-badge {
-            padding: 2px 12px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-        .admin-users-table .plan-badge.basic {
-            background: rgba(255, 255, 255, 0.02);
-            color: rgba(255, 255, 255, 0.15);
-        }
-        .admin-users-table .plan-badge.pro {
-            background: rgba(255, 45, 149, 0.06);
-            color: #ff2d95;
-        }
-        .admin-users-table .plan-badge.business {
-            background: rgba(108, 92, 231, 0.06);
-            color: #6c5ce7;
-        }
-        .admin-users-table .plan-badge.expired {
-            background: rgba(255, 95, 87, 0.06);
-            color: #ff5f57;
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         .admin-users-table .hwid-cell {
             font-family: monospace;
             font-size: 11px;
-<<<<<<< HEAD
             color: rgba(255, 255, 255, 0.2);
-=======
-            color: rgba(255, 255, 255, 0.1);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             max-width: 120px;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -1709,11 +1129,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-<<<<<<< HEAD
             background: rgba(0, 0, 0, 0.75);
-=======
-            background: rgba(0, 0, 0, 0.7);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             backdrop-filter: blur(12px);
             z-index: 1000;
             justify-content: center;
@@ -1725,22 +1141,15 @@
             border-radius: 24px;
             padding: 32px;
             max-width: 440px;
-<<<<<<< HEAD
             width: 90%;
             border: 1px solid rgba(255, 20, 120, 0.12);
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 45, 149, 0.05);
-=======
-            width: 100%;
-            border: 1px solid rgba(255, 20, 120, 0.04);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         .modal-box h3 {
             color: #fff;
             font-size: 20px;
             font-weight: 600;
             margin-bottom: 8px;
-<<<<<<< HEAD
             display: flex;
             align-items: center;
             gap: 10px;
@@ -1748,42 +1157,25 @@
         .modal-box h3 i { color: #ff2d95; }
         .modal-box p {
             color: rgba(255, 255, 255, 0.3);
-=======
-        }
-        .modal-box p {
-            color: rgba(255, 255, 255, 0.15);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             font-size: 14px;
             margin-bottom: 20px;
         }
         .modal-box .form-group { margin-bottom: 16px; }
         .modal-box .form-group label {
             display: block;
-<<<<<<< HEAD
             color: rgba(255, 255, 255, 0.4);
             font-size: 13px;
             margin-bottom: 6px;
-=======
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 13px;
-            margin-bottom: 4px;
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         .modal-box .form-group input,
         .modal-box .form-group select {
             width: 100%;
-<<<<<<< HEAD
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 20, 120, 0.08);
-=======
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 20, 120, 0.03);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             border-radius: 12px;
             color: #fff;
             padding: 10px 14px;
             font-size: 14px;
-<<<<<<< HEAD
             outline: none;
         }
         .modal-box .form-group select option {
@@ -1793,32 +1185,19 @@
         .modal-box .form-group input:focus,
         .modal-box .form-group select:focus {
             border-color: rgba(255, 45, 149, 0.3);
-=======
-        }
-        .modal-box .form-group input:focus {
-            border-color: rgba(255, 45, 149, 0.1);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         .modal-box .modal-actions {
             display: flex;
             gap: 8px;
             justify-content: flex-end;
-<<<<<<< HEAD
             margin-top: 24px;
         }
         .modal-box .modal-actions button {
             padding: 10px 24px;
-=======
-            margin-top: 20px;
-        }
-        .modal-box .modal-actions button {
-            padding: 8px 24px;
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             border-radius: 12px;
             border: none;
             cursor: pointer;
             font-size: 14px;
-<<<<<<< HEAD
             font-weight: 600;
             transition: all 0.2s;
             display: inline-flex;
@@ -1832,24 +1211,12 @@
         .modal-box .modal-actions .cancel:hover {
             background: rgba(255, 255, 255, 0.08);
             color: #fff;
-=======
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        .modal-box .modal-actions .cancel {
-            background: rgba(255, 255, 255, 0.02);
-            color: rgba(255, 255, 255, 0.2);
-        }
-        .modal-box .modal-actions .cancel:hover {
-            background: rgba(255, 255, 255, 0.03);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         .modal-box .modal-actions .confirm {
             background: linear-gradient(135deg, #ff2d95, #d41a7a);
             color: #fff;
         }
         .modal-box .modal-actions .confirm:hover {
-<<<<<<< HEAD
             box-shadow: 0 4px 20px rgba(255, 45, 149, 0.2);
         }
 
@@ -1927,57 +1294,6 @@
             .app-window { width: 96vw; height: 90vh; max-height: 90vh; }
             .settings-grid { grid-template-columns: 1fr; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
-=======
-            box-shadow: 0 4px 20px rgba(255, 45, 149, 0.1);
-        }
-
-        /* ===== ПРОЗРАЧНОСТЬ ВОКРУГ ОКНА, НЕПРОЗРАЧНОСТЬ ВНУТРИ ===== */
-        html,
-        body{
-            width:100%;
-            height:100%;
-            margin:0;
-            overflow:hidden;
-            background:transparent;
-        }
-
-        /* Навигация — непрозрачная */
-        .nav-bar, .window-header {
-            background: #0a080c !important;
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
-        }
-
-        /* Карточки — непрозрачные */
-        .result-card, .settings-card, .profile-card, .stat-card {
-            background: rgba(255, 255, 255, 0.02) !important;
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
-        }
-
-        /* Экран входа */
-        .login-screen {
-            background: #0a080c !important;
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
-        }
-
-        /* Основной контент */
-        .main-content {
-            background: #0a080c !important;
-        }
-
-        /* Убираем рамку при максимизации */
-        .app-window.maximized {
-            border-radius: 0 !important;
-            border: none !important;
-        }
-
-        @media screen and (max-width: 1024px) {
-            .app-window { width: 96vw; height: 90vh; max-height: 90vh; }
-            .settings-grid { grid-template-columns: 1fr; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
         @media screen and (max-width: 768px) {
             .app-window { border-radius: 20px; width: 98vw; height: 95vh; }
@@ -1988,30 +1304,11 @@
             .search-box { flex-wrap: wrap; border-radius: 16px; }
             .search-box input { padding: 12px 16px; font-size: 14px; width: 100%; }
             .search-box button { padding: 12px 24px; font-size: 14px; width: 100%; justify-content: center; }
-<<<<<<< HEAD
             .search-hero h1 { font-size: 32px; }
             .profile-card { flex-direction: column; text-align: center; }
             .profile-card .info { display: flex; flex-direction: column; align-items: center; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .login-box { padding: 24px; }
-=======
-            .search-box .search-options { padding: 4px 8px 8px 8px; width: 100%; justify-content: center; }
-            .search-hero h1 { font-size: 28px; }
-            .profile-card { flex-direction: column; text-align: center; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            .admin-users-table { font-size: 12px; }
-            .admin-users-table td, .admin-users-table th { padding: 6px 8px; }
-            .login-box { padding: 24px; }
-            .login-box h1 { font-size: 24px; }
-        }
-        @media screen and (max-width: 480px) {
-            .app-window { border-radius: 12px; }
-            .window-controls .dot { width: 12px; height: 12px; }
-            .search-hero h1 { font-size: 22px; }
-            .result-card { padding: 12px 14px; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .login-box { padding: 16px; }
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
     </style>
 </head>
@@ -2021,15 +1318,9 @@
     <!-- macOS Заголовок -->
     <div class="window-header" id="windowHeader">
         <div class="window-controls">
-<<<<<<< HEAD
             <button class="dot close" id="closeBtn" type="button" title="Закрыть" aria-label="Закрыть"></button>
             <button class="dot minimize" id="minimizeBtn" type="button" title="Свернуть" aria-label="Свернуть"></button>
             <button class="dot maximize" id="maximizeBtn" type="button" title="Развернуть" aria-label="Развернуть окно"></button>
-=======
-            <div class="dot close" id="closeBtn" title="Закрыть"></div>
-            <div class="dot minimize" id="minimizeBtn" title="Свернуть"></div>
-            <div class="dot maximize" id="maximizeBtn" title="Развернуть"></div>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         </div>
         <div class="window-title">Menace<span>SEARCH</span> Pro</div>
         <div class="window-actions">
@@ -2076,11 +1367,7 @@
                 <div class="user-badge" id="userBadge">
                     <div class="avatar" id="userAvatar">M</div>
                     <span class="name" id="userName">Пользователь</span>
-<<<<<<< HEAD
                     <span class="plan" id="userPlan"><i class="fas fa-user-check"></i> Бесплатно</span>
-=======
-                    <span class="plan" id="userPlan">Бесплатно</span>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
                 </div>
                 <span class="status-dot"></span>
             </div>
@@ -2094,23 +1381,6 @@
             </div>
             <div class="search-box" id="searchBox">
                 <input type="text" id="searchInput" placeholder="example@gmail.com, +7 900 123-45-67..." />
-<<<<<<< HEAD
-=======
-                <div class="search-options">
-                    <select id="searchType">
-                        <option value="auto">Авто</option>
-                        <option value="email">Email</option>
-                        <option value="phone">Телефон</option>
-                        <option value="login">Логин</option>
-                        <option value="name">ФИО</option>
-                    </select>
-                    <select id="searchSource">
-                        <option value="both">Все источники</option>
-                        <option value="leakosint">LeakOSINT</option>
-                        <option value="osintkit">OSINTKit</option>
-                    </select>
-                </div>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
                 <button id="searchBtn"><i class="fas fa-arrow-right"></i> Найти</button>
             </div>
             <div class="filter-chips" id="filterChips">
@@ -2135,17 +1405,12 @@
                 <div class="result-grid" id="resultGrid">
                     <div class="no-results">
                         <i class="fas fa-search big-icon"></i>
-<<<<<<< HEAD
                         <span style="font-size:16px; color:rgba(255,255,255,0.2);">Выполните поиск</span>
-=======
-                        <span style="font-size:16px; color:rgba(255,255,255,0.04);">Выполните поиск</span>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
                     </div>
                 </div>
             </div>
         </div>
 
-<<<<<<< HEAD
         <!-- СТРАНИЦА: ИСТОРИЯ -->
         <div class="page" id="page-history">
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
@@ -2162,59 +1427,28 @@
                         <option value="html" style="background:#141014; color:#fff;">HTML</option>
                     </select>
                     <button id="clearHistoryBtn" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,20,120,0.08); color:#ff5f57; padding:8px 16px; border-radius:12px; cursor:pointer; font-size:13px; transition:all 0.2s;">
-=======
-        <!-- СТРАНИЦА: ИСТОРИЯ (ИСПРАВЛЕНА - ОБЁРНУТА В .page) -->
-        <div class="page" id="page-history">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
-                <h3 style="color:rgba(255,255,255,0.7); font-weight:600; font-size:20px;">
-                    <i class="fas fa-clock" style="color:#ff2d95;"></i> История запросов
-                </h3>
-                <div style="display:flex; gap:8px;">
-                    <button id="exportHistoryBtn" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,20,120,0.04); color:rgba(255,255,255,0.3); padding:8px 18px; border-radius:12px; cursor:pointer; font-size:13px; transition:all 0.2s;">
-                        <i class="fas fa-download"></i> Скачать
-                    </button>
-                    <select id="historyFormatSelect" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,20,120,0.04); color:rgba(255,255,255,0.3); padding:8px 12px; border-radius:12px; cursor:pointer; font-size:13px;">
-                        <option value="json">JSON</option>
-                        <option value="csv">CSV</option>
-                        <option value="html">HTML</option>
-                    </select>
-                    <button id="clearHistoryBtn" style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,20,120,0.04); color:rgba(255,255,255,0.15); padding:8px 18px; border-radius:12px; cursor:pointer; font-size:13px; transition:all 0.2s;">
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
             </div>
-<<<<<<< HEAD
             <div id="historyList" class="history-list-container">
                 <div class="no-results" style="padding:40px 0;">
                     <i class="fas fa-clock"></i>
                     <span style="font-size:16px; color:rgba(255,255,255,0.2);">История пуста</span>
-=======
-            <div id="historyList">
-                <div class="no-results" style="padding:30px 0;">
-                    <i class="fas fa-clock"></i>
-                    <span style="font-size:16px; color:rgba(255,255,255,0.04);">История пуста</span>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
                 </div>
             </div>
         </div>
 
         <!-- СТРАНИЦА: НАСТРОЙКИ -->
         <div class="page" id="page-settings">
-<<<<<<< HEAD
             <h3 style="color:#fff; font-weight:700; font-size:22px; margin-bottom:20px;">
                 <i class="fas fa-sliders-h" style="color:#ff2d95; margin-right:8px;"></i> Настройки
-=======
-            <h3 style="color:rgba(255,255,255,0.7); font-weight:600; font-size:20px; margin-bottom:16px;">
-                <i class="fas fa-sliders-h" style="color:#ff2d95;"></i> Настройки
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             </h3>
             <div class="settings-grid">
                 <div class="settings-card">
                     <h4>Интерфейс</h4>
                     <div class="setting-row">
                         <label>Тёмная тема</label>
-<<<<<<< HEAD
                         <button class="toggle active" id="darkToggle" type="button" role="switch" aria-checked="true" aria-label="Тёмная тема">
                             <div class="thumb"></div>
                         </button>
@@ -2230,23 +1464,6 @@
                         <button class="toggle active" id="notificationsToggle" type="button" role="switch" aria-checked="true" aria-label="Уведомления">
                             <div class="thumb"></div>
                         </button>
-=======
-                        <div class="toggle active" id="darkToggle">
-                            <div class="thumb"></div>
-                        </div>
-                    </div>
-                    <div class="setting-row">
-                        <label>Анимации</label>
-                        <div class="toggle active" id="animationsToggle">
-                            <div class="thumb"></div>
-                        </div>
-                    </div>
-                    <div class="setting-row">
-                        <label>Уведомления</label>
-                        <div class="toggle active" id="notificationsToggle">
-                            <div class="thumb"></div>
-                        </div>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
                     </div>
                     <div class="setting-row">
                         <label>Масштаб</label>
@@ -2262,11 +1479,7 @@
                     <h4>Безопасность</h4>
                     <div class="setting-row">
                         <label>HWID</label>
-<<<<<<< HEAD
                         <span style="color:rgba(255,255,255,0.3); font-size:12px; font-family:monospace;" id="settingsHwid">...</span>
-=======
-                        <span style="color:rgba(255,255,255,0.1); font-size:12px; font-family:monospace;" id="settingsHwid">...</span>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
                     </div>
                     <div class="setting-row">
                         <label for="apiTokenInput">API-токен</label>
@@ -2274,7 +1487,6 @@
                     </div>
                     <div class="setting-row">
                         <label>Доступ к API</label>
-<<<<<<< HEAD
                         <button id="saveApiTokenBtn" style="background:rgba(255,45,149,0.15); border:1px solid rgba(255,45,149,0.3); color:#fff; padding:6px 16px; border-radius:8px; cursor:pointer;">Сохранить</button>
                     </div>
                     <div class="setting-row">
@@ -2303,31 +1515,13 @@
                     </div>
                     <p class="about-meta" style="margin-top:18px;">© 2026 MenaceSEARCH Pro</p>
                 </section>
-=======
-                        <button id="saveApiTokenBtn" style="background:rgba(255,45,149,0.12); border:none; color:#fff; padding:6px 16px; border-radius:8px; cursor:pointer;">Сохранить</button>
-                    </div>
-                    <div class="setting-row">
-                        <label>Очистить кэш</label>
-                        <button id="clearCacheBtn" style="background:rgba(255,255,255,0.02); border:none; color:rgba(255,255,255,0.2); padding:4px 16px; border-radius:8px; cursor:pointer;">Очистить</button>
-                    </div>
-                    <div class="setting-row">
-                        <label>Версия</label>
-                        <span style="color:rgba(255,255,255,0.1); font-size:13px;">2.1.0 Pro</span>
-                    </div>
-                </div>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             </div>
         </div>
 
         <!-- СТРАНИЦА: АККАУНТ -->
         <div class="page" id="page-account">
-<<<<<<< HEAD
             <h3 style="color:#fff; font-weight:700; font-size:22px; margin-bottom:20px;">
                 <i class="fas fa-user-shield" style="color:#ff2d95; margin-right:8px;"></i> Мой аккаунт
-=======
-            <h3 style="color:rgba(255,255,255,0.7); font-weight:600; font-size:20px; margin-bottom:16px;">
-                <i class="fas fa-user" style="color:#ff2d95;"></i> Мой аккаунт
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             </h3>
             <div id="profileSection">
                 <div class="profile-card">
@@ -2335,7 +1529,6 @@
                     <div class="info">
                         <h3 id="profileName">Пользователь</h3>
                         <p id="profileTelegram">@username</p>
-<<<<<<< HEAD
                         <div>
                             <span class="plan-badge" id="profilePlan"><i class="fas fa-gem"></i> Бесплатный</span>
                         </div>
@@ -2369,32 +1562,6 @@
                         <div class="icon"><i class="fas fa-infinity"></i></div>
                         <div class="number" id="statPlanLimit">0</div>
                         <div class="label">Макс. лимит</div>
-=======
-                        <span class="plan-badge" id="profilePlan"><i class="fas fa-gem"></i> Бесплатный</span>
-                        <p style="margin-top:8px; font-size:13px; color:rgba(255,255,255,0.06);" id="profileExpiry"></p>
-                        <p style="margin-top:4px; font-size:12px; color:rgba(255,255,255,0.04); font-family:monospace;" id="profileHwid"></p>
-                    </div>
-                    <div style="margin-left:auto; display:flex; gap:8px;">
-                        <button id="logoutBtn" style="background:rgba(255,255,255,0.02); border:none; color:rgba(255,255,255,0.2); padding:8px 20px; border-radius:12px; cursor:pointer; font-size:14px;">Выйти</button>
-                    </div>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="number" id="statQueriesUsed">0</div>
-                        <div class="label">Использовано</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="number" id="statQueriesLeft">0</div>
-                        <div class="label">Осталось</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="number" id="statTotalQueries">0</div>
-                        <div class="label">Всего запросов</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="number" id="statPlanLimit">0</div>
-                        <div class="label">Лимит</div>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
                     </div>
                 </div>
             </div>
@@ -2402,7 +1569,6 @@
 
         <!-- СТРАНИЦА: АДМИН -->
         <div class="page" id="page-admin">
-<<<<<<< HEAD
             <h3 style="color:#fff; font-weight:700; font-size:22px; margin-bottom:20px;">
                 <i class="fas fa-shield-alt" style="color:#ff2d95; margin-right:8px;"></i> Админ-панель
             </h3>
@@ -2413,14 +1579,6 @@
                 <button id="adminAddUserBtn" style="background:linear-gradient(135deg,#ff2d95,#d41a7a); border:none; color:#fff; padding:8px 20px; border-radius:12px; cursor:pointer; font-weight:600; box-shadow:0 4px 15px rgba(255,45,149,0.2);">
                     <i class="fas fa-user-plus" style="margin-right:6px;"></i> Добавить пользователя
                 </button>
-=======
-            <h3 style="color:rgba(255,255,255,0.7); font-weight:600; font-size:20px; margin-bottom:16px;">
-                <i class="fas fa-shield-alt" style="color:#ff2d95;"></i> Админ-панель
-            </h3>
-            <div style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
-                <button id="adminRefreshBtn" style="background:rgba(255,255,255,0.02); border:none; color:rgba(255,255,255,0.2); padding:8px 20px; border-radius:12px; cursor:pointer;">Обновить</button>
-                <button id="adminAddUserBtn" style="background:linear-gradient(135deg,#ff2d95,#d41a7a); border:none; color:#fff; padding:8px 20px; border-radius:12px; cursor:pointer; font-weight:600;">Добавить пользователя</button>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             </div>
             <div style="overflow-x:auto;">
                 <table class="admin-users-table" id="adminUsersTable">
@@ -2438,11 +1596,7 @@
                     </thead>
                     <tbody id="adminUsersBody">
                         <tr>
-<<<<<<< HEAD
                             <td colspan="8" style="text-align:center; color:rgba(255,255,255,0.2); padding:30px 0;">Загрузка...</td>
-=======
-                            <td colspan="8" style="text-align:center; color:rgba(255,255,255,0.04); padding:30px 0;">Загрузка...</td>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
                         </tr>
                     </tbody>
                 </table>
@@ -2454,20 +1608,12 @@
 <!-- МОДАЛЬ ПОДПИСКИ -->
 <div class="modal-overlay" id="subscriptionModal">
     <div class="modal-box">
-<<<<<<< HEAD
         <h3><i class="fas fa-user-gear"></i> Управление пользователем</h3>
-=======
-        <h3>Управление подпиской</h3>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         <p id="modalUserInfo">Пользователь: @username</p>
         <div class="form-group">
             <label>Тип подписки</label>
             <select id="modalPlanSelect">
-<<<<<<< HEAD
                 <option value="basic">Бесплатный (0 запросов)</option>
-=======
-                <option value="basic">Бесплатный (50 запросов)</option>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
                 <option value="pro">Pro (500 запросов)</option>
                 <option value="business">Бизнес (безлимит)</option>
             </select>
@@ -2481,18 +1627,12 @@
             <input type="text" id="modalHwidInput" placeholder="Оставьте пустым для снятия привязки" />
         </div>
         <div class="modal-actions">
-<<<<<<< HEAD
             <button class="cancel" id="modalCancel"><i class="fas fa-times"></i> Отмена</button>
             <button class="confirm" id="modalConfirm"><i class="fas fa-check"></i> Сохранить</button>
-=======
-            <button class="cancel" id="modalCancel">Отмена</button>
-            <button class="confirm" id="modalConfirm">Сохранить</button>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         </div>
     </div>
 </div>
 
-<<<<<<< HEAD
 <!-- МОДАЛЬ ДОБАВЛЕНИЯ ПОЛЬЗОВАТЕЛЯ -->
 <div class="modal-overlay" id="addUserModal">
     <div class="modal-box">
@@ -2547,22 +1687,12 @@
         scale: 100
     };
 
-=======
-<script>
-(function() {
-    'use strict';
-
-    let HWID = 'Загрузка…';
-
-    // ===== СОСТОЯНИЕ =====
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
     const state = {
         currentPage: 'search',
         searchResults: [],
         isLoggedIn: false,
         currentUser: null,
         users: [],
-<<<<<<< HEAD
         searchHistory: [],
         apiToken: localStorage.getItem('menacesearch_api_token') || '',
         apiUrl: SEARCH_API_URL
@@ -2611,166 +1741,10 @@
 
     function getFieldColor(key) {
         return FIELD_MAP[key]?.color || '#9E9E9E';
-=======
-        searchHistory: JSON.parse(localStorage.getItem('menacesearch_history') || '[]'),
-        apiToken: localStorage.getItem('menacesearch_api_token') || '',
-        apiUrl: 'https://leakosintapi.com/'
-    };
-
-    // ===== МАППИНГ ПОЛЕЙ =====
-    const FIELD_MAP = {
-        // Основные
-        'FULLNAME': { label: 'ФИО', icon: 'fa-user', color: '#ff2d95' },
-        'NAME': { label: 'Имя', icon: 'fa-user', color: '#ff2d95' },
-        'Firstname': { label: 'Имя', icon: 'fa-user', color: '#ff2d95' },
-        'Lastname': { label: 'Фамилия', icon: 'fa-user', color: '#ff2d95' },
-        'Middlename': { label: 'Отчество', icon: 'fa-user', color: '#ff2d95' },
-        'FIRSTNAME': { label: 'Имя', icon: 'fa-user', color: '#ff2d95' },
-        'LASTNAME': { label: 'Фамилия', icon: 'fa-user', color: '#ff2d95' },
-        'MIDDLENAME': { label: 'Отчество', icon: 'fa-user', color: '#ff2d95' },
-        
-        // Контакты
-        'PHONE': { label: 'Телефон', icon: 'fa-phone', color: '#4CAF50' },
-        'Phone': { label: 'Телефон', icon: 'fa-phone', color: '#4CAF50' },
-        'PHONE_NUMBER': { label: 'Телефон', icon: 'fa-phone', color: '#4CAF50' },
-        'MOBILE': { label: 'Мобильный', icon: 'fa-mobile-screen-button', color: '#4CAF50' },
-        'EMAIL': { label: 'Email', icon: 'fa-envelope', color: '#2196F3' },
-        'MAIL': { label: 'Email', icon: 'fa-envelope', color: '#2196F3' },
-        'EMAIL_ADDRESS': { label: 'Email', icon: 'fa-envelope', color: '#2196F3' },
-        
-        // Документы
-        'PASSPORT': { label: 'Паспорт', icon: 'fa-id-card', color: '#FF9800' },
-        'PASSPORT_SERIES': { label: 'Серия паспорта', icon: 'fa-id-card', color: '#FF9800' },
-        'PASSPORT_NUMBER': { label: 'Номер паспорта', icon: 'fa-id-card', color: '#FF9800' },
-        'INN': { label: 'ИНН', icon: 'fa-hashtag', color: '#9C27B0' },
-        'SNILS': { label: 'СНИЛС', icon: 'fa-hashtag', color: '#9C27B0' },
-        
-        // Адреса
-        'ADDRESS': { label: 'Адрес', icon: 'fa-home', color: '#795548' },
-        'ADDRESS_REGISTRATION': { label: 'Адрес регистрации', icon: 'fa-home', color: '#795548' },
-        'ADDRESS_ACTUAL': { label: 'Фактический адрес', icon: 'fa-home', color: '#795548' },
-        'CITY': { label: 'Город', icon: 'fa-city', color: '#795548' },
-        'REGION': { label: 'Регион', icon: 'fa-location-dot', color: '#795548' },
-        
-        // Даты
-        'BDAY': { label: 'Дата рождения', icon: 'fa-calendar-days', color: '#E91E63' },
-        'Bday': { label: 'Дата рождения', icon: 'fa-calendar-days', color: '#E91E63' },
-        'BIRTHDAY': { label: 'Дата рождения', icon: 'fa-calendar-days', color: '#E91E63' },
-        'BIRTH_DATE': { label: 'Дата рождения', icon: 'fa-calendar-days', color: '#E91E63' },
-        'DATE_OF_BIRTH': { label: 'Дата рождения', icon: 'fa-calendar-days', color: '#E91E63' },
-        
-        // BonusPlus (новые поля)
-        'Bonuscardnumber': { label: 'Номер бонусной карты', icon: 'fa-credit-card', color: '#FF6F00' },
-        'BonusCardNumber': { label: 'Номер бонусной карты', icon: 'fa-credit-card', color: '#FF6F00' },
-        'Gender': { label: 'Пол', icon: 'fa-venus-mars', color: '#E91E63' },
-        'Lastactive': { label: 'Последняя активность', icon: 'fa-clock', color: '#8BC34A' },
-        'LastActive': { label: 'Последняя активность', icon: 'fa-clock', color: '#8BC34A' },
-        'Regdate': { label: 'Дата регистрации', icon: 'fa-calendar-plus', color: '#4CAF50' },
-        'RegDate': { label: 'Дата регистрации', icon: 'fa-calendar-plus', color: '#4CAF50' },
-        'Type': { label: 'Тип', icon: 'fa-tag', color: '#9C27B0' },
-        
-        // Работа
-        'COMPANY': { label: 'Компания', icon: 'fa-building', color: '#607D8B' },
-        'POSITION': { label: 'Должность', icon: 'fa-briefcase', color: '#607D8B' },
-        'EMPLOYER': { label: 'Работодатель', icon: 'fa-building', color: '#607D8B' },
-        
-        // Соцсети
-        'LOGIN': { label: 'Логин', icon: 'fa-user-circle', color: '#00BCD4' },
-        'USERNAME': { label: 'Имя пользователя', icon: 'fa-user-circle', color: '#00BCD4' },
-        'NICKNAME': { label: 'Никнейм', icon: 'fa-user-circle', color: '#00BCD4' },
-        'INSTAGRAM': { label: 'Instagram', icon: 'fab fa-instagram', color: '#E1306C' },
-        'TELEGRAM': { label: 'Telegram', icon: 'fab fa-telegram', color: '#0088cc' },
-        'VK': { label: 'ВКонтакте', icon: 'fab fa-vk', color: '#4a76a8' },
-        'FACEBOOK': { label: 'Facebook', icon: 'fab fa-facebook', color: '#1877f2' },
-        'TWITTER': { label: 'Twitter', icon: 'fab fa-twitter', color: '#1DA1F2' },
-        
-        // Финансы
-        'CARD_NUMBER': { label: 'Номер карты', icon: 'fa-credit-card', color: '#F44336' },
-        'BANK': { label: 'Банк', icon: 'fa-university', color: '#F44336' },
-        
-        // Другое
-        'ONAL': { label: 'Дата обновления', icon: 'fa-clock', color: '#8BC34A' },
-        'UPDATED': { label: 'Обновлено', icon: 'fa-clock', color: '#8BC34A' },
-        'DATE': { label: 'Дата', icon: 'fa-calendar', color: '#8BC34A' },
-        'SOURCE': { label: 'Источник', icon: 'fa-database', color: '#FF5722' },
-        'INFO': { label: 'Информация', icon: 'fa-info-circle', color: '#9E9E9E' },
-        'COMMENT': { label: 'Комментарий', icon: 'fa-comment', color: '#9E9E9E' },
-    };
-
-    const FIELD_ALIASES = {
-        PASSPORTNUMBER: { label: 'Номер паспорта', icon: 'fa-id-card', color: '#FF9800' },
-        PASSPORTNUMBERS: { label: 'Номер паспорта', icon: 'fa-id-card', color: '#FF9800' },
-        PASSPORTSERIES: { label: 'Серия паспорта', icon: 'fa-id-card', color: '#FF9800' },
-        PASSPORTSERIESNUMBER: { label: 'Серия и номер паспорта', icon: 'fa-id-card', color: '#FF9800' },
-        DOCUMENTNUMBER: { label: 'Номер документа', icon: 'fa-id-card', color: '#FF9800' },
-        PHONENUMBER: { label: 'Номер телефона', icon: 'fa-phone', color: '#4CAF50' },
-        MOBILENUMBER: { label: 'Номер мобильного телефона', icon: 'fa-mobile-screen-button', color: '#4CAF50' },
-        EMAILADDRESS: { label: 'Электронная почта', icon: 'fa-envelope', color: '#2196F3' },
-        FULLNAME: { label: 'ФИО', icon: 'fa-user', color: '#ff2d95' },
-        FIRSTNAME: { label: 'Имя', icon: 'fa-user', color: '#ff2d95' },
-        LASTNAME: { label: 'Фамилия', icon: 'fa-user', color: '#ff2d95' },
-        MIDDLENAME: { label: 'Отчество', icon: 'fa-user', color: '#ff2d95' },
-        DATEOFBIRTH: { label: 'Дата рождения', icon: 'fa-calendar-days', color: '#E91E63' },
-        BIRTHDATE: { label: 'Дата рождения', icon: 'fa-calendar-days', color: '#E91E63' },
-        ADDRESSREGISTRATION: { label: 'Адрес регистрации', icon: 'fa-house', color: '#795548' },
-        ADDRESSACTUAL: { label: 'Фактический адрес', icon: 'fa-house', color: '#795548' },
-        CARDNUMBER: { label: 'Номер банковской карты', icon: 'fa-credit-card', color: '#F44336' },
-        BONUSCARDNUMBER: { label: 'Номер бонусной карты', icon: 'fa-credit-card', color: '#FF6F00' },
-        USERNAME: { label: 'Имя пользователя', icon: 'fa-user', color: '#00BCD4' },
-        RELATIVES: { label: 'Родственники', icon: 'fa-people-group', color: '#ff2d95' },
-    };
-
-    const FALLBACK_FIELD_TYPES = [
-        { terms: ['PHONE', 'TEL', 'MOBILE', 'WHATSAPP', 'VIBER'], icon: 'fa-phone', color: '#4CAF50' },
-        { terms: ['EMAIL', 'MAIL'], icon: 'fa-envelope', color: '#2196F3' },
-        { terms: ['NAME', 'FIO', 'FULLNAME', 'SURNAME', 'PATRONYMIC'], icon: 'fa-user', color: '#ff2d95' },
-        { terms: ['RELATIVE', 'FAMILY', 'SPOUSE', 'PARENT', 'CHILD'], icon: 'fa-people-group', color: '#FF2D95' },
-        { terms: ['ADDRESS', 'STREET', 'HOUSE', 'CITY', 'REGION', 'COUNTRY', 'ZIP', 'POST'], icon: 'fa-location-dot', color: '#795548' },
-        { terms: ['BIRTH', 'BDAY', 'DATE', 'YEAR', 'TIME'], icon: 'fa-calendar-days', color: '#E91E63' },
-        { terms: ['PASSPORT', 'DOCUMENT', 'INN', 'SNILS', 'DRIVER', 'LICENSE'], icon: 'fa-id-card', color: '#FF9800' },
-        { terms: ['CARD', 'BANK', 'ACCOUNT', 'IBAN', 'BIC', 'PAYMENT'], icon: 'fa-credit-card', color: '#F44336' },
-        { terms: ['COMPANY', 'WORK', 'JOB', 'EMPLOYER', 'POSITION'], icon: 'fa-briefcase', color: '#607D8B' },
-        { terms: ['TELEGRAM', 'VK', 'INSTAGRAM', 'FACEBOOK', 'TWITTER', 'SOCIAL', 'USERNAME', 'NICK', 'LOGIN'], icon: 'fa-at', color: '#00BCD4' },
-        { terms: ['PASSWORD', 'HASH', 'TOKEN', 'SECRET'], icon: 'fa-key', color: '#FF5722' },
-        { terms: ['GENDER', 'SEX'], icon: 'fa-venus-mars', color: '#E91E63' },
-        { terms: ['IP', 'DOMAIN', 'URL', 'SITE', 'HOST'], icon: 'fa-globe', color: '#03A9F4' },
-        { terms: ['CAR', 'AUTO', 'VEHICLE', 'VIN', 'PLATE'], icon: 'fa-car', color: '#9C27B0' },
-        { terms: ['PHOTO', 'IMAGE', 'AVATAR'], icon: 'fa-image', color: '#8BC34A' },
-    ];
-
-    function getFieldMetadata(key) {
-        if (FIELD_MAP[key]) return FIELD_MAP[key];
-        const normalizedKey = String(key).replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-        if (FIELD_ALIASES[normalizedKey]) return FIELD_ALIASES[normalizedKey];
-        const type = FALLBACK_FIELD_TYPES.find(({ terms }) => terms.some(term => normalizedKey.includes(term)));
-        return {
-            label: String(key).replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, letter => letter.toUpperCase()),
-            icon: type?.icon || 'fa-circle-info',
-            color: type?.color || '#9E9E9E',
-        };
-    }
-
-    function getFieldLabel(key) {
-        return getFieldMetadata(key).label;
-    }
-
-    function getFieldIcon(key) {
-        return getFieldMetadata(key).icon;
-    }
-
-    function getFieldIconClass(key) {
-        const icon = getFieldIcon(key);
-        return icon.startsWith('fab ') ? icon.replace('fab ', 'fa-brands ') : `fa-solid ${icon}`;
-    }
-
-    function getFieldColor(key) {
-        return '#ff2d95';
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
     }
 
     function escapeHtml(value) {
         return String(value ?? '').replace(/[&<>'"]/g, char => ({
-<<<<<<< HEAD
             '&': '&amp;',
             '<': '&lt;',
             '>': '&gt;',
@@ -2887,13 +1861,6 @@
     }
 
     // DOM
-=======
-            '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
-        })[char]);
-    }
-
-    // ===== DOM ЭЛЕМЕНТЫ =====
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
     const loginScreen = document.getElementById('loginScreen');
     const mainContent = document.getElementById('mainContent');
     const loginBtn = document.getElementById('loginBtn');
@@ -2903,45 +1870,28 @@
 
     const navLinks = document.querySelectorAll('#navLinks a');
     const pages = document.querySelectorAll('.page');
-<<<<<<< HEAD
 
-=======
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
     const searchInput = document.getElementById('searchInput');
     const searchBtn = document.getElementById('searchBtn');
     const resultGrid = document.getElementById('resultGrid');
     const resultsHeader = document.getElementById('resultsHeader');
     const resultCount = document.getElementById('resultCount');
     const filterChips = document.querySelectorAll('#filterChips .chip');
-<<<<<<< HEAD
 
     const copyAllBtn = document.getElementById('copyAllBtn');
     const exportBtn = document.getElementById('exportBtn');
     const clearResultsBtn = document.getElementById('clearResultsBtn');
 
-=======
-    const copyAllBtn = document.getElementById('copyAllBtn');
-    const exportBtn = document.getElementById('exportBtn');
-    const clearResultsBtn = document.getElementById('clearResultsBtn');
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
     const userBadge = document.getElementById('userBadge');
     const userAvatar = document.getElementById('userAvatar');
     const userName = document.getElementById('userName');
     const userPlan = document.getElementById('userPlan');
-<<<<<<< HEAD
 
     const logoutBtn = document.getElementById('logoutBtn');
     const settingsQuick = document.getElementById('settingsQuick');
     const closeBtn = document.getElementById('closeBtn');
     const minimizeBtn = document.getElementById('minimizeBtn');
     const maximizeBtn = document.getElementById('maximizeBtn');
-=======
-    const logoutBtn = document.getElementById('logoutBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const minimizeBtn = document.getElementById('minimizeBtn');
-    const maximizeBtn = document.getElementById('maximizeBtn');
-    const settingsQuick = document.getElementById('settingsQuick');
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
 
     const profileAvatar = document.getElementById('profileAvatar');
     const profileName = document.getElementById('profileName');
@@ -2949,10 +1899,7 @@
     const profilePlan = document.getElementById('profilePlan');
     const profileExpiry = document.getElementById('profileExpiry');
     const profileHwid = document.getElementById('profileHwid');
-<<<<<<< HEAD
 
-=======
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
     const statQueriesUsed = document.getElementById('statQueriesUsed');
     const statQueriesLeft = document.getElementById('statQueriesLeft');
     const statTotalQueries = document.getElementById('statTotalQueries');
@@ -2962,10 +1909,7 @@
     const adminUsersBody = document.getElementById('adminUsersBody');
     const adminRefreshBtn = document.getElementById('adminRefreshBtn');
     const adminAddUserBtn = document.getElementById('adminAddUserBtn');
-<<<<<<< HEAD
 
-=======
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
     const subscriptionModal = document.getElementById('subscriptionModal');
     const modalUserInfo = document.getElementById('modalUserInfo');
     const modalPlanSelect = document.getElementById('modalPlanSelect');
@@ -2973,7 +1917,6 @@
     const modalHwidInput = document.getElementById('modalHwidInput');
     const modalCancel = document.getElementById('modalCancel');
     const modalConfirm = document.getElementById('modalConfirm');
-<<<<<<< HEAD
 
     const addUserModal = document.getElementById('addUserModal');
     const addTgInput = document.getElementById('addTgInput');
@@ -2985,17 +1928,10 @@
     const addUserConfirm = document.getElementById('addUserConfirm');
 
     const clearCacheBtn = document.getElementById('clearCacheBtn');
-=======
-    const clearCacheBtn = document.getElementById('clearCacheBtn');
-
-    const exportHistoryBtn = document.getElementById('exportHistoryBtn');
-    const historyFormatSelect = document.getElementById('historyFormatSelect');
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
     const clearHistoryBtn = document.getElementById('clearHistoryBtn');
     const apiTokenInput = document.getElementById('apiTokenInput');
     const saveApiTokenBtn = document.getElementById('saveApiTokenBtn');
 
-<<<<<<< HEAD
     const appWindow = document.getElementById('appWindow');
 
     closeBtn?.addEventListener('click', () => window.electronAPI?.closeWindow?.());
@@ -3327,131 +2263,6 @@
     }
 
     // ---------- UI ----------
-=======
-    // ===== HWID DISPLAY =====
-    if (apiTokenInput) apiTokenInput.value = state.apiToken;
-
-    async function initializeHardwareId() {
-        try {
-            HWID = await window.electronAPI.getHWID();
-        } catch {
-            HWID = 'HWID-недоступен';
-        }
-        hwidDisplay.textContent = HWID;
-        if (settingsHwid) settingsHwid.textContent = HWID;
-        loginBtn.disabled = false;
-    }
-
-    // ===== БАЗА ДАННЫХ =====
-    function getUsers() {
-        try {
-            return JSON.parse(localStorage.getItem('menacesearch_users') || '[]');
-        } catch { return []; }
-    }
-
-    function saveUsers(users) {
-        localStorage.setItem('menacesearch_users', JSON.stringify(users));
-    }
-
-    function getCurrentUser() {
-        try {
-            const data = JSON.parse(localStorage.getItem('menacesearch_session') || 'null');
-            if (data && data.telegramId) {
-                const users = getUsers();
-                const user = users.find(u => u.telegramId === data.telegramId);
-                if (user) return user;
-            }
-            return null;
-        } catch { return null; }
-    }
-
-    function saveSession(user) {
-        if (user) {
-            localStorage.setItem('menacesearch_session', JSON.stringify({ telegramId: user.telegramId }));
-        } else {
-            localStorage.removeItem('menacesearch_session');
-        }
-    }
-
-    function getPlanLimit(plan) {
-        const map = { 'basic': 0, 'pro': 500, 'business': Infinity };
-        return map[plan] || 0;
-    }
-
-    function getPlanLabel(plan) {
-        const map = { 'basic': 'Бесплатно', 'pro': 'Pro', 'business': 'Бизнес' };
-        return map[plan] || 'Бесплатно';
-    }
-
-    function isPlanExpired(user) {
-        if (!user.planExpiry) return false;
-        if (user.plan === 'business') return false;
-        return new Date(user.planExpiry) < new Date();
-    }
-
-    function canMakeQuery(user) {
-        if (!user) return false;
-        
-        // ✅ Админ всегда может делать запросы
-        if (user.isAdmin) return true;
-        
-        // ❌ Если нет премиума — поиск запрещён
-        if (!user.isPremium) {
-            showNotification('❌ Для поиска нужен Premium план. Обратитесь к администратору.');
-            return false;
-        }
-        
-        // Проверяем лимиты (если есть)
-        if (user.hwid && user.hwid !== HWID) return false;
-        const limit = getPlanLimit(user.plan);
-        if (limit === Infinity) return true;
-        return (user.queriesUsed || 0) < limit;
-    }
-
-    // ===== ИНИЦИАЛИЗАЦИЯ =====
-    function initUsers() {
-        let users = getUsers();
-        if (users.length === 0) {
-            const admin = {
-                id: 1,
-                telegramId: 'admin',
-                telegramUsername: 'admin',
-                name: 'Администратор',
-                plan: 'business',
-                planExpiry: new Date(Date.now() + 365 * 86400000).toISOString(),
-                queriesUsed: 0,
-                totalQueries: 0,
-                hwid: HWID,
-                isAdmin: true,
-                isPremium: true,        // ← Админ всегда премиум
-                createdAt: new Date().toISOString()
-            };
-            users.push(admin);
-            saveUsers(users);
-        }
-        return users;
-    }
-
-    function loadCurrentUser() {
-        const user = getCurrentUser();
-        if (user) {
-            const users = getUsers();
-            const fresh = users.find(u => u.id === user.id);
-            if (fresh) {
-                state.isLoggedIn = true;
-                state.currentUser = fresh;
-                updateUIForUser(fresh);
-                showMainApp();
-                return fresh;
-            }
-        }
-        state.isLoggedIn = false;
-        state.currentUser = null;
-        showLoginScreen();
-        return null;
-    }
-
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
     function showLoginScreen() {
         loginScreen.classList.remove('hidden');
         mainContent.classList.remove('active');
@@ -3462,7 +2273,6 @@
         mainContent.classList.add('active');
     }
 
-<<<<<<< HEAD
     function updateUIForUser(user) {
         if (!user) return;
 
@@ -3553,181 +2363,10 @@
             return null;
         }
 
-=======
-    function setAvatarElement(element, user) {
-        const fallback = (user.name || user.telegramUsername || 'U')[0].toUpperCase();
-        if (user.photoUrl) {
-            element.innerHTML = `<img src="${user.photoUrl}" alt="${user.name || user.telegramUsername || 'Avatar'}" referrerpolicy="no-referrer" />`;
-        } else {
-            element.textContent = fallback;
-        }
-    }
-
-    function getTelegramDisplayName(tgUser) {
-        return [tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ').trim();
-    }
-
-    function updateUIForUser(user) {
-        // ===== АВАТАР В ШАПКЕ =====
-        const avatar = (user.name || user.telegramUsername || 'U')[0].toUpperCase();
-        userAvatar.textContent = avatar;
-        userName.textContent = user.name || user.telegramUsername || 'Пользователь';
-
-        // ===== СТАТУС ПЛАНА В ШАПКЕ =====
-        let planLabel = '🆓 Бесплатно';
-        let planClass = 'plan';
-
-        if (user.isAdmin) {
-            planLabel = '👑 Админ';
-            planClass += ' admin';
-        } else if (user.isPremium) {
-            planLabel = '⭐ Premium';
-            planClass += ' premium';
-        } else {
-            planClass += ' expired';
-        }
-
-        // Если есть срок действия и он истёк
-        if (user.planExpiry && new Date(user.planExpiry) < new Date() && !user.isAdmin) {
-            planLabel = '🆓 Бесплатно (истек)';
-            planClass += ' expired';
-        }
-
-        userPlan.textContent = planLabel;
-        userPlan.className = planClass;
-
-        // ===== ПРОФИЛЬ =====
-        profileAvatar.textContent = avatar;
-        profileName.textContent = user.name || user.telegramUsername || 'Пользователь';
-        profileTelegram.textContent = user.telegramUsername
-            ? '@' + user.telegramUsername
-            : 'ID: ' + user.telegramId;
-
-        // ===== СТАТУС ПЛАНА В ПРОФИЛЕ =====
-        let profilePlanLabel = 'Бесплатный';
-        let profilePlanClass = 'plan-badge';
-
-        if (user.isAdmin) {
-            profilePlanLabel = '👑 Администратор';
-            profilePlanClass += ' admin';
-        } else if (user.isPremium) {
-            profilePlanLabel = '⭐ Premium';
-            profilePlanClass += ' premium';
-        } else {
-            profilePlanClass += ' expired';
-        }
-
-        if (user.planExpiry && new Date(user.planExpiry) < new Date() && !user.isAdmin) {
-            profilePlanLabel = 'Бесплатный (истек)';
-            profilePlanClass += ' expired';
-        }
-
-        profilePlan.textContent = profilePlanLabel;
-        profilePlan.className = profilePlanClass;
-
-        // ===== ДАТА ОКОНЧАНИЯ =====
-        if (user.isAdmin) {
-            profileExpiry.textContent = '👑 Полный доступ';
-        } else if (user.isPremium && user.planExpiry) {
-            const d = new Date(user.planExpiry);
-            profileExpiry.textContent = `Действует до: ${d.toLocaleDateString('ru-RU')}`;
-        } else if (user.isPremium && !user.planExpiry) {
-            profileExpiry.textContent = '⭐ Бессрочный Premium';
-        } else {
-            profileExpiry.textContent = 'Бесплатный план (поиск недоступен)';
-        }
-
-        // ===== HWID =====
-        profileHwid.textContent = 'HWID: ' + (user.hwid || 'Не привязан');
-        if (user.hwid && user.hwid !== HWID) {
-            profileHwid.style.color = '#ff5f57';
-        } else {
-            profileHwid.style.color = 'rgba(255,255,255,0.04)';
-        }
-
-        // ===== СТАТИСТИКА =====
-        const users = getUsers();
-        const current = users.find(u => u.id === user.id);
-        if (current) {
-            statQueriesUsed.textContent = current.queriesUsed || 0;
-            statTotalQueries.textContent = current.totalQueries || 0;
-
-            // Лимит зависит от плана
-            let limit = 0;
-            if (user.isAdmin) {
-                limit = Infinity;
-            } else if (user.isPremium) {
-                limit = 500; // или число, которое вы задали в getPlanLimit('pro')
-            } else {
-                limit = 0; // бесплатный план — поиск отключён
-            }
-
-            const left = Math.max(0, limit - (current.queriesUsed || 0));
-            statQueriesLeft.textContent = (user.isAdmin || user.isPremium) ? left : '❌';
-            statPlanLimit.textContent = limit === Infinity ? '∞' : limit;
-        }
-
-        // ===== ПОКАЗЫВАЕМ/СКРЫВАЕМ АДМИНКУ =====
-        if (user.isAdmin) {
-            adminLink.style.display = 'block';
-        } else {
-            adminLink.style.display = 'none';
-        }
-    }
-
-    // ===== АВТОРИЗАЦИЯ =====
-    function loginWithTelegram(tgUser) {
-        const telegramId = String(tgUser.id);
-        const displayName = tgUser.first_name + (tgUser.last_name ? ' ' + tgUser.last_name : '');
-        const username = tgUser.username || '';
-        const photoUrl = tgUser.photo_url || '';
-        let users = getUsers();
-
-        // Ищем пользователя
-        let user = users.find(u => u.telegramId === telegramId);
-        if (!user && username) {
-            user = users.find(u => u.telegramUsername === username);
-        }
-
-        // ===== АВТО-РЕГИСТРАЦИЯ =====
-        if (!user) {
-            const newUser = {
-                id: Date.now(),
-                telegramId: telegramId,
-                telegramUsername: username,
-                name: displayName || username || 'Пользователь',
-                plan: 'basic',                    // ← БЕСПЛАТНЫЙ ПЛАН
-                planExpiry: null,                 // ← БЕЗ СРОКА (бессрочный basic)
-                queriesUsed: 0,
-                totalQueries: 0,
-                hwid: HWID,
-                isAdmin: false,
-                isPremium: false,                 // ← НОВОЕ ПОЛЕ
-                createdAt: new Date().toISOString(),
-                photoUrl: photoUrl
-            };
-            users.push(newUser);
-            saveUsers(users);
-            user = newUser;
-            console.log('[auth] Создан новый пользователь:', user);
-            showNotification('✅ Вы зарегистрированы! Для доступа к поиску нужен Premium план.');
-        }
-
-        // Обновляем данные пользователя (аватарка, имя)
-        user.name = displayName || user.name;
-        user.telegramUsername = username || user.telegramUsername;
-        user.photoUrl = photoUrl || user.photoUrl;
-        if (!user.hwid) user.hwid = HWID;
-        
-        saveUsers(users);
-        saveSession(user);
-        
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         state.isLoggedIn = true;
         state.currentUser = user;
         updateUIForUser(user);
         showMainApp();
-<<<<<<< HEAD
 
         if (user.isAdmin) await loadAdminUsers();
         return user;
@@ -3828,192 +2467,12 @@
                     <span style="font-size:16px;color:rgba(255,255,255,.2);">
                         Введите запрос для поиска
                     </span>
-=======
-        loginStatus.textContent = '✅ Вход выполнен!';
-        loginStatus.className = 'login-status success';
-        loadHistory();
-        return true;
-    }
-
-    function logout() {
-        saveSession(null);
-        state.isLoggedIn = false;
-        state.currentUser = null;
-        showLoginScreen();
-        loginStatus.textContent = 'Нажмите кнопку для входа через Telegram';
-        loginStatus.className = 'login-status';
-    }
-
-    // ===== АДМИН-ФУНКЦИИ =====
-    function loadAdminUsers() {
-        const users = getUsers();
-        if (users.length === 0) {
-            adminUsersBody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:rgba(255,255,255,0.04); padding:30px 0;">Нет пользователей</td></tr>`;
-            return;
-        }
-        let html = '';
-        users.forEach(u => {
-            const isExpired = isPlanExpired(u);
-            const planLabel = u.isPremium ? '⭐ Premium' : '🆓 Бесплатно';
-            const planClass = u.isPremium ? 'pro' : 'basic';
-            const expiry = u.planExpiry ? new Date(u.planExpiry).toLocaleDateString('ru-RU') : '∞';
-            const hwidDisplay = u.hwid ? u.hwid.substring(0, 12) + '...' : '—';
-            const hwidFull = u.hwid || '—';
-            html += `<tr>
-                <td>${u.id}</td>
-                <td>@${u.telegramUsername || u.telegramId}</td>
-                <td>${u.name || '-'}</td>
-                <td><span class="plan-badge ${planClass}">${planLabel}</span></td>
-                <td>${expiry}</td>
-                <td class="hwid-cell" title="${hwidFull}">${hwidDisplay}</td>
-                <td>${u.queriesUsed || 0}</td>
-                <td>
-                    <div class="actions-cell">
-                        ${u.isAdmin ? '' : (u.isPremium ? 
-                            `<button class="revoke" onclick="window.togglePremium(${u.id}, false)"><i class="fas fa-minus-circle"></i> Отключить</button>` :
-                            `<button class="grant" onclick="window.togglePremium(${u.id}, true)"><i class="fas fa-star"></i> Выдать Premium</button>`
-                        )}
-                        <button class="grant" onclick="window.openSubscriptionModal(${u.id})"><i class="fas fa-pen"></i></button>
-                        ${u.isAdmin ? '' : `<button class="revoke" onclick="window.deleteUser(${u.id})"><i class="fas fa-trash"></i></button>`}
-                    </div>
-                </td>
-            </tr>`;
-        });
-        adminUsersBody.innerHTML = html;
-    }
-
-    window.togglePremium = function(userId, enable) {
-        const users = getUsers();
-        const user = users.find(u => u.id === userId);
-        if (!user) {
-            showNotification('Пользователь не найден');
-            return;
-        }
-        if (user.isAdmin) {
-            showNotification('Администратор всегда имеет доступ');
-            return;
-        }
-        user.isPremium = enable;
-        user.plan = enable ? 'pro' : 'basic';
-        if (!enable) {
-            user.planExpiry = null;
-        }
-        saveUsers(users);
-        loadAdminUsers();
-        showNotification(enable ? '✅ Premium выдан!' : '❌ Premium отключён');
-    };
-
-    window.openSubscriptionModal = function(userId) {
-        const users = getUsers();
-        const user = users.find(u => u.id === userId);
-        if (!user) return;
-        modalUserInfo.textContent = `Пользователь: @${user.telegramUsername || user.telegramId}`;
-        modalPlanSelect.value = user.plan || 'basic';
-        if (user.planExpiry) {
-            modalExpiryDate.value = new Date(user.planExpiry).toISOString().split('T')[0];
-        } else {
-            modalExpiryDate.value = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
-        }
-        modalHwidInput.value = user.hwid || '';
-        subscriptionModal.dataset.userId = userId;
-        subscriptionModal.classList.add('active');
-    };
-
-    window.deleteUser = function(userId) {
-        if (!confirm('Удалить пользователя?')) return;
-        let users = getUsers();
-        const user = users.find(u => u.id === userId);
-        if (user && user.isAdmin) {
-            alert('Нельзя удалить администратора');
-            return;
-        }
-        users = users.filter(u => u.id !== userId);
-        saveUsers(users);
-        loadAdminUsers();
-        showNotification('Пользователь удалён');
-    };
-
-    function saveSubscription(userId, plan, expiry, hwid) {
-        const users = getUsers();
-        const idx = users.findIndex(u => u.id === userId);
-        if (idx === -1) {
-            showNotification('Пользователь не найден');
-            return;
-        }
-        users[idx].plan = plan;
-        users[idx].planExpiry = expiry;
-        users[idx].hwid = hwid || null;
-        users[idx].queriesUsed = 0;
-        saveUsers(users);
-        loadAdminUsers();
-        if (state.currentUser && state.currentUser.id === userId) {
-            loadCurrentUser();
-        }
-        showNotification('Подписка обновлена');
-    }
-
-    function addUser(telegramId, name, plan, expiry, hwid) {
-        if (!telegramId) {
-            showNotification('Введите Telegram ID');
-            return;
-        }
-        const users = getUsers();
-        if (users.find(u => u.telegramId === telegramId || u.telegramUsername === telegramId)) {
-            showNotification('Пользователь уже существует');
-            return;
-        }
-        const newUser = {
-            id: Date.now(),
-            telegramId: telegramId,
-            telegramUsername: telegramId,
-            name: name || telegramId,
-            plan: plan || 'basic',
-            planExpiry: expiry || new Date(Date.now() + 30 * 86400000).toISOString(),
-            queriesUsed: 0,
-            totalQueries: 0,
-            hwid: hwid || null,
-            isAdmin: false,
-            createdAt: new Date().toISOString()
-        };
-        users.push(newUser);
-        saveUsers(users);
-        loadAdminUsers();
-        showNotification('Пользователь добавлен');
-    }
-
-    function showNotification(msg) {
-        const div = document.createElement('div');
-        div.style.cssText = `
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: #141014; color: #fff; padding: 12px 28px; border-radius: 16px;
-            border: 1px solid rgba(255,45,149,0.06); box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-            font-size: 14px; font-weight: 500; z-index: 9999; transition: all 0.3s;
-            border-left: 4px solid #ff2d95; max-width: 90vw; text-align: center;
-        `;
-        div.textContent = msg;
-        document.body.appendChild(div);
-        setTimeout(() => {
-            div.style.opacity = '0';
-            div.style.transform = 'translateX(-50%) translateY(20px)';
-            setTimeout(() => div.remove(), 300);
-        }, 3000);
-    }
-
-    // ===== ПОИСК =====
-    async function performSearch(query) {
-        if (!query.trim()) {
-            resultGrid.innerHTML = `
-                <div class="no-results">
-                    <i class="fas fa-exclamation-circle big-icon"></i>
-                    <span style="font-size:16px; color:rgba(255,255,255,0.04);">Введите запрос</span>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
                 </div>
             `;
             resultsHeader.style.display = 'none';
             return;
         }
 
-<<<<<<< HEAD
         if (!canMakeQuery(state.currentUser)) return;
 
         if (!state.apiToken || state.apiToken.length < 10) {
@@ -4026,29 +2485,6 @@
                     </span>
                     <div style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.3);">
                         Откройте «Настройки» и сохраните API-токен.
-=======
-        const user = getCurrentUser();
-        if (!user) {
-            showNotification('Сначала войдите в систему');
-            return;
-        }
-
-        if (!canMakeQuery(user)) {
-            let reason = 'Лимит запросов исчерпан';
-            if (isPlanExpired(user)) reason = 'Подписка истекла';
-            if (user.hwid && user.hwid !== HWID) reason = 'HWID не совпадает';
-            showNotification(reason);
-            return;
-        }
-
-        if (!state.apiToken || state.apiToken.length < 10) {
-            resultGrid.innerHTML = `
-                <div class="no-results" style="color: #ffaa00;">
-                    <i class="fas fa-key big-icon" style="color:#ffaa00;"></i>
-                    <span style="font-size:16px;">❌ API токен не указан или невалидный</span>
-                    <div style="margin-top:12px; font-size:13px; color:rgba(255,255,255,0.15);">
-                        Получите токен у @leakosint_bot
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
                     </div>
                 </div>
             `;
@@ -4059,7 +2495,6 @@
         resultGrid.innerHTML = `
             <div class="no-results">
                 <i class="fas fa-spinner fa-pulse big-icon" style="color:#ff2d95;"></i>
-<<<<<<< HEAD
                 <span style="font-size:16px;color:rgba(255,255,255,.4);">
                     Выполняется поиск...
                 </span>
@@ -4147,158 +2582,15 @@
                     </div>
                 </div>
             `;
-=======
-                <span style="font-size:16px; color:rgba(255,255,255,0.04);">Поиск...</span>
-            </div>
-        `;
-
-        try {
-            const payload = {
-                token: state.apiToken.trim(),
-                request: query.trim(),
-                limit: 200,
-                lang: 'ru'
-            };
-
-            let response;
-            
-            if (window.electronAPI && window.electronAPI.apiRequest) {
-                response = await window.electronAPI.apiRequest(payload);
-                console.log('📥 Ответ через Electron:', response);
-                
-                if (!response.ok) {
-                    let errorMsg = response.error || `HTTP ${response.status}`;
-                    if (response.status === 401 || response.status === 403) {
-                        errorMsg = '❌ Неверный API-токен';
-                    } else if (response.status === 429) {
-                        errorMsg = '❌ Слишком много запросов. Подождите 5-10 минут';
-                    } else if (response.status === 0 || response.error?.includes('timeout')) {
-                        errorMsg = '❌ Не удалось подключиться к серверу. Проверьте интернет.';
-                    }
-                    throw new Error(errorMsg);
-                }
-                
-                const data = response.data;
-                
-                if (data['Error code']) {
-                    throw new Error(`Ошибка API: ${data['Error code']}`);
-                }
-                
-                if (!data.List || Object.keys(data.List).length === 0) {
-                    resultGrid.innerHTML = `
-                        <div class="no-results">
-                            <i class="fas fa-database big-icon"></i>
-                            <span style="font-size:16px; color:rgba(255,255,255,0.04);">Ничего не найдено</span>
-                        </div>
-                    `;
-                    resultsHeader.style.display = 'none';
-                    return;
-                }
-                
-                const users = getUsers();
-                const idx = users.findIndex(u => u.id === user.id);
-                if (idx !== -1) {
-                    users[idx].queriesUsed = (users[idx].queriesUsed || 0) + 1;
-                    users[idx].totalQueries = (users[idx].totalQueries || 0) + 1;
-                    saveUsers(users);
-                    loadCurrentUser();
-                }
-                
-                renderResults(data);
-                resultsHeader.style.display = 'flex';
-                
-            } else {
-                const fetchResponse = await fetch(state.apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
-                
-                if (!fetchResponse.ok) {
-                    throw new Error(`HTTP ${fetchResponse.status}`);
-                }
-                
-                const data = await fetchResponse.json();
-                
-                if (data['Error code']) {
-                    throw new Error(data['Error code']);
-                }
-                
-                if (!data.List || Object.keys(data.List).length === 0) {
-                    resultGrid.innerHTML = `
-                        <div class="no-results">
-                            <i class="fas fa-database big-icon"></i>
-                            <span style="font-size:16px; color:rgba(255,255,255,0.04);">Ничего не найдено</span>
-                        </div>
-                    `;
-                    resultsHeader.style.display = 'none';
-                    return;
-                }
-                
-                const users = getUsers();
-                const idx = users.findIndex(u => u.id === user.id);
-                if (idx !== -1) {
-                    users[idx].queriesUsed = (users[idx].queriesUsed || 0) + 1;
-                    users[idx].totalQueries = (users[idx].totalQueries || 0) + 1;
-                    saveUsers(users);
-                    loadCurrentUser();
-                }
-                
-                renderResults(data);
-                resultsHeader.style.display = 'flex';
-            }
-
-        } catch (err) {
-            console.error('❌ Ошибка поиска:', err);
-            
-            let errorMessage = err.message || 'Неизвестная ошибка';
-            
-            if (errorMessage.includes('Failed to fetch') || 
-                errorMessage.includes('Network error') ||
-                errorMessage.includes('не удалось подключиться') ||
-                errorMessage.includes('timeout')) {
-                errorMessage = '❌ Не удалось подключиться к серверу. Проверьте интернет.';
-            } else if (errorMessage.includes('Invalid token') || 
-                    errorMessage.includes('401') || 
-                    errorMessage.includes('403')) {
-                errorMessage = '❌ Неверный API-токен. Получите новый у @leakosint_bot';
-            } else if (errorMessage.includes('429')) {
-                errorMessage = '❌ Слишком много запросов. Подождите 5-10 минут.';
-            }
-            
-            resultGrid.innerHTML = `
-                <div class="no-results" style="color: #ff5f57;">
-                    <i class="fas fa-exclamation-triangle big-icon" style="color:#ff5f57;"></i>
-                    <span style="font-size:16px;">${errorMessage}</span>
-                    ${errorMessage.includes('токен') || errorMessage.includes('Неверный') ? `
-                        <div style="margin-top:12px; font-size:13px; color:rgba(255,255,255,0.15);">
-                            Получите токен: <a href="https://t.me/leakosint_bot" target="_blank" rel="noreferrer" style="color:#ff2d95; text-decoration:underline;">@leakosint_bot</a>
-                        </div>
-                    ` : ''}
-                    <div style="margin-top:8px; font-size:11px; color:rgba(255,255,255,0.02); word-break:break-all;">
-                        ${err.message || ''}
-                    </div>
-                </div>
-            `;
-            resultsHeader.style.display = 'none';
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         }
     }
 
     function renderResults(data, saveToHistory = true) {
-<<<<<<< HEAD
         const list = data?.List || {};
-=======
-        const list = data.List;
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         let totalRecords = 0;
         let html = '';
         const allData = [];
 
-<<<<<<< HEAD
         for (const dbName of Object.keys(list)) {
             const db = list[dbName];
             if (
@@ -4306,17 +2598,10 @@
                 !Array.isArray(db?.Data) ||
                 db.Data.length === 0
             ) continue;
-=======
-        for (const dbName in list) {
-            const db = list[dbName];
-            if (dbName === 'No results found') continue;
-            if (!db.Data || db.Data.length === 0) continue;
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
 
             const infoLeak = db.InfoLeak || '';
             totalRecords += db.Data.length;
 
-<<<<<<< HEAD
             db.Data.forEach(item => {
                 if (!item || typeof item !== 'object') return;
 
@@ -4335,22 +2620,10 @@
                     const ap = priorityKeys.includes(a) ? 0 : 1;
                     const bp = priorityKeys.includes(b) ? 0 : 1;
                     return ap !== bp ? ap - bp : a.localeCompare(b);
-=======
-            db.Data.forEach((item) => {
-                allData.push({ source: dbName, data: item, info: infoLeak });
-                
-                const priorityKeys = ['FULLNAME', 'NAME', 'PHONE', 'EMAIL', 'PASSPORT', 'INN', 'BDAY'];
-                const sortedKeys = Object.keys(item).sort((a, b) => {
-                    const aPriority = priorityKeys.includes(a) ? 0 : 1;
-                    const bPriority = priorityKeys.includes(b) ? 0 : 1;
-                    if (aPriority !== bPriority) return aPriority - bPriority;
-                    return a.localeCompare(b);
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
                 });
 
                 html += `<div class="result-card">`;
                 html += `<div class="card-header">`;
-<<<<<<< HEAD
                 html += `<span class="source">
                     <i class="fas fa-folder-open"></i>
                     ${escapeHtml(dbName)}
@@ -4402,31 +2675,6 @@
                         </button>
                     </div>
                 </div>`;
-=======
-                html += `<span class="source"><i class="fas fa-folder-open"></i> ${escapeHtml(dbName)}</span>`;
-                html += `<span class="tag">${sortedKeys.length} полей</span>`;
-                html += `</div>`;
-                html += `<div class="data-row">`;
-                sortedKeys.forEach(key => {
-                    const val = item[key];
-                    if (!val || val === '') return;
-                    const label = getFieldLabel(key);
-                    const icon = getFieldIconClass(key);
-                    const color = getFieldColor(key);
-                    
-                    html += `<span class="field">`;
-                    html += `<i class="${icon}" style="color:${color}; width:16px; text-align:center; font-size:13px;"></i>`;
-                    html += `<strong style="color:rgba(255,255,255,0.2); font-weight:400; font-size:12px;">${escapeHtml(label)}:</strong>`;
-                    html += `<span class="value" style="color:rgba(255,255,255,0.85); font-weight:400; font-size:13px; word-break:break-all;">${escapeHtml(val)}</span>`;
-                    html += `</span>`;
-                });
-                html += `</div>`;
-                html += `<div class="card-footer">`;
-                html += `<span class="meta"><i class="fas fa-info-circle" style="color:rgba(255,255,255,0.06);"></i> ${escapeHtml(infoLeak || 'Источник данных')}</span>`;
-                html += `<button class="copy-btn" onclick="window.copyResult(this, '${encodeURIComponent(JSON.stringify(item)).replace(/'/g, '%27')}')"><i class="fas fa-copy"></i> Копировать</button>`;
-                html += `</div>`;
-                html += `</div>`;
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             });
         }
 
@@ -4434,7 +2682,6 @@
             resultGrid.innerHTML = `
                 <div class="no-results">
                     <i class="fas fa-database big-icon"></i>
-<<<<<<< HEAD
                     <span style="font-size:16px;color:rgba(255,255,255,.2);">
                         Данные не найдены
                     </span>
@@ -4442,12 +2689,6 @@
             `;
             resultsHeader.style.display = 'none';
             state.searchResults = [];
-=======
-                    <span style="font-size:16px; color:rgba(255,255,255,0.04);">Данные не найдены</span>
-                </div>
-            `;
-            resultsHeader.style.display = 'none';
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             return;
         }
 
@@ -4456,7 +2697,6 @@
         resultsHeader.style.display = 'flex';
         resultCount.textContent = `${totalRecords} записей`;
 
-<<<<<<< HEAD
         if (saveToHistory) {
             state.searchHistory.unshift({
                 query: searchInput.value.trim(),
@@ -4473,24 +2713,10 @@
                 'menacesearch_history',
                 JSON.stringify(state.searchHistory)
             );
-=======
-        const now = new Date();
-        const timeStr = now.toLocaleString('ru-RU');
-        if (saveToHistory) {
-            state.searchHistory.unshift({
-                query: searchInput.value,
-                count: totalRecords,
-                time: timeStr,
-                results: data
-            });
-            if (state.searchHistory.length > 50) state.searchHistory.pop();
-            localStorage.setItem('menacesearch_history', JSON.stringify(state.searchHistory));
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             loadHistory();
         }
     }
 
-<<<<<<< HEAD
     window.copyResult = async function (button, encodedData) {
         try {
             const data = JSON.parse(decodeURIComponent(encodedData));
@@ -4615,71 +2841,10 @@
                         <i class="fas fa-eye"></i> Просмотр
                     </button>
                 </div>
-=======
-    window.copyResult = function(btn, encodedData) {
-        try {
-            const data = JSON.parse(decodeURIComponent(encodedData));
-            const text = Object.entries(data).map(([k,v]) => `${k}: ${v}`).join('\n');
-            navigator.clipboard.writeText(text).then(() => {
-                btn.classList.add('copied');
-                btn.innerHTML = '<i class="fas fa-check"></i> Скопировано';
-                setTimeout(() => {
-                    btn.classList.remove('copied');
-                    btn.innerHTML = '<i class="fas fa-copy"></i> Копировать';
-                }, 2000);
-            });
-        } catch(e) {}
-    };
-
-    function copyAllResults() {
-        if (state.searchResults.length === 0) return;
-        const text = state.searchResults.map(r => {
-            const dataStr = Object.entries(r.data).map(([k,v]) => `${k}: ${v}`).join(', ');
-            return `[${r.source}] ${dataStr}`;
-        }).join('\n\n');
-        navigator.clipboard.writeText(text).then(() => {
-            copyAllBtn.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
-            setTimeout(() => {
-                copyAllBtn.innerHTML = '<i class="fas fa-copy"></i> Копировать всё';
-            }, 2000);
-        });
-    }
-
-    function exportResults() {
-        if (state.searchResults.length === 0) return;
-        const data = state.searchResults.map(r => ({
-            source: r.source,
-            ...r.data
-        }));
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `menacesearch_${Date.now()}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-    }
-
-    function loadHistory() {
-        const list = document.getElementById('historyList');
-        if (state.searchHistory.length === 0) {
-            list.innerHTML = `<div class="no-results" style="padding:30px 0;"><i class="fas fa-clock"></i> История пуста</div>`;
-            return;
-        }
-        list.innerHTML = state.searchHistory.map((item, index) => `
-            <div class="history-item">
-                <span class="query">${escapeHtml(item.query)}</span>
-                <span class="status"><i class="fas fa-check-circle"></i> ${item.count} записей</span>
-                <span class="time">${escapeHtml(item.time)}</span>
-                <button class="copy-btn" type="button" onclick="window.openHistoryEntry(${index})">
-                    <i class="fas fa-eye"></i> Открыть
-                </button>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             </div>
         `).join('');
     }
 
-<<<<<<< HEAD
     window.openHistoryEntry = function (index) {
         const entry = state.searchHistory[index];
 
@@ -5090,141 +3255,6 @@ th{background:#f3f3f3}
 
             loginStatus.textContent =
                 `Ошибка: ${error.message || 'неизвестная ошибка'}`;
-=======
-    window.openHistoryEntry = function(index) {
-        const entry = state.searchHistory[index];
-        if (!entry?.results) {
-            showNotification('Для старой записи результаты не сохранены. Выполните поиск повторно.');
-            return;
-        }
-        searchInput.value = entry.query || '';
-        switchPage('search');
-        renderResults(entry.results, false);
-        showNotification(`Открыты сохранённые результаты: ${entry.count} записей`);
-    };
-
-    // ===== ЭКСПОРТ ИСТОРИИ =====
-    function exportHistory(format = 'json') {
-        const history = state.searchHistory || [];
-        if (history.length === 0) {
-            showNotification('📭 История пуста');
-            return;
-        }
-
-        let dataStr = '';
-        let fileName = `history_${new Date().toISOString().slice(0,10)}`;
-        let mimeType = '';
-
-        if (format === 'json') {
-            dataStr = JSON.stringify(history, null, 2);
-            fileName += '.json';
-            mimeType = 'application/json';
-        } else if (format === 'csv') {
-            const headers = ['Запрос', 'Результатов', 'Дата'];
-            const rows = history.map(item => [
-                `"${item.query.replace(/"/g, '""')}"`,
-                item.count || 0,
-                item.time || ''
-            ]);
-            dataStr = [headers.join(','), ...rows.map(row => row.join(','))].join('\n');
-            fileName += '.csv';
-            mimeType = 'text/csv';
-        } else if (format === 'html') {
-            let htmlContent = `
-<!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>История поиска</title>
-<style>body{background:#0a080c;color:#fff;font-family:sans-serif;padding:40px;}
-h1{color:#ff2d95;}table{width:100%;border-collapse:collapse;margin-top:20px;}
-th{text-align:left;padding:12px;background:rgba(255,45,149,0.08);color:#ff2d95;}
-td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.7);}
-.count{color:#ff2d95;font-weight:600;}
-.time{color:rgba(255,255,255,0.2);font-size:13px;}
-</style></head><body>
-<h1>📋 История поиска</h1><p>Всего записей: ${history.length}</p>
-<table><thead><tr><th>#</th><th>Запрос</th><th>Результатов</th><th>Дата</th></tr></thead><tbody>`;
-            history.forEach((item, i) => {
-                htmlContent += `<tr><td>${i+1}</td><td>${item.query}</td><td class="count">${item.count||0}</td><td class="time">${item.time||''}</td></tr>`;
-            });
-            htmlContent += `</tbody></table>
-<p style="color:rgba(255,255,255,0.06);margin-top:30px;">Экспортировано: ${new Date().toLocaleString('ru-RU')}</p></body></html>`;
-            dataStr = htmlContent;
-            fileName += '.html';
-            mimeType = 'text/html';
-        }
-
-        const blob = new Blob([dataStr], { type: mimeType + ';charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showNotification(`✅ История скачана как ${fileName}`);
-    }
-
-    function clearHistory() {
-        if (state.searchHistory.length === 0) {
-            showNotification('📭 История уже пуста');
-            return;
-        }
-        if (!confirm('🗑️ Удалить всю историю поиска?')) return;
-        state.searchHistory = [];
-        localStorage.setItem('menacesearch_history', JSON.stringify(state.searchHistory));
-        loadHistory();
-        showNotification('✅ История очищена');
-    }
-
-    function switchPage(pageId) {
-        state.currentPage = pageId;
-        pages.forEach(p => p.classList.remove('active'));
-        const target = document.getElementById('page-' + pageId);
-        if (target) target.classList.add('active');
-        navLinks.forEach(l => l.classList.remove('active'));
-        const link = document.querySelector(`#navLinks a[data-page="${pageId}"]`);
-        if (link) link.classList.add('active');
-
-        if (pageId === 'admin' && state.currentUser?.isAdmin) {
-            loadAdminUsers();
-        }
-        if (pageId === 'search' && state.searchResults.length > 0) {
-            resultsHeader.style.display = 'flex';
-        } else if (pageId === 'search') {
-            resultsHeader.style.display = 'none';
-        }
-        if (pageId === 'history') {
-            loadHistory();
-        }
-    }
-
-    // ===== СОБЫТИЯ =====
-
-    loginBtn.addEventListener('click', async function() {
-        if (!window.electronAPI?.openTelegramAuth) {
-            loginStatus.textContent = '❌ Telegram-авторизация доступна только в приложении Electron';
-            loginStatus.className = 'login-status error';
-            return;
-        }
-
-        loginBtn.disabled = true;
-        loginStatus.textContent = 'Открывается окно Telegram...';
-        loginStatus.className = 'login-status';
-
-        try {
-            const result = await window.electronAPI.openTelegramAuth();
-            if (result.ok && result.user) {
-                loginWithTelegram(result.user);
-            } else if (result.error !== 'Авторизация отменена') {
-                loginStatus.textContent = '❌ ' + (result.error || 'Не удалось войти через Telegram');
-                loginStatus.className = 'login-status error';
-            } else {
-                loginStatus.textContent = 'Авторизация отменена';
-                loginStatus.className = 'login-status';
-            }
-        } catch {
-            loginStatus.textContent = '❌ Ошибка авторизации Telegram';
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             loginStatus.className = 'login-status error';
         } finally {
             loginBtn.disabled = false;
@@ -5232,7 +3262,6 @@ td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(2
     });
 
     navLinks.forEach(link => {
-<<<<<<< HEAD
         link.addEventListener('click', event => {
             event.preventDefault();
             switchPage(link.dataset.page);
@@ -5247,69 +3276,33 @@ td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(2
     searchInput.addEventListener('keydown', event => {
         if (event.key === 'Enter') {
             event.preventDefault();
-=======
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const page = this.dataset.page;
-            if (page === 'admin' && !state.currentUser?.isAdmin) {
-                showNotification('Доступ запрещён');
-                return;
-            }
-            switchPage(page);
-        });
-    });
-
-    searchBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        performSearch(searchInput.value);
-    });
-
-    searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             performSearch(searchInput.value);
         }
     });
 
     filterChips.forEach(chip => {
-<<<<<<< HEAD
         chip.addEventListener('click', () => {
             filterChips.forEach(item => item.classList.remove('active'));
             chip.classList.add('active');
-=======
-        chip.addEventListener('click', function() {
-            filterChips.forEach(c => c.classList.remove('active'));
-            this.classList.add('active');
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         });
     });
 
     copyAllBtn.addEventListener('click', copyAllResults);
     exportBtn.addEventListener('click', exportResults);
 
-<<<<<<< HEAD
     clearResultsBtn.addEventListener('click', () => {
-=======
-    clearResultsBtn.addEventListener('click', function() {
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
         state.searchResults = [];
         resultGrid.innerHTML = `
             <div class="no-results">
                 <i class="fas fa-search big-icon"></i>
-<<<<<<< HEAD
                 <span style="font-size:16px;color:rgba(255,255,255,.2);">
                     Выполните поиск
                 </span>
-=======
-                <span style="font-size:16px; color:rgba(255,255,255,0.04);">Выполните поиск</span>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
             </div>
         `;
         resultsHeader.style.display = 'none';
     });
 
-<<<<<<< HEAD
     settingsQuick.addEventListener('click', () => switchPage('settings'));
     userBadge.addEventListener('click', () => switchPage('account'));
     logoutBtn.addEventListener('click', () => {
@@ -5519,117 +3512,3 @@ td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(2
 
 </body>
 </html>
-=======
-    document.querySelectorAll('.toggle').forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-        });
-    });
-
-    settingsQuick.addEventListener('click', function() {
-        switchPage('settings');
-    });
-
-    logoutBtn.addEventListener('click', logout);
-
-    adminRefreshBtn.addEventListener('click', loadAdminUsers);
-
-    adminAddUserBtn.addEventListener('click', function() {
-        const tg = prompt('Telegram ID или @username:');
-        if (!tg) return;
-        const name = prompt('Имя (опционально):') || tg.replace('@', '');
-        const plan = prompt('План (basic/pro/business):', 'basic') || 'basic';
-        const expiry = prompt('Действует до (YYYY-MM-DD):') || new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
-        const hwid = prompt('HWID привязка (оставьте пустым):') || null;
-        addUser(tg.replace('@', ''), name, plan, expiry + 'T00:00:00.000Z', hwid);
-    });
-
-    modalCancel.addEventListener('click', function() {
-        subscriptionModal.classList.remove('active');
-    });
-
-    modalConfirm.addEventListener('click', function() {
-        const userId = parseInt(subscriptionModal.dataset.userId);
-        const plan = modalPlanSelect.value;
-        const expiry = modalExpiryDate.value;
-        const hwid = modalHwidInput.value.trim() || null;
-        if (!expiry) {
-            showNotification('Выберите дату');
-            return;
-        }
-        saveSubscription(userId, plan, expiry + 'T00:00:00.000Z', hwid);
-        subscriptionModal.classList.remove('active');
-    });
-
-    clearCacheBtn.addEventListener('click', function() {
-        localStorage.removeItem('menacesearch_history');
-        state.searchHistory = [];
-        loadHistory();
-        showNotification('Кэш очищен');
-    });
-
-    // История
-    if (exportHistoryBtn) {
-        exportHistoryBtn.addEventListener('click', function() {
-            const format = historyFormatSelect ? historyFormatSelect.value : 'json';
-            exportHistory(format);
-        });
-    }
-
-    if (clearHistoryBtn) {
-        clearHistoryBtn.addEventListener('click', clearHistory);
-    }
-
-    if (saveApiTokenBtn && apiTokenInput) {
-        saveApiTokenBtn.addEventListener('click', function() {
-            state.apiToken = apiTokenInput.value.trim();
-            localStorage.setItem('menacesearch_api_token', state.apiToken);
-            showNotification(state.apiToken ? 'API-токен сохранён' : 'API-токен удалён');
-        });
-    }
-
-    if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-            if (window.electronAPI?.closeWindow) {
-                window.electronAPI.closeWindow();
-            } else if (confirm('Закрыть?')) {
-                window.close();
-            }
-        });
-    }
-
-    if (minimizeBtn) {
-        minimizeBtn.addEventListener('click', function() {
-            if (window.electronAPI?.minimizeWindow) {
-                window.electronAPI.minimizeWindow();
-            }
-        });
-    }
-
-    if (maximizeBtn) {
-        maximizeBtn.addEventListener('click', function() {
-            if (window.electronAPI?.maximizeWindow) {
-                window.electronAPI.maximizeWindow();
-            }
-        });
-    }
-
-    // ===== ИНИЦИАЛИЗАЦИЯ =====
-    initUsers();
-    loadHistory();
-    initializeHardwareId().then(loadCurrentUser);
-
-    console.log('🔥 MenaceSEARCH Pro loaded');
-    console.log('🖥️ HWID:', HWID);
-
-    window.electronAPI = window.electronAPI || {
-        closeWindow: () => { if (confirm('Закрыть?')) window.close(); },
-        minimizeWindow: () => {},
-        maximizeWindow: () => {}
-    };
-
-})();
-</script>
-</body>
-</html>
->>>>>>> e545f46a604e756138f3e9ba39c457033ca10a49
